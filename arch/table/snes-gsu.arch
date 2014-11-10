@@ -111,7 +111,6 @@ ljmp r*04       ;$3d %1001 =a
 
 lmult           ;$3d $9f
 
-// TODO lms and sms offsets are BROKEN fixme fix fix fix ERROR
 lms r*04, (*08) ;$3d %1010 =a >>1b
 
 //xor r1-r15

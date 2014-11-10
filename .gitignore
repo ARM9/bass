@@ -6,6 +6,7 @@ bass
 *.o
 *.exe
 *.vim
+*.sfc
 
 .*~
 *~
