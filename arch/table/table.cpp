@@ -100,6 +100,12 @@ bool BassTable::assemble(const string& statement) {
           }
           break;
         }
+
+        case Format::Type::Shift: {
+          unsigned data = evaluate(args[format.argument]);
+          writeBits(data >> format.data, opcode.number[format.argument].bits);
+          break;
+        }
       }
     }
 
@@ -257,6 +263,14 @@ void BassTable::assembleTableRHS(Opcode& opcode, const string& text) {
       Format format = {Format::Type::Repeat};
       format.argument = item[1] - 'a';
       format.data = hex((const char*)item + 3);
+      opcode.format.append(format);
+    }
+
+    /*shift right*/
+    if(item[0] == '>' && item[1] == '>') {
+      Format format = {Format::Type::Shift, Format::Match::Weak};
+      format.argument = item[3] - 'a';
+      format.data = item[2] - '0';
       opcode.format.append(format);
     }
   }

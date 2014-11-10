@@ -112,7 +112,7 @@ ljmp r*04       ;$3d %1001 =a
 lmult           ;$3d $9f
 
 // TODO lms and sms offsets are BROKEN fixme fix fix fix ERROR
-lms r*04, (*08) ;$3d %1010 =a ~b
+lms r*04, (*08) ;$3d %1010 =a >>1b
 
 //xor r1-r15
 xor r*04        ;$3d %1100 =a
@@ -129,7 +129,7 @@ and #*04        ;$3e %0111 ~a
 
 mult #*04       ;$3e %1000 ~a
 
-sms (*08), r*04 ;$3e %1010 =b ~a
+sms (*08), r*04 ;$3e %1010 =b >>1a
 
 //or #1-15
 or #*04         ;$3e %1100 ~a
