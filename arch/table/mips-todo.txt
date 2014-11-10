@@ -1,0 +1,7 @@
+msb instruction encoding support
+
+Bitwise shifting operands in tables
+
+Register nicknames flawed, either need annoying defines {t1} {a0} etc or
+repetition of instructions with different register prefixes.
+
