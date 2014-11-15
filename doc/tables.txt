@@ -1,0 +1,29 @@
+Static
+A constant
+$xx
+%xxxxxxxx
+
+example
+lsr				;$03
+nop				;%00000000
+//////////////////////////////////
+Repeat
+Repeat a constant
+*a:$xx
+
+example:
+lsr #*08        ;*a:$03
+//////////////////////////////////
+Absolute strong
+only decimal (no hex bin oct etc.)
+=a
+
+example:
+add r*04		;%1010 =a
+//////////////////////////////////
+Absolute weak
+can take any number format
+~a
+
+example
+add r*04, #*16 ;%1011 =a ~b

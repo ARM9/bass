@@ -15,7 +15,7 @@ protected:
   };
 
   struct Format {
-    enum class Type : unsigned { Static, Absolute, Relative, Repeat, Shift } type;
+    enum class Type : unsigned { Static, Absolute, Relative, Repeat, ShiftRight, ShiftLeft } type;
     enum class Match : unsigned { Exact, Strong, Weak } match;
     unsigned data;
     unsigned bits;
@@ -39,3 +39,4 @@ protected:
   void assembleTableLHS(Opcode& opcode, const string& text);
   void assembleTableRHS(Opcode& opcode, const string& text);
 };
+// vim:sts=2

@@ -101,9 +101,15 @@ bool BassTable::assemble(const string& statement) {
           break;
         }
 
-        case Format::Type::Shift: {
+        case Format::Type::ShiftRight: {
           unsigned data = evaluate(args[format.argument]);
           writeBits(data >> format.data, opcode.number[format.argument].bits);
+          break;
+        }
+
+        case Format::Type::ShiftLeft: {
+          unsigned data = evaluate(args[format.argument]);
+          writeBits(data << format.data, opcode.number[format.argument].bits);
           break;
         }
       }
@@ -265,13 +271,20 @@ void BassTable::assembleTableRHS(Opcode& opcode, const string& text) {
       format.data = hex((const char*)item + 3);
       opcode.format.append(format);
     }
-
-    /*shift right*/
+    
     if(item[0] == '>' && item[1] == '>') {
-      Format format = {Format::Type::Shift, Format::Match::Weak};
+      Format format = {Format::Type::ShiftRight, Format::Match::Weak};
+      format.argument = item[3] - 'a';
+      format.data = item[2] - '0';
+      opcode.format.append(format);
+    }
+
+    if(item[0] == '<' && item[1] == '<') {
+      Format format = {Format::Type::ShiftLeft, Format::Match::Weak};
       format.argument = item[3] - 'a';
       format.data = item[2] - '0';
       opcode.format.append(format);
     }
   }
 }
+// vim:sts=2
