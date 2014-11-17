@@ -1,5 +1,0 @@
-ldx #<foo actually the same as ldx.b #foo and not ldx #foo&$FF like in ca65
-ldx #>bar acts the same
-lda <foo = lda.b foo
-lda >foo = lda.w foo
-lda ^foo = lda.l foo

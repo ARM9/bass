@@ -157,6 +157,8 @@ getbs           ;$3f $ef
 move r*04, r*04     ;%0010 =b %0001 =a
 moves r*04, r*04    ;%0010 =a %1011 =b
 
+jal *16             ;$94 $ff ~a
+ret                 ;$9b
 )_";
 
 // vim:ft=snes
