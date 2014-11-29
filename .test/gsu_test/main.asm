@@ -60,4 +60,8 @@ _GsuReset:
     lms r10, (258)
     sms (258), r10
 
+    add r128
+    and r%1000000001
+    and r$33
+    link #255+$15
 // vim:ft=bass
