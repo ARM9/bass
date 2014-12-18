@@ -1,0 +1,101 @@
+arch(snes_cx4) = R"_(
+// all instructions are 16 bits
+// format seems to be most significant 6 bits = op, lower 10 bits = args
+
+nop             ;$00 $00
+stop            ;$00 $FC
+
+invalid0        ;$00 $04
+
+jmp *08         ;%00001000 ~b
+//todo verify p and 0 in p0aaaaaaaa
+jmp *01:*08     ;%000010 =a %0 ~b
+jz *01:08       ;%000011 =a %0 ~b
+jc *01:08       ;%000100 =a %0 ~b
+js *01:08       ;%000101 =a %0 ~b
+
+invalid1        ;$00 $18
+
+//todo find out what ext_dta is, register?
+finish ext_dta  ;$00 $1C
+
+invalid2        ;$00 $20
+
+// skip<?/?/nc/c/nz/z/ns/s>
+// <?/? = vc/v maybe?
+//skipnc          ;%001001 //%nn0000000n
+//skipc           ;%001001 //%nn0000000n
+//skipnz          ;%001001 //%nn0000000n
+//skipz           ;%001001 //%nn0000000n
+//skipns          ;%001001 //%nn0000000n
+//skips           ;%001001 //%nn0000000n
+
+//addr/prg_page:addr
+call            ;$2800 //+p0aaaaaaaa
+callz           ;$2C00 //+p0aaaaaaaa
+callc           ;$3000 //+p0aaaaaaaa
+calls           ;$3400 //+p0aaaaaaaa
+
+invalid3        ;$00 $38
+
+ret             ;$00 $3C
+inc ext_ptr     ;$00 $40
+
+invalid4        ;$00 $44
+)_";
+
+#if 0
+4800h+ssoooooooo ?? ??? cmp   <op>,A/A*2/A*100h/A*10000h     ;\
+  4C00h+ssoooooooo ?? ??? cmp   <imm>,A/A*2/A*100h/A*10000h    ; compare
+  5000h+ssoooooooo ?? NZC cmp   A/A*2/A*100h/A*10000h,<op>     ;
+  5400h+ssoooooooo ?? NZC cmp   A/A*2/A*100h/A*10000h,<imm>    ;/
+  5800h+ss00000000 ?? ??? mov   A,A.?/lsb/lsw/?                ;-sign-expand
+  5C00h            ?? ??? -
+  6000h+nnoooooooo ?? ??? mov   A/ext_dta/?/prg_page,<op>
+  6400h+nnoooooooo ?? ??? mov   A/?/?/prg_page,<imm>
+  6800h+nnoooooooo ?? ??? movb  ram_dta.lsb/mid/msb/?,cx4ram[<op>]
+  6C00h+nnoooooooo ?? ??? movb  ram_dta.lsb/mid/msb/?,cx4ram[ram_ptr+<imm>]
+  7000h+00oooooooo ?? ??? mov   rom_dta,cx4rom[<op>*3]
+  7400h            ?? ??? -
+  7800h+0noooooooo ?? ??? mov   prg_page.lsb/msb,<op>
+  7C00h+0noooooooo ?? ??? mov   prg_page.lsb/msb,<imm>
+  8000h+ssoooooooo ?? ??C add   A,A/A*2/A*100h/A*10000h,<op>   ;\
+  8400h+ssoooooooo ?? ?Z? add   A,A/A*2/A*100h/A*10000h,<imm>  ;
+  8800h+ssoooooooo ?? ??? sub   A,<op>,A/A*2/A*100h/A*10000h   ; add/subtract
+  8C00h+ssoooooooo ?? ??C sub   A,<imm>,A/A*2/A*100h/A*10000h  ;
+  9000h+ssoooooooo ?? NZC sub   A,A/A*2/A*100h/A*10000h,<op>   ;
+  9400h+ssoooooooo ?? NZC sub   A,A/A*2/A*100h/A*10000h,<imm>  ;/
+  9800h+00oooooooo ?? ??? smul  MH:ML,A,<op>    ;\use NOP or other opcode,
+  9C00h+00oooooooo ?? ??? smul  MH:ML,A,<imm>   ;/result is signed 48bit
+  A000h            ?? ??? -
+  A400h            ?? ??? -
+  A800h+ssoooooooo ?? ??? xor   A,A/A*2/A*100h/A*10000h,<op>   ;\
+  AC00h+ssoooooooo ?? ??? xor   A,A/A*2/A*100h/A*10000h,<imm>  ;
+  B000h+ssoooooooo ?? ?Z? and   A,A/A*2/A*100h/A*10000h,<op>   ; logic
+  B400h+ssoooooooo ?? ?Z? and   A,A/A*2/A*100h/A*10000h,<imm>  ;
+  B800h+ssoooooooo ?? ??? or    A,A/A*2/A*100h/A*10000h,<op>   ;
+  BC00h+ssoooooooo ?? ??? or    A,A/A*2/A*100h/A*10000h,<imm>  ;/
+  C000h+00oooooooo ?? ??? shr   A,<op>                         ;\
+  C400h+00oooooooo ?? NZ? shr   A,<imm>                        ;
+  C800h+00oooooooo ?? ??? sar   A,<op>                         ;
+  CC00h+00oooooooo ?? N?? sar   A,<imm>                        ; shift/rotate
+  D000h+00oooooooo ?? ??? ror   A,<op>                         ;
+  D400h+00oooooooo ?? ??? ror   A,<imm>                        ;
+  D800h+00oooooooo ?? ??? shl   A,<op>                         ;
+  DC00h+00oooooooo ?? N?? shl   A,<imm>                        ;/
+  E000h+00oooooooo ?? ??? mov   <op>,A
+  E400h            ?? ??? -
+  E800h+nnoooooooo ?? ??? movb  cx4ram[<op>],ram_dta.lsb/mid/msb/?
+  EC00h+nnoooooooo ?? ??? movb  cx4ram[ram_ptr+<imm>],ram_dta.lsb/mid/msb/?
+  F000h+00oooooooo ?? ??? xchg  <op>,A
+  F400h            ?? ??? -
+  F800h            ?? ??? -
+  FC00h            ?? ??? stop          ;stop, and clear Port [FF5E].bit6
+
+lsr #*08        ;*a:$03
+
+bra *08         ;$05 +2a
+
+to r*04         ;%0001 =a
+ldw (r*04)      ;%0100 =a
+#endif
