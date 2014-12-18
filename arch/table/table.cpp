@@ -281,8 +281,8 @@ void BassTable::assembleTableRHS(Opcode& opcode, const string& text) {
 
     if(item[0] == '<' && item[1] == '<') {
       Format format = {Format::Type::ShiftLeft, Format::Match::Weak};
-      format.argument = item[3] - 'a';
-      format.data = item[2] - '0';
+      format.argument = item[4] - 'a';
+      format.data = (item[2] - '0') * 10 + (item[3] - '0');
       opcode.format.append(format);
     }
   }
