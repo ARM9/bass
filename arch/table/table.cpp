@@ -122,9 +122,9 @@ bool BassTable::assemble(const string& statement) {
         case Format::Type::RelativeShiftRight: {
           int data = evaluate(args[format.argument]) - (pc + format.displacement);
           unsigned bits = opcode.number[format.argument].bits;
-          signed min = -(1 << (bits - 1)), max = +(1 << (bits - 1)) - 1;
+          signed min = -(1 << (bits - 1)>>format.data), max = +(1 << (bits - 1)>>format.data) - 1;
           if(data < min || data > max) error("branch out of bounds");
-          writeBits(data >> format.data, opcode.number[format.argument].bits);
+          writeBits(data >> format.data, opcode.number[format.argument].bits-format.data);
           break;
         }
       }
@@ -266,7 +266,7 @@ void BassTable::assembleTableRHS(Opcode& opcode, const string& text) {
       opcode.format.append(format);
     }
 
-    if(item[0] == '+') {
+    if(item[0] == '+' && item[2] != '>') {
       Format format = {Format::Type::Relative};
       format.argument = item[2] - 'a';
       format.displacement = +(item[1] - '0');
