@@ -5,6 +5,7 @@
 #include "snes-cx4.arch"
 #include "mips-vr4300.arch"
 #include "n64-rsp.arch"
+#include "gb-cpu.arch"
 #undef arch
 
 void BassTable::initialize() {
@@ -31,6 +32,7 @@ bool BassTable::assemble(const string& statement) {
     else if(s == "snes.cx4") data = Arch_snes_cx4;
     else if(s == "mips.vr4300") data = Arch_mips_vr4300;
     else if(s == "n64.rsp") data = Arch_n64_rsp;
+    else if(s == "gb.cpu") data = Arch_gb_cpu;
     else if(s.match("\"?*\"")) {
       s.trim<1>("\"");
       s = {dir(sourceFilenames.last()), s};
