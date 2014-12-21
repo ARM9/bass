@@ -38,5 +38,5 @@ cx4_start:
 
     unknown4
 
-    cmp a,a
+    cmpr a,a
 // vim:ft=bass

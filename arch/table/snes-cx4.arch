@@ -8,14 +8,14 @@ stop                ;$00 $FC
 unknown0            ;$00 $04
 
 //todo verify p and 0 in p0aaaaaaaa
-jmp prg_page:*08    ;>>1a $0A
-jmp *08             ;>>1a $08
-jmpeq prg_page:*08     ;>>1a $0E
-jmpeq *08              ;>>1a $0C
-jmpge prg_page:*08     ;>>1a $12
-jmpge *08              ;>>1a $10
-jmpmi prg_page:*08     ;>>1a $16
-jmpmi *08              ;>>1a $14
+jmp prg_page:*08    ;>>01a $0A
+jmp *08             ;>>01a $08
+jmpeq prg_page:*08  ;>>01a $0E
+jmpeq *08           ;>>01a $0C
+jmpge prg_page:*08  ;>>01a $12
+jmpge *08           ;>>01a $10
+jmpmi prg_page:*08  ;>>01a $16
+jmpmi *08           ;>>01a $14
 
 unknown1            ;$00 $18
 
@@ -53,7 +53,7 @@ unknown4            ;$00 $44
 // <op> - (a<<x)
 cmpr a,a            ;$00 $48 //+ssoooooooo cmp   <op>,A/A*2/A*100h/A*10000h
 cmpr a,a<<1         ;$00 %01001001
-cmpr a,a<<8         ;$00 $01001010
+cmpr a,a<<8         ;$00 %01001010
 cmpr a,a<<16        ;$00 %01001011
 
 // cmp a<<x,a also makes cmp a,a = $5000
@@ -87,9 +87,9 @@ cmpr r*04,a         ;%0110 =a $48
 
 // #imm - (a<<x)
 cmp #*08,a          ;=a $4C //+ssoooooooo cmp   <imm>,A/A*2/A*100h/A*10000h
-cmp #*08,a<<1       ;=a $4D //+ssoooooooo cmp   <imm>,A/A*2/A*100h/A*10000h
-cmp #*08,a<<8       ;=a $4E //+ssoooooooo cmp   <imm>,A/A*2/A*100h/A*10000h
-cmp #*08,a<<16      ;=a $4F //+ssoooooooo cmp   <imm>,A/A*2/A*100h/A*10000h
+cmp #*08,a<<1       ;=a $4D
+cmp #*08,a<<8       ;=a $4E
+cmp #*08,a<<16      ;=a $4F
 
 // (a<<x) - <op>
 cmp a<<1,a          ;$00 $51
