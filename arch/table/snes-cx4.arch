@@ -2,50 +2,153 @@ arch(snes_cx4) = R"_(
 // all instructions are 16 bits
 // format seems to be most significant 6 bits = op, lower 10 bits = args
 
-nop             ;$00 $00
-stop            ;$00 $FC
+nop                 ;$00 $00
+stop                ;$00 $FC
 
-invalid0        ;$00 $04
+unknown0            ;$00 $04
 
-jmp *08         ;%00001000 ~b
 //todo verify p and 0 in p0aaaaaaaa
-jmp *01:*08     ;%000010 =a %0 ~b
-jz *01:08       ;%000011 =a %0 ~b
-jc *01:08       ;%000100 =a %0 ~b
-js *01:08       ;%000101 =a %0 ~b
+jmp prg_page:*08    ;>>1a $0A
+jmp *08             ;>>1a $08
+jmpeq prg_page:*08     ;>>1a $0E
+jmpeq *08              ;>>1a $0C
+jmpge prg_page:*08     ;>>1a $12
+jmpge *08              ;>>1a $10
+jmpmi prg_page:*08     ;>>1a $16
+jmpmi *08              ;>>1a $14
 
-invalid1        ;$00 $18
+unknown1            ;$00 $18
 
 //todo find out what ext_dta is, register?
-finish ext_dta  ;$00 $1C
+finish ext_dta      ;$00 $1C
 
-invalid2        ;$00 $20
+unknown2            ;$00 $20
 
 // skip<?/?/nc/c/nz/z/ns/s>
 // <?/? = vc/v maybe?
-//skipnc          ;%001001 //%nn0000000n
-//skipc           ;%001001 //%nn0000000n
-//skipnz          ;%001001 //%nn0000000n
-//skipz           ;%001001 //%nn0000000n
-//skipns          ;%001001 //%nn0000000n
-//skips           ;%001001 //%nn0000000n
+skiplt              ;$00 $25
+skipge              ;$01 $25
+skipne              ;$00 $26
+skipeq              ;$01 $26
+skippl              ;$00 $27
+skipmi              ;$01 $27
 
-//addr/prg_page:addr
-call            ;$2800 //+p0aaaaaaaa
-callz           ;$2C00 //+p0aaaaaaaa
-callc           ;$3000 //+p0aaaaaaaa
-calls           ;$3400 //+p0aaaaaaaa
+// addr/prg_page:addr
+call prg_page:*08   ;>>1a $2A
+call *08            ;>>1a $28
+callz prg_page:*08  ;>>1a $2E
+callz *08           ;>>1a $2C
+callc prg_page:*08  ;>>1a $32
+callc *08           ;>>1a $30
+calls prg_page:*08  ;>>1a $36
+calls *08           ;>>1a $34
 
-invalid3        ;$00 $38
+unknown3            ;$00 $38
 
-ret             ;$00 $3C
-inc ext_ptr     ;$00 $40
+ret                 ;$00 $3C
+inc ext_ptr         ;$00 $40
 
-invalid4        ;$00 $44
+unknown4            ;$00 $44
+
+// <op> - (a<<x)
+cmpr a,a            ;$00 $48 //+ssoooooooo cmp   <op>,A/A*2/A*100h/A*10000h
+cmpr a,a<<1         ;$00 %01001001
+cmpr a,a<<8         ;$00 $01001010
+cmpr a,a<<16        ;$00 %01001011
+
+// cmp a<<x,a also makes cmp a,a = $5000
+cmpr mh,a           ;$01 $48
+cmpr ml,a           ;$02 $48
+cmpr ext_dta,a      ;$03 $48
+cmpr rom_dta,a      ;$08 $48
+cmpr ram_dta,a      ;$0C $48
+cmpr ext_ptr,a      ;$13 $48
+cmpr ram_ptr,a      ;$1C $48
+
+// this is gonna be fun...
+cmpr 0x000000,a     ;$50 $48
+cmpr 0xffffff,a     ;$51 $48
+cmpr 0x00ff00,a     ;$52 $48
+cmpr 0xff0000,a     ;$53 $48
+cmpr 0x00ffff,a     ;$54 $48
+cmpr 0xffff00,a     ;$55 $48
+cmpr 0x800000,a     ;$56 $48
+cmpr 0x7fffff,a     ;$57 $48
+cmpr 0x008000,a     ;$58 $48
+cmpr 0x007fff,a     ;$59 $48
+cmpr 0xff7fff,a     ;$5A $48
+cmpr 0xffff7f,a     ;$5B $48
+cmpr 0x010000,a     ;$5C $48
+cmpr 0xfeffff,a     ;$5D $48
+cmpr 0x000100,a     ;$5E $48
+cmpr 0x00feff,a     ;$5F $48
+
+cmpr r*04,a         ;%0110 =a $48
+
+// #imm - (a<<x)
+cmp #*08,a          ;=a $4C //+ssoooooooo cmp   <imm>,A/A*2/A*100h/A*10000h
+cmp #*08,a<<1       ;=a $4D //+ssoooooooo cmp   <imm>,A/A*2/A*100h/A*10000h
+cmp #*08,a<<8       ;=a $4E //+ssoooooooo cmp   <imm>,A/A*2/A*100h/A*10000h
+cmp #*08,a<<16      ;=a $4F //+ssoooooooo cmp   <imm>,A/A*2/A*100h/A*10000h
+
+// (a<<x) - <op>
+cmp a<<1,a          ;$00 $51
+cmp a<<8,a          ;$00 $52
+cmp a<<16,a         ;$00 $53
+cmp a,mh            ;$01 $50
+cmp a<<1,mh         ;$01 $51
+
+// (a<<x) - #imm
+cmp a,#*08          ;=a $54
+cmp a<<1,#*08       ;=a $55
+
+mov a,a             ;$00 $60
 )_";
 
 #if 0
-4800h+ssoooooooo ?? ??? cmp   <op>,A/A*2/A*100h/A*10000h     ;\
+valid registers:
+  case 0x00: return regs.a;
+  case 0x01: return regs.acch;
+  case 0x02: return regs.accl;
+  case 0x03: return regs.busdata;
+  case 0x08: return regs.romdata;
+  case 0x0c: return regs.ramdata;
+  case 0x13: return regs.busaddr;
+  case 0x1c: return regs.ramaddr;
+  case 0x50: return 0x000000;
+  case 0x51: return 0xffffff;
+  case 0x52: return 0x00ff00;
+  case 0x53: return 0xff0000;
+  case 0x54: return 0x00ffff;
+  case 0x55: return 0xffff00;
+  case 0x56: return 0x800000;
+  case 0x57: return 0x7fffff;
+  case 0x58: return 0x008000;
+  case 0x59: return 0x007fff;
+  case 0x5a: return 0xff7fff;
+  case 0x5b: return 0xffff7f;
+  case 0x5c: return 0x010000;
+  case 0x5d: return 0xfeffff;
+  case 0x5e: return 0x000100;
+  case 0x5f: return 0x00feff;
+  case 0x60: return regs.gpr[ 0];
+  case 0x61: return regs.gpr[ 1];
+  case 0x62: return regs.gpr[ 2];
+  case 0x63: return regs.gpr[ 3];
+  case 0x64: return regs.gpr[ 4];
+  case 0x65: return regs.gpr[ 5];
+  case 0x66: return regs.gpr[ 6];
+  case 0x67: return regs.gpr[ 7];
+  case 0x68: return regs.gpr[ 8];
+  case 0x69: return regs.gpr[ 9];
+  case 0x6a: return regs.gpr[10];
+  case 0x6b: return regs.gpr[11];
+  case 0x6c: return regs.gpr[12];
+  case 0x6d: return regs.gpr[13];
+  case 0x6e: return regs.gpr[14];
+  case 0x6f: return regs.gpr[15];
+
+no$ cx4 opcodes
   4C00h+ssoooooooo ?? ??? cmp   <imm>,A/A*2/A*100h/A*10000h    ; compare
   5000h+ssoooooooo ?? NZC cmp   A/A*2/A*100h/A*10000h,<op>     ;
   5400h+ssoooooooo ?? NZC cmp   A/A*2/A*100h/A*10000h,<imm>    ;/
@@ -95,7 +198,4 @@ invalid4        ;$00 $44
 lsr #*08        ;*a:$03
 
 bra *08         ;$05 +2a
-
-to r*04         ;%0001 =a
-ldw (r*04)      ;%0100 =a
 #endif
