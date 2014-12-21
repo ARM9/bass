@@ -15,7 +15,13 @@ protected:
   };
 
   struct Format {
-    enum class Type : unsigned { Static, Absolute, Relative, Repeat, ShiftRight, ShiftLeft } type;
+    enum class Type : unsigned {
+        Static, Absolute,
+        Relative,
+        Repeat,
+        ShiftRight, ShiftLeft,
+        RelativeShiftRight
+    } type;
     enum class Match : unsigned { Exact, Strong, Weak } match;
     unsigned data;
     unsigned bits;

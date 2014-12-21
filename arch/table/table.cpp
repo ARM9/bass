@@ -2,7 +2,7 @@
 #include "snes-cpu.arch"
 #include "snes-smp.arch"
 #include "snes-gsu.arch"
-#include "snes-cx4.arch"
+//#include "snes-cx4.arch"
 #include "mips-vr4300.arch"
 #include "n64-rsp.arch"
 #include "gb-cpu.arch"
@@ -29,7 +29,7 @@ bool BassTable::assemble(const string& statement) {
     else if(s == "snes.cpu") data = Arch_snes_cpu;
     else if(s == "snes.smp") data = Arch_snes_smp;
     else if(s == "snes.gsu") data = Arch_snes_gsu;
-    else if(s == "snes.cx4") data = Arch_snes_cx4;
+    //else if(s == "snes.cx4") data = Arch_snes_cx4;
     else if(s == "mips.vr4300") data = Arch_mips_vr4300;
     else if(s == "n64.rsp") data = Arch_n64_rsp;
     else if(s == "gb.cpu") data = Arch_gb_cpu;
@@ -116,6 +116,15 @@ bool BassTable::assemble(const string& statement) {
         case Format::Type::ShiftLeft: {
           unsigned data = evaluate(args[format.argument]);
           writeBits(data << format.data, opcode.number[format.argument].bits);
+          break;
+        }
+
+        case Format::Type::RelativeShiftRight: {
+          int data = evaluate(args[format.argument]) - (pc + format.displacement);
+          unsigned bits = opcode.number[format.argument].bits;
+          signed min = -(1 << (bits - 1)), max = +(1 << (bits - 1)) - 1;
+          if(data < min || data > max) error("branch out of bounds");
+          writeBits(data >> format.data, opcode.number[format.argument].bits);
           break;
         }
       }
@@ -289,6 +298,15 @@ void BassTable::assembleTableRHS(Opcode& opcode, const string& text) {
       Format format = {Format::Type::ShiftLeft, Format::Match::Weak};
       format.argument = item[4] - 'a';
       format.data = (item[2] - '0') * 10 + (item[3] - '0');
+      opcode.format.append(format);
+    }
+
+    // +X>>YYa
+    if(item[0] == '+' && item[2] == '>' && item[3] == '>') {
+      Format format = {Format::Type::RelativeShiftRight};
+      format.argument = item[6] - 'a';
+      format.displacement = +(item[1] - '0');
+      format.data = (item[4] - '0') * 10 + (item[5] - '0');
       opcode.format.append(format);
     }
   }
