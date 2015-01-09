@@ -65,8 +65,16 @@ bool Bass::assemble(const string& statement) {
   if(s.match("output ?*")) {
     lstring p = s.ltrim<1>("output ").qsplit(",").strip();
     string filename = {filepath(), p.take(0).trim<1>("\"")};
-    bool create = (p.size() && p(0) == "create");
-    target(filename, create);
+    if(filename != ".//dev/null") {
+      bool create = (p.size() && p(0) == "create");
+      target(filename, create);
+    }else{
+      #if defined(_WIN32)
+      target("./NUL", false);
+      #else
+      target("/dev/null", false);
+      #endif
+    }
     return true;
   }
 
@@ -195,6 +203,37 @@ bool Bass::assemble(const string& statement) {
     return true;
   }
 
+  if(s.beginsWith("ieee32 ")) {
+    dataLength = 4;
+    s = s.slice(7);  //remove directive
+    lstring p = s.qsplit(",").strip();
+    for(auto& t : p) {
+      /*if(!t.match("")) {
+        error("invalid single precision float");
+      }*/
+      uint64_t t_float = 0;
+      *(float*)&t_float = real(t);
+      printf("\n%x", t_float);
+      write(t_float, dataLength);
+    }
+    return true;
+  }
+  if(s.beginsWith("ieee64 ")) {
+    dataLength = 8;
+    s = s.slice(7);  //remove directive
+    lstring p = s.qsplit(",").strip();
+    for(auto& t : p) {
+      /*if(!t.match("")) {
+        error("invalid double precision float");
+      }*/
+      uint64_t t_float = 0;
+      *(double*)&t_float = real(t);
+      printf("\n%llx", t_float);
+      write(t_float, dataLength);
+    }
+    return true;
+  }
+
   //print ("string"|variable) [, ...]
   if(s.match("print ?*")) {
     s.ltrim<1>("print ").strip();
@@ -240,3 +279,4 @@ bool Bass::assemble(const string& statement) {
 
   return false;
 }
+// vim:sts=2 sw=2

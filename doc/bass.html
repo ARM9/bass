@@ -486,8 +486,13 @@
 
     <h3>d[bwldq] ("string"|variable|constant) [, ...]</h3>
     <p>Inserts binary data directly into the target file. db stores 8-bit
-    values, dw stores 16-bit values, dl stored 24-bit values, dd stored 32-bit
+    values, dw stores 16-bit values, dl stores 24-bit values, dd stores 32-bit
     values and dq stores 64-bit values.</p>
+
+    <h3>ieee[32|64] (variable|constant) [, ...]</h3>
+    <p>Inserts binary representation of ieee 754 floating point directly into
+    the target file. ieee32 stores single precision (32-bit) values, ieee64
+    stores double precision (64-bit) values.</p>
 
     <h3>print ("string"|variable) [, ...]</h3>
     <p>Prints information to the terminal. Useful for debugging.</p>

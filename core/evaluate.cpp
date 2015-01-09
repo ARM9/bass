@@ -78,6 +78,7 @@ int64_t Bass::evaluateFunction(Eval::Node* node, Evaluation mode) {
   error("unrecognized function: ", s);
 }
 
+
 int64_t Bass::evaluateLiteral(Eval::Node* node, Evaluation mode) {
   string& s = node->literal;
 

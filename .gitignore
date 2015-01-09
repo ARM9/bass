@@ -5,7 +5,10 @@ bass
 *.o
 *.exe
 *.vim
+*.bin
 *.sfc
+*.n64
+*.gb
 
 .*~
 *~

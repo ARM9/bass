@@ -287,6 +287,7 @@ void BassTable::assembleTableRHS(Opcode& opcode, const string& text) {
       opcode.format.append(format);
     }
     
+    // >>XXa
     if(item[0] == '>' && item[1] == '>') {
       Format format = {Format::Type::ShiftRight, Format::Match::Weak};
       format.argument = item[4] - 'a';
