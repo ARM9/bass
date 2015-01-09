@@ -121,10 +121,45 @@ bool BassTable::assemble(const string& statement) {
 
         case Format::Type::RelativeShiftRight: {
           int data = evaluate(args[format.argument]) - (pc + format.displacement);
-          unsigned bits = opcode.number[format.argument].bits - format.data;
-          signed min = -(1 << (bits - 1)), max = +(1 << (bits - 1)) - 1;
+          unsigned bits = opcode.number[format.argument].bits;
+          int min = -(1 << (bits - 1)), max = +(1 << (bits - 1)) - 1;
           if(data < min || data > max) error("branch out of bounds");
-          writeBits(data >> format.data, bits);
+          bits -= format.data;
+          if (endian == Endian::LSB) {
+            writeBits(data >> format.data, bits);
+          } else {
+            data >>= format.data;
+            int t_data = 0;
+            switch((bits - 1) / 8) {
+              case 3: { // 4 bytes
+                t_data = ((data & 0xFF000000) >> 24) | \
+                         ((data & 0x00FF0000) >> 8) | \
+                         ((data & 0x0000FF00) << 8) | \
+                         ((data & 0x000000FF) << 24);
+                break;
+              }
+              case 2: { // 3 bytes
+                t_data = ((data & 0x00FF0000) >> 16) | \
+                         ((data & 0x0000FF00)) | \
+                         ((data & 0x000000FF) << 16);
+                break;
+              }
+              case 1: { // 2 bytes
+                t_data = ((data & 0x0000FF00) >> 8) | \
+                         ((data & 0x000000FF) << 8);
+                break;
+              }
+              case 0: { // byte
+                t_data = data;
+                break;
+              }
+              default: {
+                error("Invalid number of bits for Format::Type::RelativeShiftRight");
+                break;
+              }
+            }
+            writeBits(t_data, bits);
+          }
           break;
         }
       }
