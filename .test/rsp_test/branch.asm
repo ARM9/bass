@@ -36,12 +36,17 @@ constant r30(30)
 constant r31(31)
 
 endian msb
-instrument "beqtest *01,*05,*18 ; %000100 >>04a >>03a >>02a >>01a ~a ~b +2>>02c"
+instrument "beqtest *01,*05,*18 ; %000100 >>04a >>03a >>02a >>01a ~a ~b +4>>02c"
 
-BEQ:
-fill $8000
-nop
-beqtest  0,31,       BEQ
-nop
-beq r31, r0, BEQ
+_start:
+    beq r2, r2,_end
+    nop
+    fill $1ffe4, 0
+    beq  r0,r31,       _start
+    nop
+    beq r2, r2, _start
+    nop
+    beq r2, r2, _start
+_end:
+    nop
 // vim:ft=bass
