@@ -1,5 +1,8 @@
 arch n64.rsp
 output "RSPTest.n64", create
+endian msb
+
+base $80000000
 
 // N64 MIPS 4000 CPU Registers
 constant r0(0)
@@ -113,10 +116,34 @@ xor r1,ra,r1
 nor r1,ra,r1
 
 slt r1,ra,r1
-BEQ:
+BLTZ:
 sltu r1,ra,r1
 
-//beq r1,r1,BEQ
+BGEZ:
+bltz r1,BLTZ
+BLTZAL:
+bgez r1,BGEZ
+BGEZAL:
+bltzal r1,BLTZAL
+BLEZ:
+bgezal r1,BGEZAL
+BGTZ:
+blez r1,BLEZ
+BEQ:
+bgtz r1,BGTZ
+
+BNE:
+beq r1,r1,BEQ
+bne r1,r1,BNE
+
+J:
+j J
+JAL:
+jal JAL
+
+jr r1
+jalr r1
+jalr ra,r1
 
 addi r1,ra,$FFEE
 addiu r1,ra,$FFEE
