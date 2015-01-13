@@ -4,8 +4,8 @@ bass
 *.obj
 *.o
 *.exe
-*.vim
 *.bin
+*.sym
 *.sfc
 *.n64
 *.gb

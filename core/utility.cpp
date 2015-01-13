@@ -162,7 +162,7 @@ string Bass::filepath() {
 }
 
 string Bass::text(string s) {
-  if(!s.match("\"*\"")) warning("string value is unqouted: ", s);
+  if(!s.match("\"*\"")) warning("string value is unquoted: ", s);
   s.trim<1>("\"");
   s.replace("\\s", "\'");
   s.replace("\\d", "\"");

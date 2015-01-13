@@ -9,6 +9,19 @@ void Bass::initialize() {
   nextLabelCounter = 1;
 }
 
+void Bass::appendSymfile(const string& entry) {
+  symfile.append(entry);
+}
+
+void Bass::appendSymfile(const string& label, unsigned data) {
+  if(writePhase()) {
+    string scopedName = label;
+    if(scope.size()) scopedName = {scope.merge("."), ".", label};
+    string entry = {hex<8, '0'>(data), " ", scopedName, "\n"};
+    symfile.append(entry);
+  }
+}
+
 bool Bass::assemble(const string& statement) {
   string s = statement;
 
@@ -25,7 +38,10 @@ bool Bass::assemble(const string& statement) {
   //scope name {
   if(s.match("scope ?* {") || s.match("scope {")) {
     s.trim<1>("scope ", "{").strip();
-    if(s.endsWith(":")) setConstant(s.rtrim<1>(":"), pc());
+    if(s.endsWith(":")) {
+      setConstant(s.rtrim<1>(":"), pc());
+      appendSymfile(s, pc());
+    }
     scope.append(s);
     return true;
   }
@@ -41,6 +57,12 @@ bool Bass::assemble(const string& statement) {
     s.rtrim<1>(" {");
     s.rtrim<1>(":");
     setConstant(s, pc());
+    appendSymfile(s, pc());
+    //if(writePhase()) {
+      //string scopedName = s;
+      //if(scope.size()) scopedName = {scope.merge("."), ".", s};
+      //symfile.append(scopedName , pc());
+    //}
     return true;
   }
 
@@ -211,10 +233,10 @@ bool Bass::assemble(const string& statement) {
       /*if(!t.match("")) {
         error("invalid single precision float");
       }*/
-      uint64_t t_float = 0;
-      *(float*)&t_float = real(t);
-      printf("\n%x", t_float);
-      write(t_float, dataLength);
+      uint64_t data = 0;
+      *(float*)&data = real(t);
+      //printf("\n%x", data);
+      write(data, dataLength);
     }
     return true;
   }
@@ -226,10 +248,10 @@ bool Bass::assemble(const string& statement) {
       /*if(!t.match("")) {
         error("invalid double precision float");
       }*/
-      uint64_t t_float = 0;
-      *(double*)&t_float = real(t);
-      printf("\n%llx", t_float);
-      write(t_float, dataLength);
+      uint64_t data = 0;
+      *(double*)&data = real(t);
+      //printf("\n%llx", data);
+      write(data, dataLength);
     }
     return true;
   }

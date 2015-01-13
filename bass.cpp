@@ -18,15 +18,18 @@ int main(int argc, char** argv) {
     print("  -strict          upgrade warnings to errors\n");
     print("  -create          overwrite target file if it already exists\n");
     print("  -benchmark       benchmark performance\n");
+    print("  -sym file        create symbol file\n");
     return 0;
   }
 
   string targetFilename;
+  string symbolFilename;
   lstring defines;
   lstring constants;
   bool strict = false;
   bool create = false;
   bool benchmark = false;
+  bool symfile = false;
   lstring sourceFilenames;
 
   for(unsigned n = 1; n < argc;) {
@@ -67,6 +70,13 @@ int main(int argc, char** argv) {
       n += 1;
       continue;
     }
+    
+    if(s == "-sym") {
+      symbolFilename = argv[n + 1];
+      symfile = true;
+      n += 2;
+      continue;
+    }
 
     if(!s.beginsWith("-")) {
       sourceFilenames.append(s);
@@ -81,6 +91,7 @@ int main(int argc, char** argv) {
   clock_t clockStart = clock();
   BassTable bass;
   bass.target(targetFilename, create);
+
   for(auto& sourceFilename : sourceFilenames) {
     bass.source(sourceFilename);
   }
@@ -96,6 +107,9 @@ int main(int argc, char** argv) {
     print("bass: assembly failed\n");
     return -1;
   }
+
+  bass.symfile.write(symbolFilename, true);
+
   clock_t clockFinish = clock();
   if(benchmark) {
     print("bass: assembled in ", (double)(clockFinish - clockStart) / CLOCKS_PER_SEC, " seconds\n");

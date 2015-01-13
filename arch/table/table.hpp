@@ -39,6 +39,7 @@ protected:
   vector<Opcode> table;
   uint64_t bitval, bitpos;
 
+  uint64_t swapEndian(uint64_t data, unsigned bits);
   unsigned bitLength(string& text) const;
   void writeBits(uint64_t data, unsigned bits);
   bool parseTable(const string& text);

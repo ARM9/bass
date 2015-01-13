@@ -3,6 +3,7 @@
 #include "execute.cpp"
 #include "assemble.cpp"
 #include "utility.cpp"
+#include "symfile.cpp"
 
 bool Bass::target(const string& filename, bool create) {
   if(targetFile.open()) targetFile.close();
@@ -86,7 +87,6 @@ bool Bass::assemble(bool strict) {
 
   return true;
 }
-
 //internal
 
 unsigned Bass::pc() const {
@@ -138,3 +138,5 @@ template<typename... Args> void Bass::error(Args&&... args) {
   struct BassError {};
   throw BassError();
 }
+
+// vim:sts=2 sw=2

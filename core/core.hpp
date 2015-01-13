@@ -1,9 +1,20 @@
+
 struct Bass {
   bool target(const string& filename, bool create);
   bool source(const string& filename);
   void define(const string& name, const string& value);
   void constant(const string& name, const string& value);
   bool assemble(bool strict = false);
+
+  class Symfile {
+  public:
+    bool write(const string& filename, bool create);
+    void append(const string& entry);
+  protected:
+    string symbolBuffer;
+  };
+
+  Symfile symfile;
 
 protected:
   enum class Phase : unsigned { Analyze, Query, Write };
@@ -129,6 +140,8 @@ protected:
   //assemble
   virtual void initialize();
   virtual bool assemble(const string& statement);
+  void appendSymfile(const string& entry);
+  void appendSymfile(const string& label, unsigned data);
 
   //utility
   void setMacro(const string& name, const lstring& parameters, unsigned ip, bool scoped, bool local);
@@ -152,3 +165,5 @@ protected:
   string text(string s);
   int64_t character(string s);
 };
+
+// vim:sts=2 sw=2

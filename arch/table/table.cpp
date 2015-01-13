@@ -129,36 +129,7 @@ bool BassTable::assemble(const string& statement) {
             writeBits(data >> format.data, bits);
           } else {
             data >>= format.data;
-            int t_data = 0;
-            switch((bits - 1) / 8) {
-              case 3: { // 4 bytes
-                t_data = ((data & 0xFF000000) >> 24) | \
-                         ((data & 0x00FF0000) >> 8) | \
-                         ((data & 0x0000FF00) << 8) | \
-                         ((data & 0x000000FF) << 24);
-                break;
-              }
-              case 2: { // 3 bytes
-                t_data = ((data & 0x00FF0000) >> 16) | \
-                         ((data & 0x0000FF00)) | \
-                         ((data & 0x000000FF) << 16);
-                break;
-              }
-              case 1: { // 2 bytes
-                t_data = ((data & 0x0000FF00) >> 8) | \
-                         ((data & 0x000000FF) << 8);
-                break;
-              }
-              case 0: { // byte
-                t_data = data;
-                break;
-              }
-              default: {
-                error("Invalid number of bits for Format::Type::RelativeShiftRight");
-                break;
-              }
-            }
-            writeBits(t_data, bits);
+            writeBits(swapEndian(data, bits), bits);
           }
           break;
         }
@@ -169,6 +140,39 @@ bool BassTable::assemble(const string& statement) {
   }
 
   return false;
+}
+
+uint64_t BassTable::swapEndian(uint64_t data, unsigned bits){
+  int t_data = 0;
+  switch((bits - 1) / 8) {
+    case 3: { // 4 bytes
+      t_data = ((data & 0xFF000000) >> 24) | \
+               ((data & 0x00FF0000) >> 8) | \
+               ((data & 0x0000FF00) << 8) | \
+               ((data & 0x000000FF) << 24);
+      break;
+    }
+    case 2: { // 3 bytes
+      t_data = ((data & 0xFF0000) >> 16) | \
+               ((data & 0x00FF00)) | \
+               ((data & 0x0000FF) << 16);
+      break;
+    }
+    case 1: { // 2 bytes
+      t_data = ((data & 0xFF00) >> 8) | \
+               ((data & 0x00FF) << 8);
+      break;
+    }
+    case 0: { // byte
+      t_data = data;
+      break;
+    }
+    default: {
+      error("Invalid number of bits for BassTable::swapEndian");
+      break;
+    }
+  }
+  return t_data;
 }
 
 unsigned BassTable::bitLength(string& text) const {
