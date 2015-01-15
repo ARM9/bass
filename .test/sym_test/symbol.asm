@@ -19,6 +19,12 @@ macro align(size) {
 
 endian msb
 
+scope park {
+...bark:
+beq r0, r0, park....bark
+lui r0, ...bark
+}
+
 _start:
     beq r2, r2,_end
 _not: {

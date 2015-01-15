@@ -3,7 +3,7 @@
 #include "snes-smp.arch"
 #include "snes-gsu.arch"
 //#include "snes-cx4.arch"
-#include "mips-vr4300.arch"
+#include "n64-cpu.arch"
 #include "n64-rsp.arch"
 #include "gb-cpu.arch"
 #undef arch
@@ -30,7 +30,7 @@ bool BassTable::assemble(const string& statement) {
     else if(s == "snes.smp") data = Arch_snes_smp;
     else if(s == "snes.gsu") data = Arch_snes_gsu;
     //else if(s == "snes.cx4") data = Arch_snes_cx4;
-    else if(s == "mips.vr4300") data = Arch_mips_vr4300;
+    else if(s == "n64.cpu") data = Arch_n64_cpu;
     else if(s == "n64.rsp") data = Arch_n64_rsp;
     else if(s == "gb.cpu") data = Arch_gb_cpu;
     else if(s.match("\"?*\"")) {
@@ -78,6 +78,9 @@ bool BassTable::assemble(const string& statement) {
     if(mismatch) continue;
 
     for(auto& format : opcode.format) {
+      uint64_t op_data = 0;
+      unsigned length = 0;
+
       switch(format.type) {
         case Format::Type::Static: {
           writeBits(format.data, format.bits);
@@ -140,39 +143,6 @@ bool BassTable::assemble(const string& statement) {
   }
 
   return false;
-}
-
-uint64_t BassTable::swapEndian(uint64_t data, unsigned bits){
-  int t_data = 0;
-  switch((bits - 1) / 8) {
-    case 3: { // 4 bytes
-      t_data = ((data & 0xFF000000) >> 24) | \
-               ((data & 0x00FF0000) >> 8) | \
-               ((data & 0x0000FF00) << 8) | \
-               ((data & 0x000000FF) << 24);
-      break;
-    }
-    case 2: { // 3 bytes
-      t_data = ((data & 0xFF0000) >> 16) | \
-               ((data & 0x00FF00)) | \
-               ((data & 0x0000FF) << 16);
-      break;
-    }
-    case 1: { // 2 bytes
-      t_data = ((data & 0xFF00) >> 8) | \
-               ((data & 0x00FF) << 8);
-      break;
-    }
-    case 0: { // byte
-      t_data = data;
-      break;
-    }
-    default: {
-      error("Invalid number of bits for BassTable::swapEndian");
-      break;
-    }
-  }
-  return t_data;
 }
 
 unsigned BassTable::bitLength(string& text) const {
@@ -351,4 +321,38 @@ void BassTable::assembleTableRHS(Opcode& opcode, const string& text) {
     }
   }
 }
+
+uint64_t BassTable::swapEndian(uint64_t data, unsigned bits){
+  int t_data = 0;
+  switch((bits - 1) / 8) {
+    case 3: { // 4 bytes
+      t_data = ((data & 0xFF000000) >> 24) | \
+               ((data & 0x00FF0000) >> 8) | \
+               ((data & 0x0000FF00) << 8) | \
+               ((data & 0x000000FF) << 24);
+      break;
+    }
+    case 2: { // 3 bytes
+      t_data = ((data & 0xFF0000) >> 16) | \
+               ((data & 0x00FF00)) | \
+               ((data & 0x0000FF) << 16);
+      break;
+    }
+    case 1: { // 2 bytes
+      t_data = ((data & 0xFF00) >> 8) | \
+               ((data & 0x00FF) << 8);
+      break;
+    }
+    case 0: { // byte
+      t_data = data;
+      break;
+    }
+    default: {
+      error("Invalid number of bits for BassTable::swapEndian");
+      break;
+    }
+  }
+  return t_data;
+}
+
 // vim:sts=2 sw=2
