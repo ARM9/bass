@@ -4,6 +4,7 @@
 #include "snes-gsu.arch"
 //#include "snes-cx4.arch"
 #include "n64-cpu.arch"
+#include "n64-rdp.arch"
 #include "n64-rsp.arch"
 #include "gb-cpu.arch"
 #undef arch
@@ -31,6 +32,7 @@ bool BassTable::assemble(const string& statement) {
     else if(s == "snes.gsu") data = Arch_snes_gsu;
     //else if(s == "snes.cx4") data = Arch_snes_cx4;
     else if(s == "n64.cpu") data = Arch_n64_cpu;
+    else if(s == "n64.rdp") data = Arch_n64_rdp;
     else if(s == "n64.rsp") data = Arch_n64_rsp;
     else if(s == "gb.cpu") data = Arch_gb_cpu;
     else if(s.match("\"?*\"")) {
