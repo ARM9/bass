@@ -102,7 +102,6 @@ srl r1,ra,1
 sra r1,ra,1
 
 sllv r1,ra,r1
-
 srlv r1,ra,r1
 srav r1,ra,r1
 
