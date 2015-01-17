@@ -255,9 +255,9 @@ dmtc0 r1,ra
 // N64 CP1 Control Instructions (COP1):
 mfc1 r1,ra
 dmfc1 r1,ra
+cfc1 r1,ra
 mtc1 r1,ra
 dmtc1 r1,ra
-cfc1 r1,ra
 ctc1 r1,ra
 
 tlbr
