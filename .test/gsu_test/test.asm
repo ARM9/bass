@@ -141,4 +141,4 @@ label:
     //movew (r1), r0
     //movew (r2), r3
 
-// vim:ft=bass
+// vim:ft=snes

@@ -289,17 +289,4 @@ bool Bass::assemble(const string& statement) {
   return false;
 }
 
-void Bass::appendSymfile(const string& entry) {
-  symfile.append(entry);
-}
-
-void Bass::appendSymfile(const string& label, unsigned data) {
-  if(writePhase()) {
-    string scopedName = label;
-    if(scope.size()) scopedName = {scope.merge("."), ".", label};
-    string entry = {hex<8, '0'>(data), " ", scopedName, "\n"};
-    symfile.append(entry);
-  }
-}
-
 // vim:sts=2 sw=2

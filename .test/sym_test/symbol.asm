@@ -64,4 +64,4 @@ scope baz {
     inner: {
     }
 }
-// vim:ft=bass
+// vim:ft=snes

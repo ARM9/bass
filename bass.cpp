@@ -108,7 +108,7 @@ int main(int argc, char** argv) {
     return -1;
   }
 
-  bass.symfile.write(symbolFilename, true);
+  bass.writeSymfile(symbolFilename, true);
 
   clock_t clockFinish = clock();
   if(benchmark) {

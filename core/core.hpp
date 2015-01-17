@@ -6,15 +6,7 @@ struct Bass {
   void constant(const string& name, const string& value);
   bool assemble(bool strict = false);
 
-  class Symfile {
-  public:
-    bool write(const string& filename, bool create);
-    void append(const string& entry);
-  protected:
-    string symbolBuffer;
-  };
-
-  Symfile symfile;
+  bool writeSymfile(const string& filename, bool create);
 
 protected:
   enum class Phase : unsigned { Analyze, Query, Write };
@@ -140,6 +132,9 @@ protected:
   //assemble
   virtual void initialize();
   virtual bool assemble(const string& statement);
+
+  //symfile
+  string symfileBuffer;
   void appendSymfile(const string& entry);
   void appendSymfile(const string& label, unsigned data);
 

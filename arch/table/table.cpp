@@ -80,8 +80,6 @@ bool BassTable::assemble(const string& statement) {
     if(mismatch) continue;
 
     for(auto& format : opcode.format) {
-      uint64_t op_data = 0;
-      unsigned length = 0;
 
       switch(format.type) {
         case Format::Type::Static: {

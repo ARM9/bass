@@ -3,7 +3,7 @@ export PATH:=$(PATH):$(CURDIR)
 bass	:= ../../bass
 gsudis	:= gsudis
 
-export output	:= spoopy.sfc
+export output	:= $(shell basename $(CURDIR)).sfc
 
 all:
 	@rm -f $(output)

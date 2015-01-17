@@ -64,4 +64,4 @@ _GsuReset:
     and r%1000000001
     and r$33
     link #255+$15
-// vim:ft=bass
+// vim:ft=snes

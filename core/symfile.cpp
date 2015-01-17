@@ -1,5 +1,18 @@
 
-bool Bass::Symfile::write(const string& filename, bool create) {
+void Bass::appendSymfile(const string& entry) {
+  symfileBuffer.append(entry);
+}
+
+void Bass::appendSymfile(const string& label, unsigned data) {
+  if(writePhase()) {
+    string scopedName = label;
+    if(scope.size()) scopedName = {scope.merge("."), ".", label};
+    string entry = {hex<8, '0'>(data), " ", scopedName, "\n"};
+    symfileBuffer.append(entry);
+  }
+}
+
+bool Bass::writeSymfile(const string& filename, bool create) {
   file symbolFile;
   if(filename.empty()) return true;
 
@@ -9,12 +22,8 @@ bool Bass::Symfile::write(const string& filename, bool create) {
     print("warning: unable to open symbol file: ", filename, "\n");;
     return false;
   }
-  symbolFile.write(filename, symbolBuffer);
+  symbolFile.write(filename, symfileBuffer);
   return true;
-}
-
-void Bass::Symfile::append(const string& entry) {
-  symbolBuffer.append(entry);
 }
 
 // vim:sts=2 sw=2
