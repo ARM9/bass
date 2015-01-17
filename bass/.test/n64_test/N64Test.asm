@@ -70,6 +70,40 @@ constant sp(29)
 constant s8(30)
 constant ra(31)
 
+// N64 MIPS 4300 FPU Registers
+constant f0(0)
+constant f1(1)
+constant f2(2)
+constant f3(3)
+constant f4(4)
+constant f5(5)
+constant f6(6)
+constant f7(7)
+constant f8(8)
+constant f9(9)
+constant f10(10)
+constant f11(11)
+constant f12(12)
+constant f13(13)
+constant f14(14)
+constant f15(15)
+constant f16(16)
+constant f17(17)
+constant f18(18)
+constant f19(19)
+constant f20(20)
+constant f21(21)
+constant f22(22)
+constant f23(23)
+constant f24(24)
+constant f25(25)
+constant f26(26)
+constant f27(27)
+constant f28(28)
+constant f29(29)
+constant f30(30)
+constant f31(31)
+
 // N64 MIPS 4300 CPU Scalar Instructions (CPU):
 nop
 syscall $FEEDD
@@ -225,9 +259,9 @@ lhu r1,$FFEE(ra)
 lwr r1,$FFEE(ra)
 lwu r1,$FFEE(ra)
 ll r1,$FFEE(ra)
-lwc1 r1,$FFEE(ra)
+lwc1 f1,$FFEE(ra)
 lld r1,$FFEE(ra)
-ldc1 r1,$FFEE(ra)
+ldc1 f1,$FFEE(ra)
 ld r1,$FFEE(ra)
 
 // N64 MIPS 4300 CPU Scalar Store Instructions (CPU):
@@ -239,9 +273,9 @@ sdl r1,$FFEE(ra)
 sdr r1,$FFEE(ra)
 swr r1,$FFEE(ra)
 sc r1,$FFEE(ra)
-swc1 r1,$FFEE(ra)
+swc1 f1,$FFEE(ra)
 scd r1,$FFEE(ra)
-sdc1 r1,$FFEE(ra)
+sdc1 f1,$FFEE(ra)
 sd r1,$FFEE(ra)
 
 cache r1,$FFEE(ra)
@@ -253,12 +287,12 @@ mtc0 r1,ra
 dmtc0 r1,ra
 
 // N64 CP1 Control Instructions (COP1):
-mfc1 r1,ra
-dmfc1 r1,ra
-cfc1 r1,ra
-mtc1 r1,ra
-dmtc1 r1,ra
-ctc1 r1,ra
+mfc1 r1,f31
+dmfc1 r1,f31
+cfc1 r1,f31
+mtc1 r1,f31
+dmtc1 r1,f31
+ctc1 r1,f31
 
 tlbr
 tlbwi
@@ -270,3 +304,8 @@ cop0 $1FFEEDD
 cop1 $1FFEEDD
 
 // N64 CP1 Floating Point Unit (FPU) Instructions (COP1):
+add.s f1,f31,f1
+add.d f1,f31,f1
+
+abs.s f1,f31
+abs.d f1,f31
