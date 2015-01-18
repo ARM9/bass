@@ -70,7 +70,7 @@ constant sp(29)
 constant s8(30)
 constant ra(31)
 
-// N64 MIPS 4300 FPU Registers
+// N64 MIPS 4300 CP1 Floating Point Unit (FPU) Registers (COP1)
 constant f0(0)
 constant f1(1)
 constant f2(2)
@@ -306,6 +306,77 @@ cop1 $1FFEEDD
 // N64 CP1 Floating Point Unit (FPU) Instructions (COP1):
 add.s f1,f31,f1
 add.d f1,f31,f1
+sub.s f1,f31,f1
+sub.d f1,f31,f1
+mul.s f1,f31,f1
+mul.d f1,f31,f1
+div.s f1,f31,f1
+div.d f1,f31,f1
 
+sqrt.s f1,f31
+sqrt.d f1,f31
 abs.s f1,f31
 abs.d f1,f31
+mov.s f1,f31
+mov.d f1,f31
+neg.s f1,f31
+neg.d f1,f31
+round.l.s f1,f31
+round.l.d f1,f31
+trunc.l.s f1,f31
+trunc.l.d f1,f31
+ceil.l.s f1,f31
+ceil.l.d f1,f31
+floor.l.s f1,f31
+floor.l.d f1,f31
+round.w.s f1,f31
+round.w.d f1,f31
+trunc.w.s f1,f31
+trunc.w.d f1,f31
+ceil.w.s f1,f31
+ceil.w.d f1,f31
+floor.w.s f1,f31
+floor.w.d f1,f31
+cvt.s.d f1,f31
+cvt.s.w f1,f31
+cvt.s.l f1,f31
+cvt.d.s f1,f31
+cvt.d.w f1,f31
+cvt.d.l f1,f31
+cvt.w.s f1,f31
+cvt.w.d f1,f31
+cvt.l.s f1,f31
+cvt.l.d f1,f31
+
+c.f.s f1,f31
+c.f.d f1,f31
+c.un.s f1,f31
+c.un.d f1,f31
+c.eq.s f1,f31
+c.eq.d f1,f31
+c.ueq.s f1,f31
+c.ueq.d f1,f31
+c.olt.s f1,f31
+c.olt.d f1,f31
+c.ult.s f1,f31
+c.ult.d f1,f31
+c.ole.s f1,f31
+c.ole.d f1,f31
+c.ule.s f1,f31
+c.ule.d f1,f31
+c.sf.s f1,f31
+c.sf.d f1,f31
+c.ngle.s f1,f31
+c.ngle.d f1,f31
+c.seq.s f1,f31
+c.seq.d f1,f31
+c.ngl.s f1,f31
+c.ngl.d f1,f31
+c.lt.s f1,f31
+c.lt.d f1,f31
+c.nge.s f1,f31
+c.nge.d f1,f31
+c.le.s f1,f31
+c.le.d f1,f31
+c.ngt.s f1,f31
+c.ngt.d f1,f31
