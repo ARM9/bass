@@ -286,3 +286,6 @@ b B
 BNEZ:
 beqz r1,BEQZ
 bnez r1,BNEZ
+
+lli r1,$FFEE
+li r1,$FFEEDDCC

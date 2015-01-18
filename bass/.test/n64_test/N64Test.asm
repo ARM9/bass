@@ -397,3 +397,12 @@ bnez r1,BNEZ
 BNEZL:
 beqzl r1,BEQZL
 bnezl r1,BNEZL
+
+lli r1,$FFEE
+li r1,$FFEEDDCC
+
+// N64 MIPS 4300 CP1 Floating Point Unit (FPU) Pseudo Instructions (COP1):
+l.s f1,$FFEE(ra)
+l.d f1,$FFEE(ra)
+s.s f1,$FFEE(ra)
+s.d f1,$FFEE(ra)
