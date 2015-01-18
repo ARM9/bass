@@ -274,3 +274,15 @@ shv v1[e15],$3F(r31)
 sfv v1[e15],$3F(r31)
 swv v1[e15],$3F(r31)
 stv v1[e15],$3F(r31)
+
+// RSP MIPS 4000 CPU Pseudo Instructions (CPU):
+move r1,ra
+neg r1,ra
+B:
+negu r1,ra
+
+BEQZ:
+b B
+BNEZ:
+beqz r1,BEQZ
+bnez r1,BNEZ

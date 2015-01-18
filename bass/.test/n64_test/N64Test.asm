@@ -130,7 +130,6 @@ dsrav r1,ra,r1
 dsll r1,ra,1
 dsrl r1,ra,1
 dsra r1,ra,1
-
 dsll32 r1,ra,1
 dsrl32 r1,ra,1
 dsra32 r1,ra,1
@@ -380,3 +379,21 @@ c.le.s f1,f31
 c.le.d f1,f31
 c.ngt.s f1,f31
 c.ngt.d f1,f31
+
+// N64 MIPS 4300 CPU Pseudo Instructions (CPU):
+move r1,ra
+neg r1,ra
+B:
+negu r1,ra
+
+BAL:
+b B
+BEQZ:
+bal BAL
+BNEZ:
+beqz r1,BEQZ
+BEQZL:
+bnez r1,BNEZ
+BNEZL:
+beqzl r1,BEQZL
+bnezl r1,BNEZL
