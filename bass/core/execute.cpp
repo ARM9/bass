@@ -141,7 +141,9 @@ bool Bass::executeInstruction(Instruction& i) {
       stackFrame.last().ip = ip;
       stackFrame.last().scoped = macro().scoped;
 
-      if(macro().scoped) scope.append(p(0));
+      if(macro().scoped) {
+        scope.append(p(0));
+      }
 
       setDefine("#", {"_", macroInvocationCounter++}, true);
       for(auto& parameter : parameters) {

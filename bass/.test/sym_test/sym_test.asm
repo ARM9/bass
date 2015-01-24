@@ -17,12 +17,33 @@ macro align(size) {
   }
 }
 
+macro FOO() {
+{#}:
+    nop
+}
+
+macro scope BAR(a) {
+    if {a} > 0 {
+        db 1
+        {#}:
+    }
+    db 0
+}
+
 endian msb
+
+FOO()
+BAR(0)
+BAR(3)
+BAR(1)
 
 scope park {
 ...bark:
 beq r0, r0, park....bark
+scope .lar.ba.: {
 lui r0, ...bark
+.par.:
+}
 }
 
 _start:

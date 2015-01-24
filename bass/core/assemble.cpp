@@ -45,11 +45,6 @@ bool Bass::assemble(const string& statement) {
     s.rtrim<1>(":");
     setConstant(s, pc());
     appendSymfile(s, pc());
-    //if(writePhase()) {
-      //string scopedName = s;
-      //if(scope.size()) scopedName = {scope.merge("."), ".", s};
-      //symfile.append(scopedName , pc());
-    //}
     return true;
   }
 
