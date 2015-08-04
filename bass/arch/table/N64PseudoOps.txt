@@ -12,10 +12,10 @@ add d,s,j => : Can't make it know immediate j from a register atm
   addi d,s,j
 
 addu d,s,j => : Can't make it know immediate j from a register atm
-addiu d,s,j
+ addiu d,s,j
 
 and d,s,j => : Can't make it know immediate j from a register atm
-andi d,s,j
+ andi d,s,j
 
 clo d,s : No info (Only in See Mips Run Rev.2)
 
