@@ -381,6 +381,8 @@ c.ngt.s f1,f31
 c.ngt.d f1,f31
 
 // N64 MIPS 4300 CPU Pseudo Instructions (CPU):
+abs r2,r3
+
 move r1,ra
 neg r1,ra
 B:
@@ -397,6 +399,41 @@ bnez r1,BNEZ
 BNEZL:
 beqzl r1,BEQZL
 bnezl r1,BNEZL
+
+BGE:
+bge r2,r3,BGE
+BGT:
+bgt r2,r3,BGT
+BLE:
+ble r2,r3,BLE
+BLT:
+blt r2,r3,BLT
+BGEU:
+bgeu r2,r3,BGEU
+BGTU:
+bgtu r2,r3,BGTU
+BLEU:
+bleu r2,r3,BLEU
+BLTU:
+bltu r2,r3,BLTU
+BGEL:
+bgel r2,r3,BGEL
+BGTL:
+bgtl r2,r3,BGTL
+BLEL:
+blel r2,r3,BLEL
+BLTL:
+bltl r2,r3,BLTL
+BGEUL:
+bgeul r2,r3,BGEUL
+BGTUL:
+bgtul r2,r3,BGTUL
+BLEUL:
+bleul r2,r3,BLEUL
+BLTUL:
+bltul r2,r3,BLTUL
+
+dabs r2,r3
 
 lli r1,$FFEE
 li r1,$FFEEDDCC
