@@ -1,0 +1,32 @@
+http://problemkaputt.de/psx-spx.htm#cpupseudoopcodes
+
+http://en.wikibooks.org/wiki/MIPS_Assembly/Pseudoinstructions
+
+----------------------------------------------------
+See Mips Run.pdf Section 8.2 Page 189 (209 PDF Page)
+----------------------------------------------------
+
+Skipped Pseudo Ops : Reason
+
+add d,s,j => : Can't make it know immediate j from a register atm 
+  addi d,s,j
+
+addu d,s,j => : Can't make it know immediate j from a register atm
+addiu d,s,j
+
+and d,s,j => : Can't make it know immediate j from a register atm
+andi d,s,j
+
+clo d,s : No info (Only in See Mips Run Rev.2)
+
+clz d,s : No info (Only in See Mips Run Rev.2)
+
+dclo d,s : No info (Only in See Mips Run Rev.2)
+
+dclz d,s : No info (Only in See Mips Run Rev.2)
+
+----------------------------------------------------
+
+Weirdness:
+
+bleu/bleul is the same as ble/blel
