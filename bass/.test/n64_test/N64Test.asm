@@ -104,6 +104,91 @@ constant f29(29)
 constant f30(30)
 constant f31(31)
 
+// N64 MIPS 4300 CPU Pseudo Instructions (CPU):
+B:
+abs r2,r3
+
+BAL:
+b B
+BEQZ:
+bal BAL
+BNEZ:
+beqz r1,BEQZ
+BEQZL:
+bnez r1,BNEZ
+BNEZL:
+beqzl r1,BEQZL
+bnezl r1,BNEZL
+
+BGE:
+bge r2,r3,BGE
+BGT:
+bgt r2,r3,BGT
+BLE:
+ble r2,r3,BLE
+BLT:
+blt r2,r3,BLT
+BGEU:
+bgeu r2,r3,BGEU
+BGTU:
+bgtu r2,r3,BGTU
+BLEU:
+bleu r2,r3,BLEU
+BLTU:
+bltu r2,r3,BLTU
+BGEL:
+bgel r2,r3,BGEL
+BGTL:
+bgtl r2,r3,BGTL
+BLEL:
+blel r2,r3,BLEL
+BLTL:
+bltl r2,r3,BLTL
+BGEUL:
+bgeul r2,r3,BGEUL
+BGTUL:
+bgtul r2,r3,BGTUL
+BLEUL:
+bleul r2,r3,BLEUL
+BLTUL:
+bltul r2,r3,BLTUL
+
+dabs r2,r3
+
+ddiv r2,r3,r4
+ddivu r2,r3,r4
+div r2,r3,r4
+divu r2,r3,r4
+
+dli r1,$FFEEDDCCBBAA9988
+
+dmul r1,r2,r3
+dmulu r1,r2,r3
+dmulo r2,r3,r4
+dmulou r2,r3,r4
+
+dneg r1,r2
+dnegu r1,r2
+
+drem r2,r3,r4
+dremu r2,r3,r4
+
+drol r2,r3,r4
+dror r2,r3,r4
+
+lli r1,$FFEE
+li r1,$FFEEDDCC
+
+move r1,ra
+neg r1,ra
+negu r1,ra
+
+// N64 MIPS 4300 CP1 Floating Point Unit (FPU) Pseudo Instructions (COP1):
+l.s f1,$FFEE(ra)
+l.d f1,$FFEE(ra)
+s.s f1,$FFEE(ra)
+s.d f1,$FFEE(ra)
+
 // N64 MIPS 4300 CPU Scalar Instructions (CPU):
 nop
 syscall $FEEDD
@@ -379,67 +464,3 @@ c.le.s f1,f31
 c.le.d f1,f31
 c.ngt.s f1,f31
 c.ngt.d f1,f31
-
-// N64 MIPS 4300 CPU Pseudo Instructions (CPU):
-abs r2,r3
-
-move r1,ra
-neg r1,ra
-B:
-negu r1,ra
-
-BAL:
-b B
-BEQZ:
-bal BAL
-BNEZ:
-beqz r1,BEQZ
-BEQZL:
-bnez r1,BNEZ
-BNEZL:
-beqzl r1,BEQZL
-bnezl r1,BNEZL
-
-BGE:
-bge r2,r3,BGE
-BGT:
-bgt r2,r3,BGT
-BLE:
-ble r2,r3,BLE
-BLT:
-blt r2,r3,BLT
-BGEU:
-bgeu r2,r3,BGEU
-BGTU:
-bgtu r2,r3,BGTU
-BLEU:
-bleu r2,r3,BLEU
-BLTU:
-bltu r2,r3,BLTU
-BGEL:
-bgel r2,r3,BGEL
-BGTL:
-bgtl r2,r3,BGTL
-BLEL:
-blel r2,r3,BLEL
-BLTL:
-bltl r2,r3,BLTL
-BGEUL:
-bgeul r2,r3,BGEUL
-BGTUL:
-bgtul r2,r3,BGTUL
-BLEUL:
-bleul r2,r3,BLEUL
-BLTUL:
-bltul r2,r3,BLTUL
-
-dabs r2,r3
-
-lli r1,$FFEE
-li r1,$FFEEDDCC
-
-// N64 MIPS 4300 CP1 Floating Point Unit (FPU) Pseudo Instructions (COP1):
-l.s f1,$FFEE(ra)
-l.d f1,$FFEE(ra)
-s.s f1,$FFEE(ra)
-s.d f1,$FFEE(ra)
