@@ -5,7 +5,6 @@ http://en.wikibooks.org/wiki/MIPS_Assembly/Pseudoinstructions
 ----------------------------------------------------
 See Mips Run.pdf Section 8.2 Page 189 (209 PDF Page)
 ----------------------------------------------------
-
 Skipped Pseudo Ops : Reason
 
 add d,s,j => : Can't make it know immediate j from a register atm 
@@ -17,16 +16,126 @@ addu d,s,j => : Can't make it know immediate j from a register atm
 and d,s,j => : Can't make it know immediate j from a register atm
   andi d,s,j
 
-clo d,s : No info (Only in See Mips Run Rev.2)
+clo d,s : Does not exist on N64 (Only in See Mips Run Rev.2)
 
-clz d,s : No info (Only in See Mips Run Rev.2)
+clz d,s : Does not exist on N64 (Only in See Mips Run Rev.2)
 
-dclo d,s : No info (Only in See Mips Run Rev.2)
+dclo d,s : Does not exist on N64 (Only in See Mips Run Rev.2)
 
-dclz d,s : No info (Only in See Mips Run Rev.2)
+dclz d,s : Does not exist on N64 (Only in See Mips Run Rev.2)
+
+deret : Does not exist on N64
+
+dext d,s,shf,sz : Does not exist on N64 (Only in See Mips Run Rev.2)
+
+dext d,s,shf,sz => : dextm Does not exist on N64 (Only in See Mips Run Rev.2)
+  dextm d,s,shf,sz
+
+dext d,s,shf,sz => : Does this op even exist on N64? (Only in See Mips Run Rev.2)
+  dextu d,s,shf,sz
+
+dextm d,s,shf,sz : Does not exist on N64 (Only in See Mips Run Rev.2)
+
+dextu d,s,shf,sz : Does not exist on N64 (Only in See Mips Run Rev.2)
+
+di d : Does not exist on N64 (Only in See Mips Run Rev.2)
+
+dins d,s,shf,sz : Does not exist on N64 (Only in See Mips Run Rev.2)
+
+dins d,s,shf,sz => : dinsm Does not exist on N64 (Only in See Mips Run Rev.2)
+  dinsm d,s,shf,sz
+
+dins d,s,shf,sz => : dinsu Does not exist on N64 (Only in See Mips Run Rev.2)
+  dinsu d,s,shf,sz
+
+dinsm d,s,shf,sz : Does not exist on N64 (Only in See Mips Run Rev.2)
+
+dinsu d,s,shf,sz : Does not exist on N64 (Only in See Mips Run Rev.2)
+
+dla t,addr => : Not enough info
+
+dret : Does not exist on N64
+
+drol d,s,j => : drotr Does not exist on N64 (Only in See Mips Run Rev.2)
+  drotr d,s,64-j
+
+dror d,s,j => : drotr Does not exist on N64 (Only in See Mips Run Rev.2)
+  drotr d,s,j
+
+dror d,s,j => : drotr32 Does not exist on N64 (Only in See Mips Run Rev.2)
+  drotr32 d,s,j
+
+dsbh d,t : Does not exist on N64 (Only in See Mips Run Rev.2)
+
+dshd d,t : Does not exist on N64 (Only in See Mips Run Rev.2)
+
+dsll d,s,t => : Can't make it know immediate j from a register atm
+  dsllv d,s,t
+
+dsll d,s,shf => : Can't make it know constant of 32 or more
+  dsll32 d,s,shf-32
+
+dsra d,s,t => : Can't make it know immediate j from a register atm
+  dsrav d,s,t
+
+dsra d,s,shf => : Can't make it know constant of 32 or more
+  dsra32 d,s,shf-32
+
+dsrl d,s,t => : Can't make it know immediate j from a register atm
+  dsrlv d,s,t
+
+dsrl d,s,shf => : Can't make it know constant of 32 or more
+  dsrl32 d,s,shf-32
+
+ehb : Does not exist on N64 (Only in See Mips Run Rev.2)
+
+ei d : Does not exist on N64 (Only in See Mips Run Rev.2)
+
+ext d,s,shf,sz : Does not exist on N64 (Only in See Mips Run Rev.2)
+
+ins d,s,shf,sz : Does not exist on N64 (Only in See Mips Run Rev.2)
+
+j r => : Can't make it know immediate j from a register atm
+  jr r
+
+ffc d, s : Does not exist on N64 (Only in See Mips Run Rev.1)
+
+ffs d, s : Does not exist on N64 (Only in See Mips Run Rev.1)
+
+flushd : Does not exist on N64 (Only in See Mips Run Rev.1)
+
+j s => : Does not exist on N64 (Only in See Mips Run Rev.1)
+  jr s
+  jr s
 
 ----------------------------------------------------
+Problem:
 
+dli t,const => : bass >>56, >>48, >>40, >>32 needs to work, right now it only works on 32-bit immediate
+  # biggest case:
+  lui t,const63..48
+  ori t,const47..32
+  dsll t,16
+  ori t,const31..16
+  dsll t,16
+  ori t,const15..0
+
+----------------------------------------------------
+Changes:
+
+dmul d,s,t => : Changed to use dmult s,t instead of dmultu
+  dmultu s,t ---> dmult s,t
+  mflo d
+
+dmulu d,s,t => : New pseudo op for dmultu
+  dmultu s,t
+  mflo d
+
+li t,const => : bass can't do something differnt for size of immediate so li always loads 32-bits
+
+lli t,const => : New pseudo op to only load 16-bits to lower (Load Lower Immediate)
+
+----------------------------------------------------
 Weirdness:
 
 bleu/bleul is the same as ble/blel
