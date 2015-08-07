@@ -108,6 +108,187 @@ j s => : Does not exist on N64 (Only in See Mips Run Rev.1)
   jr s
   jr s
 
+ldxc1 fd,s(t) : Does not exist on N64
+
+lwxcl fd, t(b) : Does not exist on N64
+
+mad s,t : Does not exist on N64
+
+madu s,t : Does not exist on N64
+
+madd d,s,t : Does not exist on N64
+
+maddu d,s,t : Does not exist on N64
+
+madd16 s,t : Does not exist on N64
+
+max d, s, t : Does not exist on N64 (Only in See Mips Run Rev.1)
+
+mfhc1 t,cs : Does not exist on N64 (Only in See Mips Run Rev.2)
+
+mfhc2 t,fs : Does not exist on N64 (Only in See Mips Run Rev.2)
+
+min d, s, t : Does not exist on N64 (Only in See Mips Run Rev.1)
+
+movf d,s,$fccN : Not enough info
+
+movn d, s, t : Not enough info
+
+movt d,s,$fccN : Not enough info
+
+movt.d fd,fs,N : Not enough info
+movt.s fd,fs,N
+
+movz d,s,t : Not enough info
+
+msub s, t : Does not exist on N64
+msubu s, t
+
+mthc1 t,cd : Does not exist on N64
+mthc2 t,fd
+
+nudge addr : Does not exist on N64 (Only in See Mips Run Rev.2)
+nudgex s(t)
+
+pref hint,addr : Does not exist on N64
+prefx hint,t(b)
+
+r2u s : Does not exist on N64
+
+radd s,t : Does not exist on N64
+
+rdhwr d,$cs : Does not exist on N64 (Only in See Mips Run Rev.2)
+
+rdpgpr d,s : Does not exist on N64 (Only in See Mips Run Rev.2)
+
+rfe : Does not exist on N64
+
+rmul s,t : Does not exist on N64
+
+rol d,s,shf => : rotr Does not exist on N64
+  rotr d,s,32-shf
+
+rol d,s,t => : rotrv Does not exist on N64
+  negu $at,t
+  rotrv d,s,$at
+
+ror d,s,shf => : rotr Does not exist on N64
+  rotr d,s,shf
+
+ror d,s,t => : rotrv Does not exist on N64
+  rotrv d,s,t
+
+rotr d,s,shf : Does not exist on N64
+
+rotrv d,s,t : Does not exist on N64
+
+rsub s,t : Does not exist on N64
+
+sdbbp c : Does not exist on N64
+
+sdxc1 fs,t(b) : Does not exist on N64
+
+selsl d, s, t : Does not exist on N64 (Only in See Mips Run Rev.1)
+
+selsr d, s, t : Does not exist on N64 (Only in See Mips Run Rev.1)
+
+seb d,s : Does not exist on N64 (Only in See Mips Run Rev.2)
+
+seh d,s : Does not exist on N64 (Only in See Mips Run Rev.2)
+
+sll d,t,s => : Can't make it know immediate j from a register atm
+  sllv d,t,s
+
+slt d,s,j => : Can't make it know immediate j from a register atm
+  slti d,s,j
+
+sra d,s,t => : Can't make it know immediate j from a register atm
+  srav d,s,t
+
+srl d,s,t => : Can't make it know immediate j from a register atm
+  slrv d,s,t
+
+standby : Does not exist on N64
+
+subu d,s,j => : Can't make it know immediate j from a register atm
+  addiu d,s,-j
+
+suspend : Does not exist on N64
+
+swxc1 fs,t(b) : Does not exist on N64
+
+synci addr : Does not exist on N64 (Only in See Mips Run Rev.2)
+
+teq s,j => : Can't make it know immediate j from a register atm (Only in See Mips Run Rev.2)
+  teqi s,j
+
+tge s,j => : Can't make it know immediate j from a register atm (Only in See Mips Run Rev.2)
+  tgei s,j
+
+tgeu s,j => : Can't make it know immediate j from a register atm (Only in See Mips Run Rev.2)
+  tgeiu s,j
+
+tlt s,j => : Can't make it know immediate j from a register atm (Only in See Mips Run Rev.2)
+  tlti s,j
+
+tltu s,j => : Can't make it know immediate j from a register atm (Only in See Mips Run Rev.2)
+  tltiu s,j
+
+tne s,j => : Can't make it know immediate j from a register atm (Only in See Mips Run Rev.2)
+  tnei s,j
+
+u2r s : Does not exist on N64
+
+udi0 d,r,s,uc : Does not exist on N64 (Only in See Mips Run Rev.2)
+  through
+udi15 d,r,s,uc
+
+uld d,addr => : Can we add 7 to address immediate?
+  ldl d,addr
+  ldr d,addr+7
+
+ulh d,addr => : Can we add 1 to address immediate?
+  lb d,addr
+  lbu at,addr+1
+  sll d,d,8
+  or d,d,at
+
+ulhu d,addr =>
+  lbu d,addr
+  lbu at,addr+1 : Can we add 1 to address immediate?
+  sll d,d,8
+  or d,d,at
+
+ulw d,addr => : Can we add 3 to address immediate?
+  lwl d,addr
+  lwr d,addr+3
+
+usd d,addr => : Can we add 7 to address immediate?
+  sdl d,addr
+  sdr d,addr+7
+
+ush addr => : Can we add 1 to address immediate?
+  sb d,addr+1
+  srl d,d,8
+  sb d,addr
+
+usw s,addr => : Can we add 3 to address immediate?
+  swl s,addr
+  swr s,addr+3
+
+wait : Does not exist on N64 (Only in See Mips Run Rev.2)
+
+waiti : Does not exist on N64 (Only in See Mips Run Rev.1)
+
+wrpgpr cd, t : Does not exist on N64 (Only in See Mips Run Rev.2)
+
+wsbh : Does not exist on N64 (Only in See Mips Run Rev.2)
+
+wb addr : Does not exist on N64 (Only in See Mips Run Rev.1)
+
+xor d,s,j => : Can't make it know immediate j from a register atm
+  xori d,s,j
+
 ----------------------------------------------------
 Problem:
 
@@ -131,9 +312,15 @@ dmulu d,s,t => : New pseudo op for dmultu
   dmultu s,t
   mflo d
 
-li t,const => : bass can't do something differnt for size of immediate so li always loads 32-bits
+mulu d,s,t => : New pseudo op for multu
+  multu s,t
+  mflo d
 
-lli t,const => : New pseudo op to only load 16-bits to lower (Load Lower Immediate)
+la d,addr => : using lui / addiu (http://problemkaputt.de/psx-spx.htm#cpupseudoopcodes)
+
+li d,const => : bass can't do something differnt for size of immediate so li always loads 32-bits
+
+lli d,const => : New pseudo op to only load 16-bits to lower (Load Lower Immediate)
 
 ----------------------------------------------------
 Weirdness:

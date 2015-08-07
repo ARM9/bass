@@ -120,12 +120,31 @@ bleu r2,r3,BLEU
 BLTU:
 bltu r2,r3,BLTU
 
+JALP:
+jal r1,JALP
+
+LA:
+la r1,LA
 lli r1,$FFEE
 li r1,$FFEEDDCC
 
 move r1,ra
+
 neg r1,ra
 negu r1,ra
+
+not r1,ra
+
+seq r1,r2,r3
+sge r1,r2,r3
+sgeu r1,r2,r3
+sgt r1,r2,r3
+sgtu r1,r2,r3
+sle r1,r2,r3
+sleu r1,r2,r3
+sne r1,r2,r3
+
+ssnop
 
 // RSP MIPS 4000 CPU Scalar Instructions (CPU):
 nop

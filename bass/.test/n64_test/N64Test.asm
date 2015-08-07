@@ -176,12 +176,39 @@ dremu r2,r3,r4
 drol r2,r3,r4
 dror r2,r3,r4
 
+JALP:
+jal r1,JALP
+
+LA:
+la r1,LA
 lli r1,$FFEE
 li r1,$FFEEDDCC
 
 move r1,ra
+
+mul r1,r2,r3
+mulu r1,r2,r3
+mulo r2,r3,r4
+mulou r2,r3,r4
+
 neg r1,ra
 negu r1,ra
+
+not r1,ra
+
+rem r2,r3,r4
+remu r2,r3,r4
+
+seq r1,r2,r3
+sge r1,r2,r3
+sgeu r1,r2,r3
+sgt r1,r2,r3
+sgtu r1,r2,r3
+sle r1,r2,r3
+sleu r1,r2,r3
+sne r1,r2,r3
+
+ssnop
 
 // N64 MIPS 4300 CP1 Floating Point Unit (FPU) Pseudo Instructions (COP1):
 l.s f1,$FFEE(ra)
