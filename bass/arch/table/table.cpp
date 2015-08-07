@@ -111,13 +111,13 @@ bool BassTable::assemble(const string& statement) {
         }
 
         case Format::Type::ShiftRight: {
-          unsigned data = evaluate(args[format.argument]);
+          uint64_t data = evaluate(args[format.argument]);
           writeBits(data >> format.data, opcode.number[format.argument].bits);
           break;
         }
 
         case Format::Type::ShiftLeft: {
-          unsigned data = evaluate(args[format.argument]);
+          uint64_t data = evaluate(args[format.argument]);
           writeBits(data << format.data, opcode.number[format.argument].bits);
           break;
         }

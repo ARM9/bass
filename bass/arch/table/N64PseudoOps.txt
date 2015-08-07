@@ -290,18 +290,6 @@ xor d,s,j => : Can't make it know immediate j from a register atm
   xori d,s,j
 
 ----------------------------------------------------
-Problem:
-
-dli t,const => : bass >>56, >>48, >>40, >>32 needs to work, right now it only works on 32-bit immediate
-  # biggest case:
-  lui t,const63..48
-  ori t,const47..32
-  dsll t,16
-  ori t,const31..16
-  dsll t,16
-  ori t,const15..0
-
-----------------------------------------------------
 Changes:
 
 dmul d,s,t => : Changed to use dmult s,t instead of dmultu
