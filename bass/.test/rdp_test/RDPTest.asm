@@ -13,7 +13,7 @@ Shade_Triangle 1,2,3,4,5,6, 7,8,9,10, 11,12,13,14, 15,16,17,18 // lft,level,tile
 Shade_ZBuffer_Triangle 1,2,3,4,5,6, 7,8,9,10, 11,12,13,14, 15,16,17,18 // lft,level,tile,yl,ym,yh, xl,xlf,dxldy,dxldyf, xh,xhf,dxhdy,dxhdyf, xm,xmf,dxmdy,dxmdyf
 Shade_Texture_Triangle 1,2,3,4,5,6, 7,8,9,10, 11,12,13,14, 15,16,17,18 // lft,level,tile,yl,ym,yh, xl,xlf,dxldy,dxldyf, xh,xhf,dxhdy,dxhdyf, xm,xmf,dxmdy,dxmdyf
 Shade_Texture_Z_Buffer_Triangle 1,2,3,4,5,6, 7,8,9,10, 11,12,13,14, 15,16,17,18 // lft,level,tile,yl,ym,yh, xl,xlf,dxldy,dxldyf, xh,xhf,dxhdy,dxhdyf, xm,xmf,dxmdy,dxmdyf
-//Shade_Coefficients
+Shade_Coefficients 1,2,3,4, 5,6,7,8, 9,10,11,12, 13,14,15,16, 17,18,19,20, 21,22,23,24, 25,26,27,28, 29,30,31,32 // r,g,b,a, drdx,dgdx,dbdx,dadx, rf,gf,bf,af, drdxf,dgdxf,dbdxf,dadxf, drde,dgde,dbde,dade, drdy,dgdy,dbdy,dady, drdef,dgdef,dbdef,dadef, drdyf,dgdyf,dbdyf,dadyf
 Texture_Coefficients 1,2,3, 4,5,6, 7,8,9, 10,11,12, 13,14,15, 16,17,18, 19,20,21, 22,23,24 // s,t,w, dsdx,dtdx,dwdx, sf,tf,wf, dsdxf,dtdxf,dwdxf, dsde,dtde,dwde, dsdy,dtdy,dwdy, dsdef,dtdef,dwdef, dsdyf,dtdyf,dwdyf
 ZBuffer_Coefficients 1,2, 3,4, 5,6, 7,8 // z,zf, dzdx,dzdxf, dzde,dzdef, dzdy,dzdyf
 
@@ -28,7 +28,7 @@ Set_Key_R 1,2,3 // wr,cr,sr
 Set_Convert 1,2,3,4,5,6 // k0,k1,k2,k3,k4,k5
 Set_Scissor 1,2, 1,1, 3,4 // xh,yh, f,o, xl,yl
 Set_Prim_Depth 1,2 // pz,pdz
-//Set_Other_Modes
+Set_Other_Modes 1, 3, 1,1,1,1,1,1,1,1,1,1,1,1, 3,3, 3,3,3,3,3,3,3,3, 1,1,1, 3, 3, 1,1,1,1,1,1,1,1 // atomic prim, cycle type, persp tex,detail tex,sharpen tex,tex lod,tlut,tlut type,sample type,mid texel,bilerp0,bilerp1,convert one,key, rgb dither,alpha dither, bm1a0,bm1a1,bm1b0,bm1b1,bm2a0,bm2a1,bm2b0,bm2b1, force blend,alpha cvg,cvg*alpha, z mode, cvg dest, color on cvg,image read,z update,z compare,antialias,z source,dither alpha,alpha compare
 Load_Tlut 1,2, 3, 4,5 // sl,tl, tile, sh,th
 
 Set_Tile_Size 1,2, 3, 4,5 // sl,tl, tile, sh,th
