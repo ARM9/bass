@@ -259,24 +259,28 @@ void BassTable::assembleTableRHS(Opcode& opcode, const string& text) {
 
     if(item[0] == '!') {
       Format format = {Format::Type::Absolute, Format::Match::Exact};
+	  if (item[1] >= 'A' && item[1] <= 'Z') item[1] += 123-'A';
       format.argument = item[1] - 'a';
       opcode.format.append(format);
     }
 
     if(item[0] == '=') {
       Format format = {Format::Type::Absolute, Format::Match::Strong};
+	  if (item[1] >= 'A' && item[1] <= 'Z') item[1] += 123-'A';
       format.argument = item[1] - 'a';
       opcode.format.append(format);
     }
 
     if(item[0] == '~') {
       Format format = {Format::Type::Absolute, Format::Match::Weak};
+	  if (item[1] >= 'A' && item[1] <= 'Z') item[1] += 123-'A';
       format.argument = item[1] - 'a';
       opcode.format.append(format);
     }
 
     if(item[0] == '+' && item[2] != '>') {
       Format format = {Format::Type::Relative};
+	  if (item[2] >= 'A' && item[2] <= 'Z') item[2] += 123-'A';
       format.argument = item[2] - 'a';
       format.displacement = +(item[1] - '0');
       opcode.format.append(format);
@@ -284,6 +288,7 @@ void BassTable::assembleTableRHS(Opcode& opcode, const string& text) {
 
     if(item[0] == '-') {
       Format format = {Format::Type::Relative};
+	  if (item[2] >= 'A' && item[2] <= 'Z') item[2] += 123-'A';
       format.argument = item[2] - 'a';
       format.displacement = -(item[1] - '0');
       opcode.format.append(format);
@@ -291,6 +296,7 @@ void BassTable::assembleTableRHS(Opcode& opcode, const string& text) {
 
     if(item[0] == '*') {
       Format format = {Format::Type::Repeat};
+	  if (item[1] >= 'A' && item[1] <= 'Z') item[1] += 123-'A';
       format.argument = item[1] - 'a';
       format.data = hex((const char*)item + 3);
       opcode.format.append(format);
@@ -299,6 +305,7 @@ void BassTable::assembleTableRHS(Opcode& opcode, const string& text) {
     // >>XXa
     if(item[0] == '>' && item[1] == '>') {
       Format format = {Format::Type::ShiftRight, Format::Match::Weak};
+	  if (item[4] >= 'A' && item[4] <= 'Z') item[4] += 123-'A';
       format.argument = item[4] - 'a';
       format.data = (item[2] - '0') * 10 + (item[3] - '0');
       opcode.format.append(format);
@@ -306,6 +313,7 @@ void BassTable::assembleTableRHS(Opcode& opcode, const string& text) {
 
     if(item[0] == '<' && item[1] == '<') {
       Format format = {Format::Type::ShiftLeft, Format::Match::Weak};
+	  if (item[4] >= 'A' && item[4] <= 'Z') item[4] += 123-'A';
       format.argument = item[4] - 'a';
       format.data = (item[2] - '0') * 10 + (item[3] - '0');
       opcode.format.append(format);
@@ -314,6 +322,7 @@ void BassTable::assembleTableRHS(Opcode& opcode, const string& text) {
     // +X>>YYa
     if(item[0] == '+' && item[2] == '>' && item[3] == '>') {
       Format format = {Format::Type::RelativeShiftRight, Format::Match::Weak};
+	  if (item[6] >= 'A' && item[6] <= 'Z') item[6] += 123-'A';
       format.argument = item[6] - 'a';
       format.displacement = +(item[1] - '0');
       format.data = (item[4] - '0') * 10 + (item[5] - '0');
