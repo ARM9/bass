@@ -217,7 +217,6 @@ bool Bass::assemble(const string& statement) {
       }*/
       uint64_t data = 0;
       *(float*)&data = real(t);
-      //printf("\n%x", data);
       write(data, dataLength);
     }
     return true;
@@ -232,7 +231,6 @@ bool Bass::assemble(const string& statement) {
       }*/
       uint64_t data = 0;
       *(double*)&data = real(t);
-      //printf("\n%llx", data);
       write(data, dataLength);
     }
     return true;
