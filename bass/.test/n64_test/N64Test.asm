@@ -105,8 +105,9 @@ constant f30(30)
 constant f31(31)
 
 // N64 MIPS 4300 CPU Pseudo Instructions (CPU):
-B:
 abs r2,r3
+B:
+abs r2
 
 BAL:
 b B
@@ -154,6 +155,7 @@ BLTUL:
 bltul r2,r3,BLTUL
 
 dabs r2,r3
+dabs r2
 
 ddiv r2,r3,r4
 ddivu r2,r3,r4
@@ -163,18 +165,28 @@ divu r2,r3,r4
 dli r1,$FFEEDDCCBBAA9988
 
 dmul r1,r2,r3
+dmul r1,r2
 dmulu r1,r2,r3
+dmulu r1,r2
 dmulo r2,r3,r4
+dmulo r2,r3
 dmulou r2,r3,r4
+dmulou r2,r3
 
 dneg r1,r2
+dneg r1
 dnegu r1,r2
+dnegu r1
 
 drem r2,r3,r4
+drem r2,r3
 dremu r2,r3,r4
+dremu r2,r3
 
 drol r2,r3,r4
+drol r2,r3
 dror r2,r3,r4
+dror r2,r3
 
 JALP:
 jal r1,JALP
@@ -187,26 +199,43 @@ li r1,$FFEEDDCC
 move r1,ra
 
 mul r1,r2,r3
+mul r1,r2
 mulu r1,r2,r3
+mulu r1,r2
 mulo r2,r3,r4
+mulo r2,r3
 mulou r2,r3,r4
+mulou r2,r3
 
 neg r1,ra
+neg r1
 negu r1,ra
+negu r1
 
 not r1,ra
+not r1
 
 rem r2,r3,r4
+rem r2,r3
 remu r2,r3,r4
+remu r2,r3
 
 seq r1,r2,r3
+seq r1,r2
 sge r1,r2,r3
+sge r1,r2
 sgeu r1,r2,r3
+sgeu r1,r2
 sgt r1,r2,r3
+sgt r1,r2
 sgtu r1,r2,r3
+sgtu r1,r2
 sle r1,r2,r3
+sle r1,r2
 sleu r1,r2,r3
+sleu r1,r2
 sne r1,r2,r3
+sne r1,r2
 
 ssnop
 
@@ -227,8 +256,11 @@ srl r1,ra,1
 sra r1,ra,1
 
 sllv r1,ra,r1
+sllv r1,r2
 srlv r1,ra,r1
+srlv r1,r2
 srav r1,ra,r1
+srav r1,r2
 
 mfhi r1
 mthi r1
@@ -236,8 +268,11 @@ mflo r1
 mtlo r1
 
 dsllv r1,ra,r1
+dsllv r1,r2
 dsrlv r1,ra,r1
+dsrlv r1,r2
 dsrav r1,ra,r1
+dsrav r1,r2
 
 dsll r1,ra,1
 dsrl r1,ra,1
@@ -256,20 +291,34 @@ ddiv r1,ra
 ddivu r1,ra
 
 add r1,ra,r1
+add r1,r2
 addu r1,ra,r1
+addu r1,r2
 sub r1,ra,r1
+sub r1,r2
 subu r1,ra,r1
+subu r1,r2
 and r1,ra,r1
+and r1,r2
 or r1,ra,r1
+or r1,r2
 xor r1,ra,r1
+xor r1,r2
 nor r1,ra,r1
+nor r1,r2
 
 slt r1,ra,r1
+slt r1,r2
 sltu r1,ra,r1
+sltu r1,r2
 dadd r1,ra,r1
+dadd r1,r2
 daddu r1,ra,r1
+daddu r1,r2
 dsub r1,ra,r1
+dsub r1,r2
 dsubu r1,ra,r1
+dsubu r1,r2
 
 tge r1,ra,$3FF
 tgeu r1,ra,$3FF
@@ -416,48 +465,90 @@ cop1 $1FFEEDD
 
 // N64 CP1 Floating Point Unit (FPU) Instructions (COP1):
 add.s f1,f31,f1
+add.s f1,f2
 add.d f1,f31,f1
+add.d f1,f2
 sub.s f1,f31,f1
+sub.s f1,f2
 sub.d f1,f31,f1
+sub.d f1,f2
 mul.s f1,f31,f1
+mul.s f1,f2
 mul.d f1,f31,f1
+mul.d f1,f2
 div.s f1,f31,f1
+div.s f1,f2
 div.d f1,f31,f1
+div.d f1,f2
 
 sqrt.s f1,f31
+sqrt.s f1
 sqrt.d f1,f31
+sqrt.d f1
 abs.s f1,f31
+abs.s f1
 abs.d f1,f31
+abs.d f1
 mov.s f1,f31
+mov.s f1
 mov.d f1,f31
+mov.d f1
 neg.s f1,f31
+neg.s f1
 neg.d f1,f31
+neg.d f1
 round.l.s f1,f31
+round.l.s f1
 round.l.d f1,f31
+round.l.d f1
 trunc.l.s f1,f31
+trunc.l.s f1
 trunc.l.d f1,f31
+trunc.l.d f1
 ceil.l.s f1,f31
+ceil.l.s f1
 ceil.l.d f1,f31
+ceil.l.d f1
 floor.l.s f1,f31
+floor.l.s f1
 floor.l.d f1,f31
+floor.l.d f1
 round.w.s f1,f31
+round.w.s f1
 round.w.d f1,f31
+round.w.d f1
 trunc.w.s f1,f31
+trunc.w.s f1
 trunc.w.d f1,f31
+trunc.w.d f1
 ceil.w.s f1,f31
+ceil.w.s f1
 ceil.w.d f1,f31
+ceil.w.d f1
 floor.w.s f1,f31
+floor.w.s f1
 floor.w.d f1,f31
+floor.w.d f1
 cvt.s.d f1,f31
+cvt.s.d f1
 cvt.s.w f1,f31
+cvt.s.w f1
 cvt.s.l f1,f31
+cvt.s.l f1
 cvt.d.s f1,f31
+cvt.d.s f1
 cvt.d.w f1,f31
+cvt.d.w f1
 cvt.d.l f1,f31
+cvt.d.l f1
 cvt.w.s f1,f31
+cvt.w.s f1
 cvt.w.d f1,f31
+cvt.w.d f1
 cvt.l.s f1,f31
+cvt.l.s f1
 cvt.l.d f1,f31
+cvt.l.d f1
 
 c.f.s f1,f31
 c.f.d f1,f31

@@ -94,8 +94,9 @@ constant vcc(1) // RSP CP2 Control Register 1: Vector Compare Code
 constant vce(2) // RSP CP2 Control Register 2: Vector Compare Extension
 
 // RSP MIPS 4000 CPU Pseudo Instructions (CPU):
-B:
 abs r2,r3
+B:
+abs r2
 
 BEQZ:
 b B
@@ -131,18 +132,29 @@ li r1,$FFEEDDCC
 move r1,ra
 
 neg r1,ra
+neg r1
 negu r1,ra
+negu r1
 
 not r1,ra
+not r1
 
 seq r1,r2,r3
+seq r1,r2
 sge r1,r2,r3
+sge r1,r2
 sgeu r1,r2,r3
+sgeu r1,r2
 sgt r1,r2,r3
+sgt r1,r2
 sgtu r1,r2,r3
+sgtu r1,r2
 sle r1,r2,r3
+sle r1,r2
 sleu r1,r2,r3
+sleu r1,r2
 sne r1,r2,r3
+sne r1,r2
 
 ssnop
 
@@ -155,21 +167,34 @@ srl r1,ra,1
 sra r1,ra,1
 
 sllv r1,ra,r1
+sllv r1,r2
 srlv r1,ra,r1
+srlv r1,r2
 srav r1,ra,r1
+srav r1,r2
 
 add r1,ra,r1
+add r1,r2
 addu r1,ra,r1
+addu r1,r2
 sub r1,ra,r1
+sub r1,r2
 subu r1,ra,r1
+subu r1,r2
 and r1,ra,r1
+and r1,r2
 or r1,ra,r1
+or r1,r2
 xor r1,ra,r1
+xor r1,r2
 nor r1,ra,r1
+nor r1,r2
 
 slt r1,ra,r1
-BLTZ:
+slt r1,r2
 sltu r1,ra,r1
+BLTZ:
+sltu r1,r2
 
 BGEZ:
 bltz r1,BLTZ
@@ -230,75 +255,139 @@ ctc2 r1,vce
 
 // RSP CP2 Vector Operation Matrix Instructions (COP2):
 vmulf v1,v1,v1[e15]
+vmulf v1,v1[e15]
 vmulu v1,v1,v1[e15]
+vmulu v1,v1[e15]
 vrndp v1,v1,v1[e15]
+vrndp v1,v1[e15]
 vmulq v1,v1,v1[e15]
+vmulq v1,v1[e15]
 vmudl v1,v1,v1[e15]
+vmudl v1,v1[e15]
 vmudm v1,v1,v1[e15]
+vmudm v1,v1[e15]
 vmudn v1,v1,v1[e15]
+vmudn v1,v1[e15]
 vmudh v1,v1,v1[e15]
+vmudh v1,v1[e15]
 
 vmacf v1,v1,v1[e15]
+vmacf v1,v1[e15]
 vmacu v1,v1,v1[e15]
+vmacu v1,v1[e15]
 vrndn v1,v1,v1[e15]
+vrndn v1,v1[e15]
 vmacq v1,v1,v1[e15]
+vmacq v1,v1[e15]
 vmadl v1,v1,v1[e15]
+vmadl v1,v1[e15]
 vmadm v1,v1,v1[e15]
+vmadm v1,v1[e15]
 vmadn v1,v1,v1[e15]
+vmadn v1,v1[e15]
 vmadh v1,v1,v1[e15]
+vmadh v1,v1[e15]
 
 vadd v1,v1,v1[e15]
+vadd v1,v1[e15]
 vsub v1,v1,v1[e15]
+vsub v1,v1[e15]
 vsut v1,v1,v1[e15]
+vsut v1,v1[e15]
 vabs v1,v1,v1[e15]
+vabs v1,v1[e15]
 vaddc v1,v1,v1[e15]
+vaddc v1,v1[e15]
 vsubc v1,v1,v1[e15]
+vsubc v1,v1[e15]
 vaddb v1,v1,v1[e15]
+vaddb v1,v1[e15]
 vsubb v1,v1,v1[e15]
+vsubb v1,v1[e15]
 vaccb v1,v1,v1[e15]
+vaccb v1,v1[e15]
 vsucb v1,v1,v1[e15]
+vsucb v1,v1[e15]
 vsad v1,v1,v1[e15]
+vsad v1,v1[e15]
 vsac v1,v1,v1[e15]
+vsac v1,v1[e15]
 vsum v1,v1,v1[e15]
+vsum v1,v1[e15]
 vsar v1,v1,v1[e15]
+vsar v1,v1[e15]
 vacc v1,v1,v1[e15]
+vacc v1,v1[e15]
 vsuc v1,v1,v1[e15]
+vsuc v1,v1[e15]
 
 vlt v1,v1,v1[e15]
+vlt v1,v1[e15]
 veq v1,v1,v1[e15]
+veq v1,v1[e15]
 vne v1,v1,v1[e15]
+vne v1,v1[e15]
 vge v1,v1,v1[e15]
+vge v1,v1[e15]
 vcl v1,v1,v1[e15]
+vcl v1,v1[e15]
 vch v1,v1,v1[e15]
+vch v1,v1[e15]
 vcr v1,v1,v1[e15]
+vcr v1,v1[e15]
 vmrg v1,v1,v1[e15]
+vmrg v1,v1[e15]
 
 vand v1,v1,v1[e15]
+vand v1,v1[e15]
 vnand v1,v1,v1[e15]
+vnand v1,v1[e15]
 vor v1,v1,v1[e15]
+vor v1,v1[e15]
 vnor v1,v1,v1[e15]
+vnor v1,v1[e15]
 vxor v1,v1,v1[e15]
+vxor v1,v1[e15]
 vnxor v1,v1,v1[e15]
+vnxor v1,v1[e15]
 v056 v1,v1,v1[e15]
+v056 v1,v1[e15]
 v057 v1,v1,v1[e15]
+v057 v1,v1[e15]
 
 vrcp v1,v1,v1[e15]
+vrcp v1,v1[e15]
 vrcpl v1,v1,v1[e15]
+vrcpl v1,v1[e15]
 vrcph v1,v1,v1[e15]
+vrcph v1,v1[e15]
 vmov v1,v1,v1[e15]
+vmov v1,v1[e15]
 vrsq v1,v1,v1[e15]
+vrsq v1,v1[e15]
 vrsql v1,v1,v1[e15]
+vrsql v1,v1[e15]
 vrsqh v1,v1,v1[e15]
+vrsqh v1,v1[e15]
 vnop v1,v1,v1[e15]
+vnop v1,v1[e15]
 
 vextt v1,v1,v1[e15]
+vextt v1,v1[e15]
 vextq v1,v1,v1[e15]
+vextq v1,v1[e15]
 vextn v1,v1,v1[e15]
+vextn v1,v1[e15]
 v073 v1,v1,v1[e15]
+v073 v1,v1[e15]
 vinst v1,v1,v1[e15]
+vinst v1,v1[e15]
 vinsq v1,v1,v1[e15]
+vinsq v1,v1[e15]
 vinsn v1,v1,v1[e15]
+vinsn v1,v1[e15]
 vnull v1,v1,v1[e15]
+vnull v1,v1[e15]
 
 // RSP CP2 Vector Load Instructions (LWC2):
 lbv v1[e15],$3F(r31)
