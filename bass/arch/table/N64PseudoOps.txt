@@ -304,7 +304,7 @@ mulu d,s,t => : New pseudo op for multu
   multu s,t
   mflo d
 
-la d,addr => : using lui / addiu (http://problemkaputt.de/psx-spx.htm#cpupseudoopcodes)
+la d,addr => : same as "li" bass can't do something differnt for size of immediate so la always loads 32-bits
 
 li d,const => : bass can't do something differnt for size of immediate so li always loads 32-bits
 
