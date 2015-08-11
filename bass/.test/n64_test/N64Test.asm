@@ -159,7 +159,7 @@ dabs r2
 
 ddiv r2,r3,r4
 ddivu r2,r3,r4
-div r2,r3,r4
+//div r2,r3,r4
 divu r2,r3,r4
 
 dli r1,$FFEEDDCCBBAA9988
@@ -215,8 +215,8 @@ negu r1
 not r1,ra
 not r1
 
-rem r2,r3,r4
-rem r2,r3
+//rem r2,r3,r4
+//rem r2,r3
 remu r2,r3,r4
 remu r2,r3
 
@@ -252,8 +252,11 @@ break $FEEDD
 sync
 
 sll r1,ra,1
+sll r1,1
 srl r1,ra,1
+srl r1,1
 sra r1,ra,1
+sra r1,1
 
 sllv r1,ra,r1
 sllv r1,r2
@@ -275,11 +278,17 @@ dsrav r1,ra,r1
 dsrav r1,r2
 
 dsll r1,ra,1
+dsll r1,1
 dsrl r1,ra,1
+dsrl r1,1
 dsra r1,ra,1
+dsra r1,1
 dsll32 r1,ra,1
+dsll32 r1,1
 dsrl32 r1,ra,1
+dsrl32 r1,1
 dsra32 r1,ra,1
+dsra32 r1,1
 
 mult r1,ra
 multu r1,ra
@@ -321,12 +330,18 @@ dsubu r1,ra,r1
 dsubu r1,r2
 
 tge r1,ra,$3FF
+tge r1,$3FF
 tgeu r1,ra,$3FF
+tgeu r1,$3FF
 tlt r1,ra,$3FF
+tlt r1,$3FF
 tltu r1,ra,$3FF
+tltu r1,$3FF
 teq r1,ra,$3FF
-BLTZ:
+teq r1,$3FF
 tne r1,ra,$3FF
+BLTZ:
+tne r1,$3FF
 
 BGEZ:
 bltz r1,BLTZ
@@ -378,16 +393,25 @@ teqi r1,$FFEE
 tnei r1,$FFEE
 
 addi r1,ra,$FFEE
+addi r1,$FFEE
 addiu r1,ra,$FFEE
+addiu r1,$FFEE
 slti r1,ra,$FFEE
+slti r1,$FFEE
 sltiu r1,ra,$FFEE
+sltiu r1,$FFEE
 andi r1,ra,$FFEE
+andi r1,$FFEE
 ori r1,ra,$FFEE
+ori r1,$FFEE
 xori r1,ra,$FFEE
+xori r1,$FFEE
 
 daddi r1,ra,$FFEE
-BC0F:
+daddi r1,$FFEE
 daddiu r1,ra,$FFEE
+BC0F:
+daddiu r1,$FFEE
 
 // N64 MIPS 4300 CPU Branch On Coprocessor Instructions (COPz):
 BC1F:

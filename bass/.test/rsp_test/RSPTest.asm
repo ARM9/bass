@@ -163,8 +163,11 @@ nop
 break
 
 sll r1,ra,1
+sll r1,1
 srl r1,ra,1
+srl r1,1
 sra r1,ra,1
+sra r1,1
 
 sllv r1,ra,r1
 sllv r1,r2
@@ -223,12 +226,19 @@ jalr r1
 jalr ra,r1
 
 addi r1,ra,$FFEE
+addi r1,$FFEE
 addiu r1,ra,$FFEE
+addiu r1,$FFEE
 slti r1,ra,$FFEE
+slti r1,$FFEE
 sltiu r1,ra,$FFEE
+sltiu r1,$FFEE
 andi r1,ra,$FFEE
+andi r1,$FFEE
 ori r1,ra,$FFEE
+ori r1,$FFEE
 xori r1,ra,$FFEE
+xori r1,$FFEE
 
 // RSP MIPS 4000 CPU Scalar Load Instructions (CPU):
 lui r1,$FFEE
