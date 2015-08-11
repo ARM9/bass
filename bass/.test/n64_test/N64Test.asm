@@ -159,7 +159,7 @@ dabs r2
 
 ddiv r2,r3,r4
 ddivu r2,r3,r4
-//div r2,r3,r4
+div r2,r3,r4
 divu r2,r3,r4
 
 dli r1,$FFEEDDCCBBAA9988
@@ -215,8 +215,8 @@ negu r1
 not r1,ra
 not r1
 
-//rem r2,r3,r4
-//rem r2,r3
+rem r2,r3,r4
+rem r2,r3
 remu r2,r3,r4
 remu r2,r3
 
