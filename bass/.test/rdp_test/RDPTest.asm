@@ -28,7 +28,8 @@ Set_Key_R 1,2,3 // wr,cr,sr
 Set_Convert 1,2,3,4,5,6 // k0,k1,k2,k3,k4,k5
 Set_Scissor 1,2, 1,1, 3,4 // xh,yh, f,o, xl,yl
 Set_Prim_Depth 1,2 // pz,pdz
-Set_Other_Modes 1, 3, 1,1,1,1,1,1,1,1,1,1,1,1, 3,3, 3,3,3,3,3,3,3,3, 1,1,1, 3, 3, 1,1,1,1,1,1,1,1 // atomic prim, cycle type, persp tex,detail tex,sharpen tex,tex lod,tlut,tlut type,sample type,mid texel,bilerp0,bilerp1,convert one,key, rgb dither,alpha dither, bm1a0,bm1a1,bm1b0,bm1b1,bm2a0,bm2a1,bm2b0,bm2b1, force blend,alpha cvg,cvg*alpha, z mode, cvg dest, color on cvg,image read,z update,z compare,antialias,z source,dither alpha,alpha compare
+Set_Other_Modes $FFEEDDCCBBAA99 // atomic prim, cycle type, persp tex,detail tex,sharpen tex,tex lod,tlut,tlut type,sample type,mid texel,bilerp0,bilerp1,convert one,key, rgb dither,alpha dither, bm1a0,bm1a1,bm1b0,bm1b1,bm2a0,bm2a1,bm2b0,bm2b1, force blend,alpha cvg,cvg*alpha, z mode, cvg dest, color on cvg,image read,z update,z compare,antialias,z source,dither alpha,alpha compare
+
 Load_Tlut 1,2, 3, 4,5 // sl,tl, tile, sh,th
 
 Set_Tile_Size 1,2, 3, 4,5 // sl,tl, tile, sh,th
