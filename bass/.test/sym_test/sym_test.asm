@@ -1,21 +1,4 @@
-arch n64.rsp
-output "sym_test.n64", create
-
-// N64 MIPS 4000 CPU Registers
-constant r0(0)
-constant r1(1)
-constant r2(2)
-constant r3(3)
-constant r4(4)
-constant r5(5)
-constant r6(6)
-constant r7(7)
-
-macro align(size) {
-  while (pc() % {size}) {
-    db 0
-  }
-}
+arch snes.cpu
 
 macro FOO() {
 {#}:
@@ -30,8 +13,6 @@ macro scope BAR(a) {
     db 0
 }
 
-endian msb
-
 FOO()
 BAR(0)
 BAR(3)
@@ -39,15 +20,15 @@ BAR(1)
 
 scope park {
 ...bark:
-beq r0, r0, park....bark
+beq park....bark
 scope .lar.ba.: {
-lui r0, ...bark
+lda #...bark
 .par.:
 }
 }
 
 _start:
-    beq r2, r2,_end
+    beq _end
 _not: {
     scope _the {
         scope _end: {
@@ -68,7 +49,7 @@ _not: {
 }
 scope _end: {
     nop
-    j _start
+    bra _start
 }
 scope foo: {
     scope bar: {

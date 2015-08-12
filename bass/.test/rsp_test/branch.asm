@@ -1,5 +1,4 @@
 arch n64.rsp
-output "branch.n64", create
 
 // N64 MIPS 4000 CPU Registers
 constant r0(0)

@@ -1,5 +1,4 @@
 arch n64.cpu
-output "N64Test.n64", create
 endian msb
 
 base $80000000

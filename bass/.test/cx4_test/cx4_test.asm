@@ -1,5 +1,4 @@
     arch snes.cx4
-    output "cx4_test.sfc",create
 //db "cx4"
 cx4_start:
     nop

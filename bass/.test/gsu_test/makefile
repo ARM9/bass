@@ -1,12 +1,9 @@
-export PATH:=$(PATH):$(CURDIR)
-
 bass	:= ../../bass
 gsudis	:= gsudis
 
-export output	:= $(shell basename $(CURDIR)).sfc
+TARGET	:= $(shell basename $(CURDIR))
 
 all:
-	@rm -f $(output)
-	$(bass) main.asm -o $(output)
-	$(gsudis) -e80f9 $(output) > dis.asm
+	$(bass) -create -o $(TARGET).bin $(TARGET).asm 
+	$(gsudis) -e80f9 $(TARGET).bin > dis.asm
 

@@ -1,5 +1,4 @@
 arch n64.rsp
-output "RSPTest.n64", create
 endian msb
 
 base $80000000

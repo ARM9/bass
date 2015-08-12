@@ -1,5 +1,4 @@
-
-export PATH	:= $(CURDIR)/../../:$(PATH)
+bass	:= ../../bass
 
 all:
-	bass error_test.asm
+	$(bass) error_test.asm

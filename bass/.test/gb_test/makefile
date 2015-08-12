@@ -1,7 +1,7 @@
-PATH	:=	$(CURDIR)/../../:$(PATH)
+bass	:= ../../bass
 
-TARGET	:=	$(shell basename $(CURDIR))
+TARGET	:= $(shell basename $(CURDIR))
 
 all:
-	bass $(TARGET).asm
+	$(bass) -create -o $(TARGET).bin $(TARGET).asm 
 

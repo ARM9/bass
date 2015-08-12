@@ -1,6 +1,8 @@
-PATH	:=	$(CURDIR)/../../:$(PATH)
+bass	:= ../../bass
+
+TARGET	:= $(shell basename $(CURDIR))
 
 all:
-	bass RSPTest.asm
-	bass branch.asm
+	$(bass) -create -o $(TARGET).bin $(TARGET).asm
+	$(bass) -create -o branch.bin branch.asm
 

@@ -1,5 +1,4 @@
 arch n64.rdp
-output "RDPTest.n64", create
 endian msb
 
 // RDP Commands:

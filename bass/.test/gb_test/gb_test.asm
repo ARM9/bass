@@ -1,5 +1,4 @@
 arch gb.cpu
-output "GBTest.gb", create
 
 // Game Boy Z80 (CPU):
 nop
