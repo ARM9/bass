@@ -20,7 +20,9 @@ protected:
         Relative,
         Repeat,
         ShiftRight, ShiftLeft,
-        RelativeShiftRight
+        RelativeShiftRight,
+        Negative,
+        NegativeShiftRight
     } type;
     enum class Match : unsigned { Exact, Strong, Weak } match;
     unsigned data;

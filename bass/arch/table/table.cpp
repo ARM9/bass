@@ -136,6 +136,18 @@ bool BassTable::assemble(const string& statement) {
           }
           break;
         }
+
+        case Format::Type::Negative: {
+          unsigned data = evaluate(args[format.argument]);
+          writeBits(-data, opcode.number[format.argument].bits);
+          break;
+        }
+
+        case Format::Type::NegativeShiftRight: {
+          uint64_t data = evaluate(args[format.argument]);
+          writeBits(-data >> format.data, opcode.number[format.argument].bits);
+          break;
+        }
       }
     }
 
@@ -335,6 +347,24 @@ void BassTable::assembleTableRHS(Opcode& opcode, const string& text) {
       format.argument = item[6];
       format.displacement = +(item[1] - '0');
       format.data = (item[4] - '0') * 10 + (item[5] - '0');
+      opcode.format.append(format);
+    }
+
+    // N>>XXa
+    if(item[0] == 'N' && item[1] == '>' && item[2] == '>') {
+      Format format = {Format::Type::NegativeShiftRight, Format::Match::Weak};
+      if (item[5] >= 'A' && item[5] <= 'Z') item[5] += 123-'A';
+      item[5] = item[5]-'a';
+      format.argument = item[5];
+      format.data = (item[3] - '0') * 10 + (item[4] - '0');
+      opcode.format.append(format);
+    }
+
+    if(item[0] == 'N' && item[1] != '>') {
+      Format format = {Format::Type::Negative, Format::Match::Weak};
+      if (item[1] >= 'A' && item[1] <= 'Z') item[1] += 123-'A';
+      item[1] = item[1]-'a';
+      format.argument = item[1];
       opcode.format.append(format);
     }
   }

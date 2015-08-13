@@ -238,6 +238,11 @@ sne r1,r2
 
 ssnop
 
+subi r1,ra,1
+subi r1,1
+subiu r1,ra,1
+subiu r1,1
+
 // N64 MIPS 4300 CP1 Floating Point Unit (FPU) Pseudo Instructions (COP1):
 l.s f1,$FFEE(ra)
 l.d f1,$FFEE(ra)

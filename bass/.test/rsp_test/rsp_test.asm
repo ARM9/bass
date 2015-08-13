@@ -157,6 +157,11 @@ sne r1,r2
 
 ssnop
 
+subi r1,ra,1
+subi r1,1
+subiu r1,ra,1
+subiu r1,1
+
 // RSP MIPS 4000 CPU Scalar Instructions (CPU):
 nop
 break
