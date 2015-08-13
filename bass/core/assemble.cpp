@@ -207,30 +207,30 @@ bool Bass::assemble(const string& statement) {
     return true;
   }
 
-  if(s.beginsWith("ieee32 ")) {
+  if(s.beginsWith("float32 ")) {
     dataLength = 4;
-    s = s.slice(7);  //remove directive
+    s = s.slice(8);  //remove directive
     lstring p = s.qsplit(",").strip();
     for(auto& t : p) {
       /*if(!t.match("")) {
         error("invalid single precision float");
       }*/
       uint64_t data = 0;
-      *(float*)&data = real(t);
+      *(float*)&data = atof(t);
       write(data, dataLength);
     }
     return true;
   }
-  if(s.beginsWith("ieee64 ")) {
+  if(s.beginsWith("float64 ")) {
     dataLength = 8;
-    s = s.slice(7);  //remove directive
+    s = s.slice(8);  //remove directive
     lstring p = s.qsplit(",").strip();
     for(auto& t : p) {
       /*if(!t.match("")) {
         error("invalid double precision float");
       }*/
       uint64_t data = 0;
-      *(double*)&data = real(t);
+      *(double*)&data = atof(t);
       write(data, dataLength);
     }
     return true;
