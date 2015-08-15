@@ -101,6 +101,35 @@ constant f29(29)
 constant f30(30)
 constant f31(31)
 
+
+move 0, 0
+addu 0, 0
+daddu 0, 0
+
+bc0f B
+bc1f B
+bc2f B
+bc3f B
+bc0t B
+bc1t B
+bc2t B
+bc3t B
+ldc1 31,$feed(31)
+ldc2 31,$feed(31)
+ldc3 31,$feed(31)
+ld 31,$feed(31)
+sdc1 31,$feed(31)
+sdc2 31,$feed(31)
+sdc3 31,$feed(31)
+sd 31,$feed(31)
+
+lwc1 31,-30584(31)
+lwc2 31,0(31)
+lwc3 31,0(31)
+swc1 31,0(31)
+swc2 31,0(31)
+swc3 31,0(31)
+
 dmfc0 31, 31
 dmfc1 31, 31
 dmfc2 31, 31
@@ -118,10 +147,10 @@ bc1tl B
 bc2tl B
 bc3tl B
 rfe
-cop0 0xabbaaa
-cop1 0xbaabbb
-cop2 0xcafeba
-cop3 0xdaadad
+cop0 0x1abbaaa
+cop1 0x1baabbb
+cop2 0x1cafeba
+cop3 0x1daadad
 mfc0 1, 1
 mfc1 1, 1
 mfc2 1, 1
@@ -138,10 +167,6 @@ ctc0 1, 1
 ctc1 1, 1
 ctc2 1, 1
 ctc3 1, 1
-l.s 0,0(0)
-l.d 0,0(0)
-s.s 0,0(0)
-s.d 0,0(0)
 trunc.w.s 1, 2
 trunc.w.s 1
 trunc.w.d 3, 4
@@ -238,7 +263,6 @@ la r1,LA
 lli r1,$FFEE
 li r1,$FFEEDDCC
 
-move r1,ra
 
 mul r1,r2,r3
 mul r1,r2
@@ -286,13 +310,13 @@ subi r1,1
 subiu r1,ra,1
 subiu r1,1
 
-// N64 MIPS 4300 CP1 Floating Point Unit (FPU) Pseudo Instructions (COP1):
+// MIPS CP1 Floating Point Unit (FPU) Pseudo Instructions (COP1):
 l.s f1,$FFEE(ra)
 l.d f1,$FFEE(ra)
 s.s f1,$FFEE(ra)
 s.d f1,$FFEE(ra)
 
-// N64 MIPS 4300 CPU Scalar Instructions (CPU):
+// MIPS CPU Scalar Instructions (CPU):
 nop
 syscall $FEEDD
 break $FEEDD
@@ -460,24 +484,7 @@ daddiu r1,ra,$FFEE
 BC0F:
 daddiu r1,$FFEE
 
-// N64 MIPS 4300 CPU Branch On Coprocessor Instructions (COPz):
-BC1F:
-bc0f BC0F
-BC0T:
-bc1f BC1F
-BC1T:
-bc0t BC0T
-BC0FL:
-bc1t BC1T
-BC1FL:
-bc0fl BC0FL
-BC0TL:
-bc1fl BC1FL
-BC1TL:
-bc0tl BC0TL
-bc1tl BC1TL
-
-// N64 MIPS 4300 CPU Scalar Load Instructions (CPU):
+// MIPS CPU Scalar Load Instructions (CPU):
 lui r1,$FFEE
 ldl r1,$FFEE(ra)
 ldr r1,$FFEE(ra)
@@ -495,7 +502,7 @@ lld r1,$FFEE(ra)
 ldc1 f1,$FFEE(ra)
 ld r1,$FFEE(ra)
 
-// N64 MIPS 4300 CPU Scalar Store Instructions (CPU):
+// MIPS CPU Scalar Store Instructions (CPU):
 sb r1,$FFEE(ra)
 sh r1,$FFEE(ra)
 swl r1,$FFEE(ra)
@@ -511,30 +518,13 @@ sd r1,$FFEE(ra)
 
 cache r1,$FFEE(ra)
 
-// N64 CP0 Control Instructions (COP0):
-mfc0 r1,ra
-dmfc0 r1,ra
-mtc0 r1,ra
-dmtc0 r1,ra
-
-// N64 CP1 Control Instructions (COP1):
-mfc1 r1,f31
-dmfc1 r1,f31
-cfc1 r1,f31
-mtc1 r1,f31
-dmtc1 r1,f31
-ctc1 r1,f31
-
 tlbr
 tlbwi
 tlbwr
 tlbp
 eret
 
-cop0 $1FFEEDD
-cop1 $1FFEEDD
-
-// N64 CP1 Floating Point Unit (FPU) Instructions (COP1):
+// CP1 Floating Point Unit (FPU) Instructions (COP1):
 add.s f1,f31,f1
 add.s f1,f2
 add.d f1,f31,f1
@@ -561,9 +551,7 @@ abs.s f1
 abs.d f1,f31
 abs.d f1
 mov.s f1,f31
-mov.s f1
 mov.d f1,f31
-mov.d f1
 neg.s f1,f31
 neg.s f1
 neg.d f1,f31

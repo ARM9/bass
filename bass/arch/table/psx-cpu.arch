@@ -2,4 +2,5 @@
 
 arch(psx_cpu) =
 #include "mips/mips1eb.md"
+#include "mips/mips1eb-pseudo.md"
 ;

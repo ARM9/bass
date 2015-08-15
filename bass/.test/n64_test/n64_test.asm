@@ -518,9 +518,7 @@ abs.s f1
 abs.d f1,f31
 abs.d f1
 mov.s f1,f31
-mov.s f1
 mov.d f1,f31
-mov.d f1
 neg.s f1,f31
 neg.s f1
 neg.d f1,f31

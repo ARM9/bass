@@ -68,4 +68,4 @@ fo:
     j _end+$4000000-1 // msb should be $09 is $08
     nop
     j fo-1
-// vim:ft=bass
+// vim:ft=mips
