@@ -101,10 +101,22 @@ constant f29(29)
 constant f30(30)
 constant f31(31)
 
-l.s 0,0(0)
-l.d 0,0(0)
-s.s 0,0(0)
-s.d 0,0(0)
+dmfc0 31, 31
+dmfc1 31, 31
+dmfc2 31, 31
+dmfc3 31, 31
+dmtc0 31, 31
+dmtc1 31, 31
+dmtc2 31, 31
+dmtc3 31, 31
+bc0fl B
+bc1fl B
+bc2fl B
+bc3fl B
+bc0tl B
+bc1tl B
+bc2tl B
+bc3tl B
 rfe
 cop0 0xabbaaa
 cop1 0xbaabbb
@@ -126,6 +138,10 @@ ctc0 1, 1
 ctc1 1, 1
 ctc2 1, 1
 ctc3 1, 1
+l.s 0,0(0)
+l.d 0,0(0)
+s.s 0,0(0)
+s.d 0,0(0)
 trunc.w.s 1, 2
 trunc.w.s 1
 trunc.w.d 3, 4

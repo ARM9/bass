@@ -1,7 +1,5 @@
 // PSX MIPS r3000 CPU instruction set
 
 arch(psx_cpu) =
-
-R"(
-
-)";
+#include "mips/mips1eb.md"
+;
