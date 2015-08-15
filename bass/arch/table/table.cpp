@@ -6,6 +6,7 @@
 #include "n64-cpu.arch"
 #include "n64-rdp.arch"
 #include "n64-rsp.arch"
+#include "psx-cpu.arch"
 #include "gb-cpu.arch"
 #undef arch
 
@@ -34,6 +35,7 @@ bool BassTable::assemble(const string& statement) {
     else if(s == "n64.cpu") data = Arch_n64_cpu;
     else if(s == "n64.rdp") data = Arch_n64_rdp;
     else if(s == "n64.rsp") data = Arch_n64_rsp;
+    else if(s == "psx.cpu") data = Arch_psx_cpu;
     else if(s == "gb.cpu") data = Arch_gb_cpu;
     else if(s.match("\"?*\"")) {
       s.trim<1>("\"");
@@ -360,6 +362,7 @@ void BassTable::assembleTableRHS(Opcode& opcode, const string& text) {
       opcode.format.append(format);
     }
 
+    // Na
     if(item[0] == 'N' && item[1] != '>') {
       Format format = {Format::Type::Negative, Format::Match::Weak};
       if (item[1] >= 'A' && item[1] <= 'Z') item[1] += 123-'A';
