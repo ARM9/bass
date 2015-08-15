@@ -1,5 +1,6 @@
-arch(snes_gsu) = R"_(
+arch(snes_gsu) =
 // alt0
+R"(
 stop            ;$00
 nop             ;$01
 cache           ;$02
@@ -23,7 +24,6 @@ bvs *08         ;$0f +2a
 to r*04         ;%0001 =a
 with r*04       ;%0010 =a
 
-//stw (r0-r11)
 stw (r*04)      ;%0011 =a
 
 loop            ;$3c
@@ -32,7 +32,6 @@ alt1            ;$3d
 alt2            ;$3e
 alt3            ;$3f
 
-//ldw (r0-r11)
 ldw (r*04)      ;%0100 =a
 
 plot            ;$4c
@@ -45,14 +44,12 @@ sub r*04        ;%0110 =a
 
 merge           ;$70
 
-//and r1-15
 and r*04        ;%0111 ~a
 
 mult r*04       ;%1000 ~a
 
 sbk             ;$90
 
-//link #1-4
 link #*03       ;%10010 =a
 
 sex             ;$95
@@ -61,7 +58,6 @@ asr #*08        ;*a:$96
 ror             ;$97
 ror #*08        ;*a:$97
 
-//jmp r8-r13
 jmp r*04        ;%1001 =a
 
 lob             ;$9e
@@ -72,25 +68,23 @@ ibt r*04, #*08  ;%1010 =a ~b
 from r*04       ;%1011 =a
 hib             ;$c0
 
-//or r1-r15
 or r*04         ;%1100 =a
-//inc r0-r14
+
 inc r*04        ;%1101 =a
 
 getc            ;$df
 
-//dec r0-r14
 dec r*04        ;%1110 =a
 
 getb            ;$ef
 
 iwt r*04, #*16  ;%1111 =a ~b
 lea r*04, *16   ;%1111 =a ~b
+")
 
 //--------- alt1 --------- 
-//stb (r0-r11)
+R"(
 stb (r*04)      ;$3d %0011 =a
-//ldb (r0-r11)
 ldb (r*04)      ;$3d %0100 =a
 
 rpix            ;$3d $4c
@@ -99,66 +93,65 @@ cmode           ;$3d $4e
 adc r*04        ;$3d %0101 =a
 sbc r*04        ;$3d %0110 =a
 
-//bic r1-r15
 bic r*04        ;$3d %0111 =a
 
 umult r*04      ;$3d %1000 =a
 
 div2            ;$3d $96
 
-//ljmp r8-r13
 ljmp r*04       ;$3d %1001 =a
 
 lmult           ;$3d $9f
 
 lms r*04, (*08) ;$3d %1010 =a >>01b
 
-//xor r1-r15
 xor r*04        ;$3d %1100 =a
 
 getbh           ;$3d $ef
 lm r*04, (*16)  ;$3d %1111 =a ~b
+")
 
 //--------- alt2 ---------
+R"(
 add #*04        ;$3e %0101 ~a
 sub #*04        ;$3e %0110 ~a
 
-//and #1-15
 and #*04        ;$3e %0111 ~a
 
 mult #*04       ;$3e %1000 ~a
 
 sms (*08), r*04 ;$3e %1010 =b >>01a
 
-//or #1-15
 or #*04         ;$3e %1100 ~a
 
 ramb            ;$3e $df
 getbl           ;$3e $ef
 
 sm (*16), r*04  ;$3e %1111 =b ~a
+")
 
 //--------- alt3 ---------
+R"(
 adc #*04        ;$3f %0101 ~a
 cmp r*04        ;$3f %0110 =a
 
-//bic #1-15
 bic #*04        ;$3f %0111 ~a
 
 umult #*04      ;$3f %1000 ~a
 
-//xor #1-15
 xor #*04        ;$3f %1100 ~a
 
 romb            ;$3f $df
 getbs           ;$3f $ef
+")
 
 //--------- pseudo-ops ---------
+R"(
 move r*04, r*04     ;%0010 =b %0001 =a
 moves r*04, r*04    ;%0010 =a %1011 =b
 
 jal *16             ;$94 $ff ~a
 ret                 ;$9b
-)_";
+)";
 
 // vim:ft=snes
