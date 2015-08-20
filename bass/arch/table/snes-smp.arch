@@ -102,7 +102,7 @@ ora *08,x        ;$14 =a
 orr *08=*08      ;$09 =b =a
 ora *16          ;$05 =a
 ora *08          ;$04 =a
-//
+
 ora.w *16,x      ;$15 ~a
 ora.b *08,x      ;$14 ~a
 ora.w *16        ;$05 ~a
@@ -120,7 +120,7 @@ and *08,x        ;$34 =a
 and *08=*08      ;$29 =b =a
 and *16          ;$25 =a
 and *08          ;$24 =a
-//
+
 and.w *16,x      ;$35 ~a
 and.b *08,x      ;$34 ~a
 and.w *16        ;$25 ~a
@@ -138,7 +138,7 @@ eor *08,x        ;$54 =a
 eor *08=*08      ;$49 =b =a
 eor *16          ;$45 =a
 eor *08          ;$44 =a
-//
+
 eor.w *16,x      ;$55 ~a
 eor.b *08,x      ;$54 ~a
 eor.w *16        ;$45 ~a
@@ -156,7 +156,7 @@ cmp *08,x        ;$74 =a
 cmp *08=*08      ;$69 =b =a
 cmp *16          ;$65 =a
 cmp *08          ;$64 =a
-//
+
 cmp.w *16,x      ;$75 ~a
 cmp.b *08,x      ;$74 ~a
 cmp.w *16        ;$65 ~a
@@ -174,7 +174,7 @@ adc *08,x        ;$94 =a
 adc *08=*08      ;$89 =b =a
 adc *16          ;$85 =a
 adc *08          ;$84 =a
-//
+
 adc.w *16,x      ;$95 ~a
 adc.b *08,x      ;$94 ~a
 adc.w *16        ;$85 ~a
@@ -192,7 +192,7 @@ sbc *08,x        ;$b4 =a
 sbc *08=*08      ;$a9 =b =a
 sbc *16          ;$a5 =a
 sbc *08          ;$a4 =a
-//
+
 sbc.w *16,x      ;$b5 ~a
 sbc.b *08,x      ;$b4 ~a
 sbc.w *16        ;$a5 ~a
@@ -209,7 +209,7 @@ sta *08,x        ;$d4 =a
 str *08=*08      ;$fa =b =a
 sta *16          ;$c5 =a
 sta *08          ;$c4 =a
-//
+
 sta.w *16,x      ;$d5 ~a
 sta.b *08,x      ;$d4 ~a
 sta.w *16        ;$c5 ~a
@@ -225,7 +225,7 @@ lda *16,y        ;$f6 =a
 lda *08,x        ;$f4 =a
 lda *16          ;$e5 =a
 lda *08          ;$e4 =a
-//
+
 lda.w *16,x      ;$f5 ~a
 lda.b *08,x      ;$f4 ~a
 lda.w *16        ;$e5 ~a
@@ -234,14 +234,14 @@ lda.b *08        ;$e4 ~a
 stx *08,y        ;$d9 =a
 stx *16          ;$c9 =a
 stx *08          ;$d8 =a
-//
+
 stx.w *16        ;$c9 ~a
 stx.b *08        ;$d8 ~a
 
 sty *08,x        ;$db =a
 sty *16          ;$cc =a
 sty *08          ;$cb =a
-//
+
 sty.w *16        ;$cc ~a
 sty.b *08        ;$cb ~a
 
@@ -249,7 +249,7 @@ ldx #*08         ;$cd =a
 ldx *08,y        ;$f9 =a
 ldx *16          ;$e9 =a
 ldx *08          ;$f8 =a
-//
+
 ldx.w *16        ;$e9 ~a
 ldx.b *08        ;$f8 ~a
 
@@ -257,21 +257,21 @@ ldy #*08         ;$8d =a
 ldy *08,x        ;$fb =a
 ldy *16          ;$ec =a
 ldy *08          ;$eb =a
-//
+
 ldy.w *16        ;$ec ~a
 ldy.b *08        ;$eb ~a
 
 cpx #*08         ;$c8 =a
 cpx *16          ;$1e =a
 cpx *08          ;$3e =a
-//
+
 cpx.w *16        ;$1e ~a
 cpx.b *08        ;$3e ~a
 
 cpy #*08         ;$ad =a
 cpy *16          ;$5e =a
 cpy *08          ;$7e =a
-//
+
 cpy.w *16        ;$5e ~a
 cpy.b *08        ;$7e ~a
 
@@ -279,7 +279,7 @@ asl              ;$1c
 asl *08,x        ;$1b =a
 asl *16          ;$0c =a
 asl *08          ;$0b =a
-//
+
 asl.w *16        ;$0c ~a
 asl.b *08        ;$0b ~a
 
@@ -287,7 +287,7 @@ lsr              ;$5c
 lsr *08,x        ;$5b =a
 lsr *16          ;$4c =a
 lsr *08          ;$4b =a
-//
+
 lsr.w *16        ;$4c ~a
 lsr.b *08        ;$4b ~a
 
@@ -295,7 +295,7 @@ rol              ;$3c
 rol *08,x        ;$3b =a
 rol *16          ;$2c =a
 rol *08          ;$2b =a
-//
+
 rol.w *16        ;$2c ~a
 rol.b *08        ;$2b ~a
 
@@ -303,7 +303,7 @@ ror              ;$7c
 ror *08,x        ;$7b =a
 ror *16          ;$6c =a
 ror *08          ;$6b =a
-//
+
 ror.w *16        ;$6c ~a
 ror.b *08        ;$6b ~a
 
@@ -311,7 +311,7 @@ inc              ;$bc
 inc *08,x        ;$bb =a
 inc *16          ;$ac =a
 inc *08          ;$ab =a
-//
+
 inc.w *16        ;$ac ~a
 inc.b *08        ;$ab ~a
 
@@ -319,8 +319,7 @@ dec              ;$9c
 dec *08,x        ;$9b =a
 dec *16          ;$8c =a
 dec *08          ;$8b =a
-//
+
 dec.w *16        ;$8c ~a
 dec.b *08        ;$8b ~a
-
 )";

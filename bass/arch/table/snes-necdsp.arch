@@ -1,4 +1,3 @@
-arch(snes_necdsp) = R"_(
+arch(snes_necdsp) = R"(
 nop             ;$00 $00 $00
-)_";
-
+)";

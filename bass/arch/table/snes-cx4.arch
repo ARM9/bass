@@ -1,4 +1,4 @@
-arch(snes_cx4) = R"_(
+arch(snes_cx4) = R"(
 // all instructions are 16 bits
 // format seems to be most significant 6 bits = op, lower 10 bits = args
 
@@ -103,7 +103,7 @@ cmp a,#*08          ;=a $54
 cmp a<<1,#*08       ;=a $55
 
 mov a,a             ;$00 $60
-)_";
+)";
 
 #if 0
 valid registers:
