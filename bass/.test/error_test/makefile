@@ -1,4 +1,6 @@
 bass	:= ../../bass
 
+TARGET	:= $(shell basename $(CURDIR))
+
 all:
-	$(bass) error_test.asm
+	$(bass) $(TARGET).asm
