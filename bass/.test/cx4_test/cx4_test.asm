@@ -1,3 +1,4 @@
+if 0 {
     arch snes.cx4
 //db "cx4"
 cx4_start:
@@ -38,4 +39,5 @@ cx4_start:
     unknown4
 
     cmpr a,a
+}
 // vim:ft=snes
