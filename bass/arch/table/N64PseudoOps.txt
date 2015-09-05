@@ -309,8 +309,3 @@ la d,addr => : same as "li" bass can't do something differnt for size of immedia
 li d,const => : bass can't do something differnt for size of immediate so li always loads 32-bits
 
 lli d,const => : New pseudo op to only load 16-bits to lower (Load Lower Immediate)
-
-----------------------------------------------------
-Weirdness:
-
-bleu/bleul is the same as ble/blel
