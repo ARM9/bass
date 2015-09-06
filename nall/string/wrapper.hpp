@@ -119,6 +119,28 @@ maybe<unsigned> string::ifind(rstring key) const { return istrpos(data(), key); 
 maybe<unsigned> string::qfind(rstring key) const { return qstrpos(data(), key); }
 maybe<unsigned> string::iqfind(rstring key) const { return iqstrpos(data(), key); }
 
+string& string::reduceWhitespace() {
+// '[ ]+' -> ' '
+// ad-hoc whitespace compression
+  bool insideQuotes = false;
+  for(unsigned i = 0; i < length(); i++) {
+    if(!insideQuotes){
+      if(data()[i] == ' ') {
+        unsigned j = i+1;
+        for(; j < length() && data()[j] == ' '; j++) {}
+        if(j > i+1) {
+          memmove(data() + i+1, data() + j, length() - (j - 1));
+        }
+      }
+    }
+    if(data()[i] == '"'){
+      insideQuotes = !insideQuotes;
+    }
+  }
+  //resize(length());
+  return *this;
+}
+
 }
 
 #endif
