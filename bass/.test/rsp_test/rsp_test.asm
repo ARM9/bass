@@ -164,7 +164,9 @@ subiu r1,1
 
 // RSP MIPS 4000 CPU Scalar Instructions (CPU):
 nop
+break 5
 break
+break 0xfff
 
 sll r1,ra,1
 sll r1,1
@@ -264,6 +266,8 @@ mtc0 r1,c15
 // RSP CP2 Control Instructions (COP2):
 mfc2 r1,v1[e15]
 mtc2 r1,v1[e15]
+mfc2 r1,r2
+mtc2 r1,r2
 cfc2 r1,vce
 ctc2 r1,vce
 

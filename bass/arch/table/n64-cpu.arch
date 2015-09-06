@@ -2,7 +2,9 @@
 
 arch(n64_cpu) =
 #include "mips/mips1eb.md"
+#include "mips/mips1cop0eb.md"
 #include "mips/mips1cop1eb.md"
+#include "mips/mips1divmuleb.md"
 #include "mips/mips2eb.md"
 #include "mips/mips3eb.md"
 ;

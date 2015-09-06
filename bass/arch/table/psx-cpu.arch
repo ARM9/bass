@@ -3,4 +3,6 @@
 arch(psx_cpu) =
 #include "mips/mips1eb.md"
 #include "mips/mips1eb-pseudo.md"
+#include "mips/mips1cop0eb.md"
+#include "mips/mips1divmuleb.md"
 ;
