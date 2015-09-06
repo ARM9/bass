@@ -193,8 +193,15 @@ unsigned BassTable::bitLength(string& text) const {
 }
 
 void BassTable::writeBits(uint64_t data, unsigned length) {
+  function<unsigned(unsigned)> setBits = [&](unsigned n) -> unsigned {
+    if(n == 0){
+      return 0;
+    }
+    n--;
+    return (1<<n) | setBits(n);
+  };
   bitval <<= length;
-  bitval |= data;
+  bitval |= data & setBits(length);
   bitpos += length;
 
   while(bitpos >= 8) {
