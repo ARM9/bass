@@ -164,9 +164,8 @@ subiu r1,1
 
 // RSP MIPS 4000 CPU Scalar Instructions (CPU):
 nop
-break 5
+break $FEEDD
 break
-break 0xfff
 
 sll r1,ra,1
 sll r1,1

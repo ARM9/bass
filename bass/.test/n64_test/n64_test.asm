@@ -253,6 +253,7 @@ s.d f1,$FFEE(ra)
 nop
 syscall $FEEDD
 break $FEEDD
+break
 sync
 
 sll r1,ra,1
