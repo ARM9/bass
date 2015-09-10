@@ -112,8 +112,6 @@ public:
   inline maybe<unsigned> qfind(rstring key) const;
   inline maybe<unsigned> iqfind(rstring key) const;
 
-  inline string& reduceWhitespace();
-
   //core.hpp
   inline explicit operator bool() const;
   inline operator const char*() const;

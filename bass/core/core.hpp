@@ -112,6 +112,8 @@ protected:
   template<typename... Args> void warning(Args&&... args);
   template<typename... Args> void error(Args&&... args);
 
+  string& reduceWhitespace(string& s);
+
   //evaluate
   enum class Evaluation : unsigned { Default = 0, Strict = 1 };  //strict mode disallows forward-declaration of constants
   int64_t evaluate(const string& expression, Evaluation mode = Evaluation::Default);

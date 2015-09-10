@@ -36,7 +36,7 @@ bool Bass::source(const string& filename) {
   for(unsigned lineNumber = 0; lineNumber < lines.size(); lineNumber++) {
     if(auto position = lines[lineNumber].find("//")) lines[lineNumber].resize(position());  //remove comments
 
-    lines[lineNumber].reduceWhitespace();
+    reduceWhitespace(lines[lineNumber]);
 
     lstring blocks = lines[lineNumber].qsplit(";").strip();
     for(unsigned blockNumber = 0; blockNumber < blocks.size(); blockNumber++) {
@@ -58,6 +58,31 @@ bool Bass::source(const string& filename) {
   }
 
   return true;
+}
+
+string& Bass::reduceWhitespace(string& s) {
+// '[ ]+' -> ' '
+// ad-hoc whitespace compression
+// this only fixes some problems, see bass/.test/space_test
+  bool insideQuotes = false;
+  char *p = s.data();
+
+  for(unsigned i = 0; i < s.length(); i++) {
+    if(!insideQuotes) {
+      if(p[i] == ' ') {
+        unsigned j = i+1;
+        for(; j < s.length() && p[j] == ' '; j++) {}
+        if(j > i+1) {
+          memmove(p + i+1, p + j, s.length() - (j - 1));
+        }
+      }
+    }
+    if(p[i] == '"') {
+      insideQuotes = !insideQuotes;
+    }
+  }
+  //s.resize(s.length());
+  return s;
 }
 
 void Bass::define(const string& name, const string& value) {
