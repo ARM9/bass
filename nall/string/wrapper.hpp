@@ -122,6 +122,7 @@ maybe<unsigned> string::iqfind(rstring key) const { return iqstrpos(data(), key)
 string& string::reduceWhitespace() {
 // '[ ]+' -> ' '
 // ad-hoc whitespace compression
+// this only fixes some problems, see bass/.test/space_test
   bool insideQuotes = false;
   for(unsigned i = 0; i < length(); i++) {
     if(!insideQuotes){

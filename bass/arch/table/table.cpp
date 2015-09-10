@@ -194,7 +194,7 @@ unsigned BassTable::bitLength(string& text) const {
 
 void BassTable::writeBits(uint64_t data, unsigned length) {
   function<uint64_t(unsigned)> setBits = [&](unsigned n) -> uint64_t {
-    // set the first n bits from the right
+    // Create a bit mask with the n least significant bits set
     if(n == 0){
       return 0;
     }
