@@ -66,14 +66,16 @@ string& Bass::reduceWhitespace(string& s) {
 // this only fixes some problems, see bass/.test/space_test
   bool insideQuotes = false;
   char *p = s.data();
+  unsigned len = s.length();
 
-  for(unsigned i = 0; i < s.length(); i++) {
+  for(unsigned i = 0; i < len; i++) {
     if(!insideQuotes) {
       if(p[i] == ' ') {
-        unsigned j = i+1;
-        for(; j < s.length() && p[j] == ' '; j++) {}
-        if(j > i+1) {
-          memmove(p + i+1, p + j, s.length() - (j - 1));
+        unsigned j = ++i;
+        for(; j < len && p[j] == ' '; j++) {}
+        if(j > i) {
+          memmove(p + i, p + j, len - (j - 1));
+          len -= j - i;
         }
       }
     }
@@ -81,7 +83,7 @@ string& Bass::reduceWhitespace(string& s) {
       insideQuotes = !insideQuotes;
     }
   }
-  //s.resize(s.length());
+  //s.resize(len);
   return s;
 }
 

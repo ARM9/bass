@@ -41,7 +41,7 @@ _GsuReset:
     link #0 // 0x90 = sbk
     link #1
     link #4
-    link #15 // 0x9f = fmult
+    link #15 // 0x97 = ror
     link #16 // 0x90 = sbk
     link #17 // 0x91 = link #1
 
