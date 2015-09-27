@@ -487,6 +487,7 @@ tlbr
 tlbwi
 tlbwr
 tlbp
+rfe
 eret
 
 cop0 $1FFEEDD
