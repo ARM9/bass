@@ -386,8 +386,7 @@ vrsql v1,v1,v1[e15]
 vrsql v1,v1[e15]
 vrsqh v1,v1,v1[e15]
 vrsqh v1,v1[e15]
-vnop v1,v1,v1[e15]
-vnop v1,v1[e15]
+vnop
 
 vextt v1,v1,v1[e15]
 vextt v1,v1[e15]
@@ -403,8 +402,7 @@ vinsq v1,v1,v1[e15]
 vinsq v1,v1[e15]
 vinsn v1,v1,v1[e15]
 vinsn v1,v1[e15]
-vnull v1,v1,v1[e15]
-vnull v1,v1[e15]
+vnull
 
 // RSP CP2 Vector Load Instructions (LWC2):
 lbv v1[e15],$3F(r31)
@@ -417,7 +415,7 @@ lpv v1[e15],$3F(r31)
 luv v1[e15],$3F(r31)
 lhv v1[e15],$3F(r31)
 lfv v1[e15],$3F(r31)
-ltwv v1[e15],$3F(r31)
+lwv v1[e15],$3F(r31)
 ltv v1[e15],$3F(r31)
 
 // RSP CP2 Vector Store Instructions (SWC2):
