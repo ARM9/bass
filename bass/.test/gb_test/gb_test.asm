@@ -493,6 +493,7 @@ call c,CALLC
 sbc a,$FF
 rst 18h
 ld ($FF00+$FF),a
+ldh ($FFFF),a
 pop hl
 ld (c),a
 pushhl
@@ -504,6 +505,7 @@ ld ($FFFF),a
 xor $FF
 rst 28h
 ld a,($FF00+$FF)
+ldh a,($FFFF)
 pop af
 ld a,(c)
 di
