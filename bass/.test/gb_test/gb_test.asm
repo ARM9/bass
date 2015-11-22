@@ -1,6 +1,6 @@
 arch gb.cpu
 
-// Game Boy Z80 (CPU):
+// Game Boy CPU:
 nop
 ld bc,$FFFF
 ld (bc),a
@@ -38,6 +38,8 @@ JRNZ:
 jr nz,JRNZ
 ld hl,$FFFF
 ld (hli),a
+ld (hl+),a
+ldi (hl),a
 inc hl
 inc h
 dec h
@@ -47,6 +49,8 @@ JRZ:
 jr z,JRZ
 add hl,hl
 ld a,(hli)
+ld a,(hl+)
+ldi a,(hl)
 dec hl
 inc l
 dec l
@@ -56,6 +60,8 @@ JRNC:
 jr nc,JRNC
 ld sp,$FFFF
 ld (hld),a
+ld (hl-),a
+ldd (hl),a
 inc sp
 inc (hl)
 dec (hl)
@@ -65,6 +71,8 @@ JRC:
 jr c,JRC
 add hl,sp
 ld a,(hld)
+ld a,(hl-)
+ldd a,(hl)
 dec sp
 inc a
 dec a
@@ -493,6 +501,7 @@ call c,CALLC
 sbc a,$FF
 rst 18h
 ld ($FF00+$FF),a
+ldh ($FFFF),a
 pop hl
 ld (c),a
 pushhl
@@ -500,10 +509,12 @@ and $FF
 rst 20h
 add sp,$FF
 jp (hl)
+jp hl
 ld ($FFFF),a
 xor $FF
 rst 28h
 ld a,($FF00+$FF)
+ldh a,($FFFF)
 pop af
 ld a,(c)
 di

@@ -1,4 +1,4 @@
-// Game Boy Z80:
+// Game Boy CPU:
 
 arch(gb_cpu) = R"(
 jr nz,*08   ; $20 +2a
@@ -76,8 +76,13 @@ jp nc,*16   ; $D2 =a
 call nc,*16 ; $D4 =a
 jp c,*16    ; $DA =a
 call c,*16  ; $DC =a
+
 jp (hl)     ; $E9
+jp hl       ; $E9
+
 ld a,($FF00+*08) ; $F0 =a
+ldh a,(*08) ; $F0 ~a
+
 ld a,(c)    ; $F2
 ld sp,hl    ; $F9
 
@@ -115,7 +120,11 @@ ld e,*08    ; $1E =a
 rra         ; $1F
 
 ld hl,*16   ; $21 =a
+
 ld (hli),a  ; $22
+ld (hl+),a  ; $22
+ldi (hl),a  ; $22
+
 inc hl      ; $23
 inc h       ; $24
 dec h       ; $25
@@ -123,7 +132,11 @@ ld h,*08    ; $26 =a
 daa         ; $27
 
 add hl,hl   ; $29
+
 ld a,(hli)  ; $2A
+ld a,(hl+)  ; $2A
+ldi a,(hl)  ; $2A
+
 dec hl      ; $2B
 inc l       ; $2C
 dec l       ; $2D
@@ -131,7 +144,11 @@ ld l,*08    ; $2E =a
 cpl         ; $2F
 
 ld sp,*16   ; $31 =a
+
 ld (hld),a  ; $32
+ld (hl-),a  ; $32
+ldd (hl),a  ; $32
+
 inc sp      ; $33
 inc (hl)    ; $34
 dec (hl)    ; $35
@@ -139,7 +156,10 @@ ld (hl),*08 ; $36 =a
 scf         ; $37
 
 add hl,sp   ; $39
+
 ld a,(hld)  ; $3A
+ld a,(hl-)  ; $3A
+ldd a,(hl)  ; $3A
 
 ld a,(*16)  ; $FA =a
 
@@ -496,7 +516,11 @@ reti        ; $D9
 
 sbc a,*08   ; $DE =a
 rst 18h     ; $DF
+
 ld ($FF00+*08),a ; $E0 =a
+ldh (*08),a ; $E0 ~a
+
+ld
 pop hl      ; $E1
 ld (c),a    ; $E2
 
@@ -506,7 +530,6 @@ rst 20h     ; $E7
 add sp,*08  ; $E8 =a
 
 ld (*16),a  ; $EA =a
-
 xor *08     ; $EE =a
 rst 28h     ; $EF
 pop af      ; $F1
