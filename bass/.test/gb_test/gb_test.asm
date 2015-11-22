@@ -1,6 +1,6 @@
 arch gb.cpu
 
-// Game Boy Z80 (CPU):
+// Game Boy CPU:
 nop
 ld bc,$FFFF
 ld (bc),a
