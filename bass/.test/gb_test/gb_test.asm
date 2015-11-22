@@ -38,6 +38,8 @@ JRNZ:
 jr nz,JRNZ
 ld hl,$FFFF
 ld (hli),a
+ld (hl+),a
+ldi (hl),a
 inc hl
 inc h
 dec h
@@ -47,6 +49,8 @@ JRZ:
 jr z,JRZ
 add hl,hl
 ld a,(hli)
+ld a,(hl+)
+ldi a,(hl)
 dec hl
 inc l
 dec l
@@ -56,6 +60,8 @@ JRNC:
 jr nc,JRNC
 ld sp,$FFFF
 ld (hld),a
+ld (hl-),a
+ldd (hl),a
 inc sp
 inc (hl)
 dec (hl)
@@ -65,6 +71,8 @@ JRC:
 jr c,JRC
 add hl,sp
 ld a,(hld)
+ld a,(hl-)
+ldd a,(hl)
 dec sp
 inc a
 dec a

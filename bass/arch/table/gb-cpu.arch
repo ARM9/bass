@@ -118,7 +118,11 @@ ld e,*08    ; $1E =a
 rra         ; $1F
 
 ld hl,*16   ; $21 =a
+
 ld (hli),a  ; $22
+ld (hl+),a  ; $22
+ldi (hl),a  ; $22
+
 inc hl      ; $23
 inc h       ; $24
 dec h       ; $25
@@ -126,7 +130,11 @@ ld h,*08    ; $26 =a
 daa         ; $27
 
 add hl,hl   ; $29
+
 ld a,(hli)  ; $2A
+ld a,(hl+)  ; $2A
+ldi a,(hl)  ; $2A
+
 dec hl      ; $2B
 inc l       ; $2C
 dec l       ; $2D
@@ -134,7 +142,11 @@ ld l,*08    ; $2E =a
 cpl         ; $2F
 
 ld sp,*16   ; $31 =a
+
 ld (hld),a  ; $32
+ld (hl-),a  ; $32
+ldd (hl),a  ; $32
+
 inc sp      ; $33
 inc (hl)    ; $34
 dec (hl)    ; $35
@@ -142,7 +154,10 @@ ld (hl),*08 ; $36 =a
 scf         ; $37
 
 add hl,sp   ; $39
+
 ld a,(hld)  ; $3A
+ld a,(hl-)  ; $3A
+ldd a,(hl)  ; $3A
 
 ld a,(*16)  ; $FA =a
 
