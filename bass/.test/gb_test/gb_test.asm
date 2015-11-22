@@ -509,6 +509,7 @@ and $FF
 rst 20h
 add sp,$FF
 jp (hl)
+jp hl
 ld ($FFFF),a
 xor $FF
 rst 28h

@@ -76,7 +76,9 @@ jp nc,*16   ; $D2 =a
 call nc,*16 ; $D4 =a
 jp c,*16    ; $DA =a
 call c,*16  ; $DC =a
+
 jp (hl)     ; $E9
+jp hl       ; $E9
 
 ld a,($FF00+*08) ; $F0 =a
 ldh a,(*08) ; $F0 ~a
