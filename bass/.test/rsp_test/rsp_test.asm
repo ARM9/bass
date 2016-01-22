@@ -468,20 +468,13 @@ v057 v1,v1,v1
 v057 v1,v1[e15]
 v057 v1,v1
 
-vrcp v1,v1,v1[e15]
-vrcp v1,v1[e15]
-vrcpl v1,v1,v1[e15]
-vrcpl v1,v1[e15]
-vrcph v1,v1,v1[e15]
-vrcph v1,v1[e15]
-vmov v1,v1,v1[e15]
-vmov v1,v1[e15]
-vrsq v1,v1,v1[e15]
-vrsq v1,v1[e15]
-vrsql v1,v1,v1[e15]
-vrsql v1,v1[e15]
-vrsqh v1,v1,v1[e15]
-vrsqh v1,v1[e15]
+vrcp v1[e1],v1[e15]
+vrcpl v1[e1],v1[e15]
+vrcph v1[e1],v1[e15]
+vmov v1[e1],v1[e15]
+vrsq v1[e1],v1[e15]
+vrsql v1[e1],v1[e15]
+vrsqh v1[e1],v1[e15]
 vnop
 
 vextt v1,v1,v1[e15]
