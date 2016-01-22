@@ -238,7 +238,7 @@ pop bc      ; $C1
 jp nz,*16   ; $C2 =a
 jp *16      ; $C3 =a
 call nz,*16 ; $C4 =a
-pushbc      ; $C5
+push bc     ; $C5
 add a,*08   ; $C6 =a
 rst 00h     ; $C7
 ret z       ; $C8
@@ -508,7 +508,7 @@ rst 08h     ; $CF
 ret nc      ; $D0
 pop de      ; $D1
 
-pushde      ; $D5
+push de     ; $D5
 sub *08     ; $D6 =a
 rst 10h     ; $D7
 ret c       ; $D8
@@ -524,7 +524,7 @@ ld
 pop hl      ; $E1
 ld (c),a    ; $E2
 
-pushhl      ; $E5
+push hl     ; $E5
 and *08     ; $E6 =a
 rst 20h     ; $E7
 add sp,*08  ; $E8 =a
@@ -535,7 +535,7 @@ rst 28h     ; $EF
 pop af      ; $F1
 
 di          ; $F3
-pushaf      ; $F5
+push af     ; $F5
 or *08      ; $F6 =a
 rst 30h     ; $F7
 ldhl sp,*08 ; $F8 =a

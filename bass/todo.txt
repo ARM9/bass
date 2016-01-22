@@ -1,4 +1,3 @@
-push/pop segments
 arch local constants
 make tables endian agnostic
 integrate new nall

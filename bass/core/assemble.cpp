@@ -106,8 +106,8 @@ bool Bass::assemble(const string& statement) {
   }
 
   //push variable [, ...]
-  if(s.match("push ?*")) {
-    lstring p = s.ltrim<1>("push ").qsplit(",").strip();
+  if(s.match("pushvar ?*")) {
+    lstring p = s.ltrim<1>("pushvar ").qsplit(",").strip();
     for(auto& t : p) {
       if(t == "origin") {
         pushStack.append(origin);
@@ -124,8 +124,8 @@ bool Bass::assemble(const string& statement) {
   }
 
   //pull variable [, ...]
-  if(s.match("pull ?*")) {
-    lstring p = s.ltrim<1>("pull ").qsplit(",").strip();
+  if(s.match("pullvar ?*")) {
+    lstring p = s.ltrim<1>("pullvar ").qsplit(",").strip();
     for(auto& t : p) {
       if(t == "origin") {
         origin = decimal(pushStack.takeLast());

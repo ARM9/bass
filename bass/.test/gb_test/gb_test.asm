@@ -214,7 +214,7 @@ JP:
 jp JP
 CALLNZ:
 call nz,CALLNZ
-pushbc
+push bc
 add a,$FF
 rst 00h
 ret z
@@ -489,7 +489,7 @@ JPNC:
 jp nc,JPNC
 CALLNC:
 call nc,CALLNC
-pushde
+push de
 sub $FF
 rst 10h
 ret c
@@ -504,7 +504,7 @@ ld ($FF00+$FF),a
 ldh ($FFFF),a
 pop hl
 ld (c),a
-pushhl
+push hl
 and $FF
 rst 20h
 add sp,$FF
@@ -518,7 +518,7 @@ ldh a,($FFFF)
 pop af
 ld a,(c)
 di
-pushaf
+push af
 or $FF
 rst 30h
 ldhl sp,$FF
