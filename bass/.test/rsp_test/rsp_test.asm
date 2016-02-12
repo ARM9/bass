@@ -270,7 +270,7 @@ mtc2 r1,r2
 cfc2 r1,vce
 ctc2 r1,vce
 
-// RSP CP2 Vector Operation Matrix Instructions (COP2):
+// RSP CP2 Vector Operation Instructions (COP2):
 vmulf v1,v1,v1[e15]
 vmulf v1,v1,v1
 vmulf v1,v1[e15]
