@@ -1,6 +1,6 @@
 arch gb.cpu
 
-// Game Boy CPU:
+// Game Boy Sharp LR35902
 nop
 ld bc,$FFFF
 ld (bc),a

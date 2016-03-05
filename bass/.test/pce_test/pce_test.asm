@@ -1,6 +1,6 @@
 arch pce.cpu
 
-// PC-Engine CPU:
+// PC-Engine/TurboGrafx-16 HuC6280 (Modified WDC65C02 CPU)
 asl
 cla
 clc

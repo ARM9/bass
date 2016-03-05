@@ -1,6 +1,6 @@
 arch snes.smp
 
-// Super Famicom/SNES SPC-700 SMP:
+// Super Famicom/SNES SPC-700 SMP
 nop
 brk
 rts

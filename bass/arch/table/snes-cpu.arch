@@ -1,5 +1,6 @@
-arch(snes_cpu) = R"(
+// Super Famicom/SNES WDC65816
 
+arch(snes_cpu) = R"(
 asl            ;$0a
 clc            ;$18
 cld            ;$d8

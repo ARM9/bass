@@ -1,5 +1,6 @@
-arch(snes_smp) = R"(
+// Super Famicom/SNES SPC-700 SMP
 
+arch(snes_smp) = R"(
 nop              ;$00
 brk              ;$0f
 rts              ;$6f

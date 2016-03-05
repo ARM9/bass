@@ -1,6 +1,6 @@
 arch snes.cpu
 
-// Super Famicom/SNES CPU:
+// Super Famicom/SNES WDC65816
 asl
 clc
 cld

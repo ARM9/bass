@@ -1,6 +1,6 @@
 arch nes.cpu
 
-// Famicom/NES CPU:
+// Famicom/NES WDC6502 without decimal flag ("cld" & "sed" run as NOP)
 asl
 clc
 cld

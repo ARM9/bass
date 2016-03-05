@@ -1,5 +1,5 @@
+// PC-Engine/TurboGrafx-16 HuC6280 (Modified WDC65C02 CPU)
 
-// Modified 65C02 CPU (HuC6280)
 arch(pce_cpu) = R"(
 asl             ;$0a
 cla             ;$62

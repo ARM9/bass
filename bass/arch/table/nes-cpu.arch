@@ -1,5 +1,5 @@
+// Famicom/NES WDC6502 without decimal flag ("cld" & "sed" run as NOP)
 
-// 6502 without decimal flag ("cld" & "sed" run as NOP)
 arch(nes_cpu) = R"(
 asl            ;$0a
 clc            ;$18
