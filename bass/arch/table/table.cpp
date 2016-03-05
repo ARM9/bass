@@ -10,6 +10,7 @@
 #include "gb-cpu.arch"
 //#include "psx-cpu.arch"
 #include "nes-cpu.arch"
+#include "pce-cpu.arch"
 #undef arch
 
 void BassTable::initialize() {
@@ -41,6 +42,7 @@ bool BassTable::assemble(const string& statement) {
     else if(s == "gb.cpu") data = Arch_gb_cpu;
     //else if(s == "psx.cpu") data = Arch_psx_cpu;
     else if(s == "nes.cpu") data = Arch_nes_cpu;
+    else if(s == "pce.cpu") data = Arch_pce_cpu;
     else if(s.match("\"?*\"")) {
       s.trim<1>("\"");
       s = {dir(sourceFilenames.last()), s};
