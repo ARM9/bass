@@ -295,8 +295,8 @@ st0 #$FE
 st1 #$FE
 st2 #$FE
 
-tam #$FE
-tma #$FE
+tam #7
+tma #7
 
 tai $FEDC,$BA98,$7654
 tdd $FEDC,$BA98,$7654
