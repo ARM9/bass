@@ -65,6 +65,7 @@ protected:
     unsigned ip;
     bool scoped;
 
+    Instruction* invokedBy = nullptr;
     hashset<Macro> macros;
     hashset<Define> defines;
     hashset<Variable> variables;
@@ -108,6 +109,7 @@ protected:
   void write(uint64_t data, unsigned length = 1);
 
   void printInstruction();
+  void printInstructionStack();
   template<typename... Args> void notice(Args&&... args);
   template<typename... Args> void warning(Args&&... args);
   template<typename... Args> void error(Args&&... args);
