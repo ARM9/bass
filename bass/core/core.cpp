@@ -143,16 +143,27 @@ void Bass::printInstruction() {
   }
 }
 
+void Bass::printInstructionStack() {
+  printInstruction();
+
+  for(unsigned s = stackFrame.size() - 1; s >= 1; s--) {
+    if(stackFrame[s].invokedBy) {
+      auto& i = *stackFrame[s].invokedBy;
+      print("   ", sourceFilenames[i.fileNumber], ":", i.lineNumber, ":", i.blockNumber, ": ", i.statement, "\n");
+    }
+  }
+}
+
 template<typename... Args> void Bass::notice(Args&&... args) {
   string s = string(std::forward<Args>(args)...);
   print("notice: ", s, "\n");
-  printInstruction();
+  printInstructionStack();
 }
 
 template<typename... Args> void Bass::warning(Args&&... args) {
   string s = string(std::forward<Args>(args)...);
   print("warning: ", s, "\n");
-  printInstruction();
+  printInstructionStack();
 
   if(strict == false) return;
   struct BassWarning {};
@@ -162,7 +173,7 @@ template<typename... Args> void Bass::warning(Args&&... args) {
 template<typename... Args> void Bass::error(Args&&... args) {
   string s = string(std::forward<Args>(args)...);
   print("error: ", s, "\n");
-  printInstruction();
+  printInstructionStack();
 
   struct BassError {};
   throw BassError();

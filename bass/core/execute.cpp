@@ -139,6 +139,7 @@ bool Bass::executeInstruction(Instruction& i) {
       StackFrame frame;
       stackFrame.append(frame);
       stackFrame.last().ip = ip;
+      stackFrame.last().invokedBy = &i;
       stackFrame.last().scoped = macro().scoped;
 
       if(macro().scoped) {

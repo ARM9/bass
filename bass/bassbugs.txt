@@ -1,12 +1,3 @@
-bug in: error "string"
-test case:
-error "foo"
-$ bass err.asm
-error: foo
-e.asm:2:1: error "foo"
-bass: assembly failed
-rationale: Should list the line where the macro was invoked? instead of the line in the macro where the error statement is located.
-
 lda #$00		= A9 00
 lda #$0000		= A9 00 00
 lda #0			= A9 00 00
