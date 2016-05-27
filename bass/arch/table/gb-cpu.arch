@@ -519,8 +519,6 @@ rst 18h     ; $DF
 
 ld ($FF00+*08),a ; $E0 =a
 ldh (*08),a ; $E0 ~a
-
-ld
 pop hl      ; $E1
 ld (c),a    ; $E2
 
