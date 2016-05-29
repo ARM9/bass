@@ -1,0 +1,5 @@
+// MSX / MSX2 / MSX2+ Zilog Z80
+
+arch(msx_cpu) =
+#include "z80/z80.md"
+;

@@ -1,4 +1,6 @@
 #define arch(name) static string Arch_##name
+#include "nes-cpu.arch"
+#include "pce-cpu.arch"
 #include "snes-cpu.arch"
 #include "snes-smp.arch"
 #include "snes-gsu.arch"
@@ -7,10 +9,12 @@
 #include "n64-rdp.arch"
 #include "n64-rsp.arch"
 #include "sgi-msp.arch"
-#include "gb-cpu.arch"
 //#include "psx-cpu.arch"
-#include "nes-cpu.arch"
-#include "pce-cpu.arch"
+#include "gb-cpu.arch"
+#include "gg-cpu.arch"
+#include "sms-cpu.arch"
+#include "msx-cpu.arch"
+#include "msxtr-cpu.arch"
 #undef arch
 
 void BassTable::initialize() {
@@ -31,6 +35,8 @@ bool BassTable::assemble(const string& statement) {
     string data;
     if(0);
     else if(s == "reset") data = "";
+    else if(s == "nes.cpu") data = Arch_nes_cpu;
+    else if(s == "pce.cpu") data = Arch_pce_cpu;
     else if(s == "snes.cpu") data = Arch_snes_cpu;
     else if(s == "snes.smp") data = Arch_snes_smp;
     else if(s == "snes.gsu") data = Arch_snes_gsu;
@@ -39,10 +45,12 @@ bool BassTable::assemble(const string& statement) {
     else if(s == "n64.rdp") data = Arch_n64_rdp;
     else if(s == "n64.rsp") data = Arch_n64_rsp;
     else if(s == "sgi.msp") data = Arch_sgi_msp;
-    else if(s == "gb.cpu") data = Arch_gb_cpu;
     //else if(s == "psx.cpu") data = Arch_psx_cpu;
-    else if(s == "nes.cpu") data = Arch_nes_cpu;
-    else if(s == "pce.cpu") data = Arch_pce_cpu;
+    else if(s == "gb.cpu") data = Arch_gb_cpu;
+    else if(s == "gg.cpu") data = Arch_gg_cpu;
+    else if(s == "sms.cpu") data = Arch_sms_cpu;
+    else if(s == "msx.cpu") data = Arch_msx_cpu;
+    else if(s == "msxtr.cpu") data = Arch_msxtr_cpu;
     else if(s.match("\"?*\"")) {
       s.trim<1>("\"");
       s = {dir(sourceFilenames.last()), s};

@@ -1,0 +1,442 @@
+http://map.grauw.nl/resources/z80instr.php
+
+-------------------------------------
+
+R800 Additional instructions to Z80:
+
+mulub a,b       ; $ED $C1
+muluw hl,bc     ; $ED $C3
+mulub a,c       ; $ED $C9
+mulub a,d       ; $ED $D1
+mulub a,e       ; $ED $D9
+mulub a,h       ; $ED $E1
+mulub a,l       ; $ED $E9
+mulub a,a       ; $ED $F1
+muluw hl,sp     ; $ED $F3
+
+-------------------------------------
+
+Z80 Additional instructions to gb.cpu:
+
+ex (sp),hl      ; $E3
+ex de,hl        ; $EB
+ex (sp),ix      ; $DD $E3
+ex (sp),iy      ; $FD $E3
+
+im 0            ; $ED $46
+im 1            ; $ED $56
+im 2            ; $ED $5E
+
+in b,(c)        ; $ED $40
+neg             ; $ED $44
+ld i,a          ; $ED $47
+in c,(c)        ; $ED $48
+ld r,a          ; $ED $4F
+in d,(c)        ; $ED $50
+in e,(c)        ; $ED $58
+in h,(c)        ; $ED $60
+in l,(c)        ; $ED $68
+rld             ; $ED $6F
+in f,(c)        ; $ED $70
+in a,(c)        ; $ED $78
+ld sp,(*16)     ; $ED $7B =a
+in a,(*08)      ; $DB =a
+
+ldi             ; $ED $A0
+cpi             ; $ED $A1
+ini             ; $ED $A2
+ldd             ; $ED $A8
+cpd             ; $ED $A9
+ind             ; $ED $AA
+ldir            ; $ED $B0
+cpir            ; $ED $B1
+inir            ; $ED $B2
+lddr            ; $ED $B8
+cpdr            ; $ED $B9
+indr            ; $ED $BA
+
+ld ix,*16       ; $DD $21 =a
+inc ix          ; $DD $23
+inc ixh         ; $DD $24
+dec ixh         ; $DD $25
+
+ld ix,(*16)     ; $DD $2A =a
+dec ix          ; $DD $2B
+inc ixl         ; $DD $2C
+dec ixl         ; $DD $2D
+
+inc (ix+*08)    ; $DD $34 =a
+dec (ix+*08)    ; $DD $35 =a
+
+add ix,bc       ; $DD $09
+add ix,de       ; $DD $19
+add ix,ix       ; $DD $29
+add ix,sp       ; $DD $39
+
+ld b,ixh        ; $DD $44
+ld b,ixl        ; $DD $45
+ld b,(ix+*08)   ; $DD $46 =a
+
+ld c,ixh        ; $DD $4C
+ld c,ixl        ; $DD $4D
+ld c,(ix+*08)   ; $DD $4E =a
+
+ld d,ixh        ; $DD $54
+ld d,ixl        ; $DD $55
+ld d,(ix+*08)   ; $DD $56 =a
+
+ld e,ixh        ; $DD $5C
+ld e,ixl        ; $DD $5D
+ld e,(ix+*08)   ; $DD $5E =a
+
+ld l,(ix+*08)   ; $DD $6E =a
+
+ld ixh,b        ; $DD $60
+ld ixh,c        ; $DD $61
+ld ixh,d        ; $DD $62
+ld ixh,e        ; $DD $63
+ld ixh,ixh      ; $DD $64
+ld ixh,ixl      ; $DD $65
+ld h,(ix+*08)   ; $DD $66 =a
+ld ixh,a        ; $DD $67
+ld ixl,b        ; $DD $68
+ld ixl,c        ; $DD $69
+ld ixl,d        ; $DD $6A
+ld ixl,e        ; $DD $6B
+ld ixl,ixh      ; $DD $6C
+ld ixl,ixl      ; $DD $6D
+ld ixl,a        ; $DD $6F
+
+ld ixh,*08      ; $DD $26 =a
+ld ixl,*08      ; $DD $2E =a
+
+ld (ix+*08),b   ; $DD $70 =a
+ld (ix+*08),c   ; $DD $71 =a
+ld (ix+*08),d   ; $DD $72 =a
+ld (ix+*08),e   ; $DD $73 =a
+ld (ix+*08),h   ; $DD $74 =a
+ld (ix+*08),l   ; $DD $75 =a
+ld (ix+*08),a   ; $DD $77 =a
+
+ld a,ixh        ; $DD $7C
+ld a,ixl        ; $DD $7D
+ld a,(ix+*08)   ; $DD $7E =a
+
+ld (ix+*08),*08 ; $DD $36 =a =b
+
+add a,ixh       ; $DD $84
+add a,ixl       ; $DD $85
+add a,(ix+*08)  ; $DD $86 =a
+
+adc a,ixh       ; $DD $8C
+adc a,ixl       ; $DD $8D
+adc a,(ix+*08)  ; $DD $8E =a
+
+sub ixh         ; $DD $94
+sub ixl         ; $DD $95
+sub (ix+*08)    ; $DD $96 =a
+
+sbc a,ixh       ; $DD $9C
+sbc a,ixl       ; $DD $9D
+sbc a,(ix+*08)  ; $DD $9E =a
+
+and ixh         ; $DD $A4
+and ixl         ; $DD $A5
+and (ix+*08)    ; $DD $A6 =a
+
+xor ixh         ; $DD $AC
+xor ixl         ; $DD $AD
+xor (ix+*08)    ; $DD $AE =a
+
+or ixh          ; $DD $B4
+or ixl          ; $DD $B5
+or (ix+*08)     ; $DD $B6 =a
+
+cp ixh          ; $DD $BC
+cp ixl          ; $DD $BD
+cp (ix+*08)     ; $DD $BE =a
+
+rlc (ix+*08)    ; $DD $CB =a $06
+rl (ix+*08)     ; $DD $CB =a $16
+rrc (ix+*08)    ; $DD $CB =a $0E
+rr (ix+*08)     ; $DD $CB =a $1E
+sla (ix+*08)    ; $DD $CB =a $26
+sra (ix+*08)    ; $DD $CB =a $2E
+srl (ix+*08)    ; $DD $CB =a $3E
+
+bit 0,(ix+*08)  ; $DD $CB =a $46
+bit 1,(ix+*08)  ; $DD $CB =a $4E
+bit 2,(ix+*08)  ; $DD $CB =a $56
+bit 3,(ix+*08)  ; $DD $CB =a $5E
+bit 4,(ix+*08)  ; $DD $CB =a $66
+bit 5,(ix+*08)  ; $DD $CB =a $6E
+bit 6,(ix+*08)  ; $DD $CB =a $76
+bit 7,(ix+*08)  ; $DD $CB =a $7E
+
+res 0,(ix+*08)  ; $DD $CB =a $86
+res 1,(ix+*08)  ; $DD $CB =a $8E
+res 2,(ix+*08)  ; $DD $CB =a $96
+res 3,(ix+*08)  ; $DD $CB =a $9E
+res 4,(ix+*08)  ; $DD $CB =a $A6
+res 5,(ix+*08)  ; $DD $CB =a $AE
+res 6,(ix+*08)  ; $DD $CB =a $B6
+res 7,(ix+*08)  ; $DD $CB =a $BE
+
+set 0,(ix+*08)  ; $DD $CB =a $C6
+set 1,(ix+*08)  ; $DD $CB =a $CE
+set 2,(ix+*08)  ; $DD $CB =a $D6
+set 3,(ix+*08)  ; $DD $CB =a $DE
+set 4,(ix+*08)  ; $DD $CB =a $E6
+set 5,(ix+*08)  ; $DD $CB =a $EE
+set 6,(ix+*08)  ; $DD $CB =a $F6
+set 7,(ix+*08)  ; $DD $CB =a $FE
+
+pop ix          ; $DD $E1
+push ix         ; $DD $E5
+
+jp (ix)         ; $DD $E9
+
+ld sp,ix        ; $DD $F9
+
+call po,*16     ; $E4 =a
+call pe,*16     ; $EC =a
+
+sbc hl,bc       ; $ED $42
+retn            ; $ED $45
+adc hl,bc       ; $ED $4A
+ld bc,(*16)     ; $ED $4B =a
+reti            ; $ED $4D
+sbc hl,de       ; $ED $52
+ld a,i          ; $ED $57
+adc hl,de       ; $ED $5A
+ld de,(*16)     ; $ED $5B =a
+ld a,r          ; $ED $5F
+sbc hl,hl       ; $ED $62
+rrd             ; $ED $67
+adc hl,hl       ; $ED $6A
+sbc hl,sp       ; $ED $72
+adc hl,sp       ; $ED $7A
+
+out (c),b       ; $ED $41
+out (c),c       ; $ED $49
+out (c),d       ; $ED $51
+out (c),e       ; $ED $59
+out (c),h       ; $ED $61
+out (c),l       ; $ED $69
+out (c),a       ; $ED $79
+
+out (*08),a     ; $D3 =a
+
+outi            ; $ED $A3
+outd            ; $ED $AB
+otir            ; $ED $B3
+otdr            ; $ED $BB
+
+call p,*16      ; $F4 =a
+call m,*16      ; $FC =a
+
+ld iy,*16       ; $FD $21 =a
+inc iy          ; $FD $23
+inc iyh         ; $FD $24
+dec iyh         ; $FD $25
+
+ld iy,(*16)     ; $FD $2A =a
+dec iy          ; $FD $2B
+inc iyl         ; $FD $2C
+dec iyl         ; $FD $2D
+inc (iy+*08)    ; $FD $34 =a
+dec (iy+*08)    ; $FD $35 =a
+
+add iy,bc       ; $FD $09
+add iy,de       ; $FD $19
+add iy,iy       ; $FD $29
+add iy,sp       ; $FD $39
+
+ld b,iyh        ; $FD $44
+ld b,iyl        ; $FD $45
+ld b,(iy+*08)   ; $FD $46 =a
+
+ld c,iyh        ; $FD $4C
+ld c,iyl        ; $FD $4D
+ld c,(iy+*08)   ; $FD $4E =a
+
+ld d,iyh        ; $FD $54
+ld d,iyl        ; $FD $55
+ld d,(iy+*08)   ; $FD $56 =a
+
+ld e,iyh        ; $FD $5C
+ld e,iyl        ; $FD $5D
+ld e,(iy+*08)   ; $FD $5E =a
+
+ld l,(iy+*08)   ; $FD $6E =a
+
+ld iyh,b        ; $FD $60
+ld iyh,c        ; $FD $61
+ld iyh,d        ; $FD $62
+ld iyh,e        ; $FD $63
+ld iyh,iyh      ; $FD $64
+ld iyh,iyl      ; $FD $65
+ld h,(iy+*08)   ; $FD $66 =a
+ld iyh,a        ; $FD $67
+ld iyl,b        ; $FD $68
+ld iyl,c        ; $FD $69
+ld iyl,d        ; $FD $6A
+ld iyl,e        ; $FD $6B
+ld iyl,iyh      ; $FD $6C
+ld iyl,iyl      ; $FD $6D
+ld iyl,a        ; $FD $6F
+
+ld iyh,*08      ; $FD $26 =a
+ld iyl,*08      ; $FD $2E =a
+
+ld (iy+*08),b   ; $FD $70 =a
+ld (iy+*08),c   ; $FD $71 =a
+ld (iy+*08),d   ; $FD $72 =a
+ld (iy+*08),e   ; $FD $73 =a
+ld (iy+*08),h   ; $FD $74 =a
+ld (iy+*08),l   ; $FD $75 =a
+ld (iy+*08),a   ; $FD $77 =a
+
+ld a,iyh        ; $FD $7C
+ld a,iyl        ; $FD $7D
+ld a,(iy+*08)   ; $FD $7E =a
+
+ld (iy+*08),*08 ; $FD $36 =a =b
+
+add a,iyh       ; $FD $84
+add a,iyl       ; $FD $85
+add a,(iy+*08)  ; $FD $86 =a
+
+adc a,iyh       ; $FD $8C
+adc a,iyl       ; $FD $8D
+adc a,(iy+*08)  ; $FD $8E =a
+
+sub iyh         ; $FD $94
+sub iyl         ; $FD $95
+sub (iy+*08)    ; $FD $96 =a
+
+sbc a,iyh       ; $FD $9C
+sbc a,iyl       ; $FD $9D
+sbc a,(iy+*08)  ; $FD $9E =a
+
+and iyh         ; $FD $A4
+and iyl         ; $FD $A5
+and (iy+*08)    ; $FD $A6 =a
+
+xor iyh         ; $FD $AC
+xor iyl         ; $FD $AD
+xor (iy+*08)    ; $FD $AE =a
+
+or iyh          ; $FD $B4
+or iyl          ; $FD $B5
+or (iy+*08)     ; $FD $B6 =a
+
+cp iyh          ; $FD $BC
+cp iyl          ; $FD $BD
+cp (iy+*08)     ; $FD $BE =a
+
+rlc (iy+*08)    ; $FD $CB =a $06
+rl (iy+*08)     ; $FD $CB =a $16
+rrc (iy+*08)    ; $FD $CB =a $0E
+rr (iy+*08)     ; $FD $CB =a $1E
+sla (iy+*08)    ; $FD $CB =a $26
+sra (iy+*08)    ; $FD $CB =a $2E
+srl (iy+*08)    ; $FD $CB =a $3E
+
+bit 0,(iy+*08)  ; $FD $CB =a $46
+bit 1,(iy+*08)  ; $FD $CB =a $4E
+bit 2,(iy+*08)  ; $FD $CB =a $56
+bit 3,(iy+*08)  ; $FD $CB =a $5E
+bit 4,(iy+*08)  ; $FD $CB =a $66
+bit 5,(iy+*08)  ; $FD $CB =a $6E
+bit 6,(iy+*08)  ; $FD $CB =a $76
+bit 7,(iy+*08)  ; $FD $CB =a $7E
+
+res 0,(iy+*08)  ; $FD $CB =a $86
+res 1,(iy+*08)  ; $FD $CB =a $8E
+res 2,(iy+*08)  ; $FD $CB =a $96
+res 3,(iy+*08)  ; $FD $CB =a $9E
+res 4,(iy+*08)  ; $FD $CB =a $A6
+res 5,(iy+*08)  ; $FD $CB =a $AE
+res 6,(iy+*08)  ; $FD $CB =a $B6
+res 7,(iy+*08)  ; $FD $CB =a $BE
+
+set 0,(iy+*08)  ; $FD $CB =a $C6
+set 1,(iy+*08)  ; $FD $CB =a $CE
+set 2,(iy+*08)  ; $FD $CB =a $D6
+set 3,(iy+*08)  ; $FD $CB =a $DE
+set 4,(iy+*08)  ; $FD $CB =a $E6
+set 5,(iy+*08)  ; $FD $CB =a $EE
+set 6,(iy+*08)  ; $FD $CB =a $F6
+set 7,(iy+*08)  ; $FD $CB =a $FE
+
+pop iy          ; $FD $E1
+push iy         ; $FD $E5
+
+jp (iy)         ; $FD $E9
+
+ld sp,iy        ; $FD $F9
+
+ld (*16),ix     ; $DD $22 =a
+ld (*16),bc     ; $ED $43 =a
+ld (*16),de     ; $ED $53 =a
+ld (*16),sp     ; $ED $73 =a
+ld (*16),iy     ; $FD $22 =a
+
+-----------------------------------
+Changed instructions to gb.cpu:
+
+ld (*16),sp ; $08 =a (GB)
+ex af,af'       ; $08 (Z80)
+
+stop        ; $10 (GB)
+djnz *08        ; $10 =a (Z80)
+
+ld (hli),a  ; $22
+ld (hl+),a  ; $22
+ldi (hl),a  ; $22
+ld (*16),hl     ; $22 =a (Z80)
+
+ld a,(hli)  ; $2A (GB)
+ld a,(hl+)  ; $2A (GB)
+ldi a,(hl)  ; $2A (GB)
+ld hl,(*16)     ; $2A =a (Z80)
+
+ld (hld),a  ; $32 (GB)
+ld (hl-),a  ; $32 (GB)
+ldd (hl),a  ; $32 (GB)
+ld (*16),a      ; $32 =a (Z80)
+
+ld a,(hld)  ; $3A (GB)
+ld a,(hl-)  ; $3A (GB)
+ldd a,(hl)  ; $3A (GB)
+ld a,(*16)      ; $3A =a (Z80)
+
+reti        ; $D9 (GB)
+exx             ; $D9 (Z80)
+
+ld ($FF00+*08),a ; $E0 =a (GB)
+ldh (*08),a ; $E0 ~a (GB)
+ret po          ; $E0 (Z80)
+
+ld (c),a    ; $E2 (GB)
+jp po,*16       ; $E2 =a (Z80)
+
+add sp,*08  ; $E8 =a (GB)
+ret pe          ; $E8 (Z80)
+
+ld (*16),a  ; $EA =a (GB)
+jp pe,*16       ; $EA =a (Z80)
+
+ld a,($FF00+*08) ; $F0 =a (GB)
+ldh a,(*08) ; $F0 ~a (GB)
+ret p           ; $F0 (Z80)
+
+ld a,(c)    ; $F2 (GB)
+jp p,*16        ; $F2 =a (Z80)
+
+ldhl sp,*08 ; $F8 =a (GB)
+ret m           ; $F8 (Z80)
+
+ld a,(*16)  ; $FA =a (GB)
+jp m,*16        ; $FA =a (Z80)

@@ -1,0 +1,5 @@
+// SEGA Master System / Mark III Zilog Z80
+
+arch(sms_cpu) =
+#include "z80/z80.md"
+;

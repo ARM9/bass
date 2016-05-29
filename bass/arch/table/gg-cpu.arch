@@ -1,0 +1,5 @@
+// Game Gear Zilog Z80
+
+arch(gg_cpu) =
+#include "z80/z80.md"
+;

@@ -1,0 +1,6 @@
+// MSX Turbo-R ASCII R800
+
+arch(msxtr_cpu) =
+#include "z80/r800.md"
+#include "z80/z80.md"
+;
