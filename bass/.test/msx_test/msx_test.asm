@@ -651,14 +651,7 @@ sra h
 sra l
 sra (hl)
 sra a
-swap b
-swap c
-swap d
-swap e
-swap h
-swap l
-swap (hl)
-swap a
+
 srl b
 srl c
 srl d
