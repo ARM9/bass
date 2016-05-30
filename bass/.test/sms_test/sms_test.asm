@@ -6,8 +6,10 @@ DJNZ:
 djnz DJNZ
 ld ($FFFF),hl
 ld hl,($FFFF)
+ld hl,$FFFF
 ld ($FFFF),a
 ld a,($FFFF)
+ld a,$FF
 exx
 JPPO:
 jp po,JPPO
@@ -55,12 +57,12 @@ lddr
 cpdr
 indr
 
-ld ix,$FFFF
 inc ix
 inc ixh
 dec ixh
 
 ld ix,($FFFF)
+ld ix,$FFFF
 dec ix
 inc ixl
 dec ixl
@@ -243,12 +245,12 @@ ret m
 CALLM:
 call m,CALLM
 
-ld iy,$FFFF
 inc iy
 inc iyh
 dec iyh
 
 ld iy,($FFFF)
+ld iy,$FFFF
 dec iy
 inc iyl
 dec iyl
@@ -426,7 +428,6 @@ ld e,$FF
 rra
 JRNZ:
 jr nz,JRNZ
-ld hl,$FFFF
 
 inc hl
 inc h
@@ -458,7 +459,7 @@ add hl,sp
 dec sp
 inc a
 dec a
-ld a,$FF
+
 ccf
 ld b,b
 ld b,c
