@@ -403,7 +403,7 @@ ld (*16),sp ; $08 =a (GB)
 ex af,af'       ; $08 (Z80)
 
 stop        ; $10 (GB)
-djnz *08        ; $10 =a (Z80)
+djnz *08        ; $10 +2a (Z80)
 
 ld (hli),a  ; $22
 ld (hl+),a  ; $22
