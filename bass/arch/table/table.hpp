@@ -44,6 +44,7 @@ protected:
   uint64_t swapEndian(uint64_t data, unsigned bits);
   unsigned bitLength(string& text) const;
   void writeBits(uint64_t data, unsigned bits);
+  void parseDirective(string& line);
   bool parseTable(const string& text);
   void assembleTableLHS(Opcode& opcode, const string& text);
   void assembleTableRHS(Opcode& opcode, const string& text);

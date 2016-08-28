@@ -76,6 +76,8 @@ protected:
     string type;
   };
 
+  vector<string> DirectivesEmitBytes = {"db ", "dw ", "dl ", "dd ", "dq "};
+
   file targetFile;
   lstring sourceFilenames;
 

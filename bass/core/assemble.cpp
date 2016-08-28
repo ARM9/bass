@@ -187,53 +187,61 @@ bool Bass::assemble(const string& statement) {
   }
 
   //d[bwldq] ("string"|variable) [, ...]
-  unsigned dataLength = 0;
-  if(s.beginsWith("db ")) dataLength = 1;
-  if(s.beginsWith("dw ")) dataLength = 2;
-  if(s.beginsWith("dl ")) dataLength = 3;
-  if(s.beginsWith("dd ")) dataLength = 4;
-  if(s.beginsWith("dq ")) dataLength = 8;
-  if(dataLength) {
-    s = s.slice(3);  //remove prefix
-    lstring p = s.qsplit(",").strip();
-    for(auto& t : p) {
-      if(t.match("\"*\"")) {
-        t = text(t);
-        for(auto& b : t) write(stringTable[b], dataLength);
-      } else {
-        write(evaluate(t), dataLength);
+  {
+    const unsigned dataLengths[] = {1, 2, 3, 4, 8};
+    unsigned dataLength = 0;
+    unsigned n = 0;
+    for(; n < sizeof(dataLengths)/sizeof(*dataLengths); n++) {
+      if(s.beginsWith(DirectivesEmitBytes[n])) {
+        dataLength = dataLengths[n];
+        break;
       }
     }
-    return true;
+    if(dataLength) {
+      s = s.slice(DirectivesEmitBytes[n].length());  //remove prefix
+      lstring p = s.qsplit(",").strip();
+      for(auto& t : p) {
+        if(t.match("\"*\"")) {
+          t = text(t);
+          for(auto& b : t) write(stringTable[b], dataLength);
+        } else {
+          write(evaluate(t), dataLength);
+        }
+      }
+      return true;
+    }
   }
 
-  if(s.beginsWith("float32 ")) {
-    dataLength = 4;
-    s = s.slice(8);  //remove directive
-    lstring p = s.qsplit(",").strip();
-    for(auto& t : p) {
-      /*if(!t.match("")) {
-        error("invalid single precision float");
-      }*/
-      uint64_t data = 0;
-      *(float*)&data = atof(t);
-      write(data, dataLength);
+  {
+    unsigned dataLength = 0;
+    if(s.beginsWith("float32 ")) {
+      dataLength = 4;
+      s = s.slice(8);  //remove directive
+      lstring p = s.qsplit(",").strip();
+      for(auto& t : p) {
+        /*if(!t.match("")) {
+          error("invalid single precision float");
+        }*/
+        uint64_t data = 0;
+        *(float*)&data = atof(t);
+        write(data, dataLength);
+      }
+      return true;
     }
-    return true;
-  }
-  if(s.beginsWith("float64 ")) {
-    dataLength = 8;
-    s = s.slice(8);  //remove directive
-    lstring p = s.qsplit(",").strip();
-    for(auto& t : p) {
-      /*if(!t.match("")) {
-        error("invalid double precision float");
-      }*/
-      uint64_t data = 0;
-      *(double*)&data = atof(t);
-      write(data, dataLength);
+    if(s.beginsWith("float64 ")) {
+      dataLength = 8;
+      s = s.slice(8);  //remove directive
+      lstring p = s.qsplit(",").strip();
+      for(auto& t : p) {
+        /*if(!t.match("")) {
+          error("invalid double precision float");
+        }*/
+        uint64_t data = 0;
+        *(double*)&data = atof(t);
+        write(data, dataLength);
+      }
+      return true;
     }
-    return true;
   }
 
   //print ("string"|variable) [, ...]

@@ -222,8 +222,41 @@ void BassTable::writeBits(uint64_t data, unsigned length) {
   }
 }
 
+void BassTable::parseDirective(string& line) {
+  lstring part = line.split<1>(";");
+  lstring rhs = part(1).split<1>(":");
+  string& token = rhs(0);
+  if(token == "EMIT_BYTES") {
+    unsigned n = atoi(rhs(1));
+    DirectivesEmitBytes[n] = part(0);
+  } else {
+    //print("unrecognized `",part(0),"`\n");
+  }
+}
+
 bool BassTable::parseTable(const string& text) {
   lstring lines = text.split("\n");
+
+  unsigned line_n = 0;
+  for(auto& line : lines) {
+    if(!line.empty()) break;
+    ++line_n;
+  }
+  lines.remove(0, line_n);
+
+  if(lines[0] == "//DIRECTIVES") {
+    unsigned line_n = 0;
+    lines.removeFirst();
+    for(auto& line : lines) {
+      ++line_n;
+
+      if(line == "//INSTRUCTIONS")
+        break;
+      parseDirective(line);
+    }
+    lines.remove(0, line_n);
+  }
+
   for(auto& line : lines) {
     if(auto position = line.find("//")) line.resize(position());  //remove comments
     lstring part = line.split<1>(";").strip();

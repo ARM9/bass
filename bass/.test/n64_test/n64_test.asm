@@ -103,6 +103,12 @@ constant f29(29)
 constant f30(30)
 constant f31(31)
 
+db 0x42
+dh 0xffff
+dl 0x112233
+dw 0xCAFEBABE
+dd 0x1122334455667788
+
 // N64 MIPS 4300 CPU Pseudo Instructions (CPU):
 abs r2,r3
 B:

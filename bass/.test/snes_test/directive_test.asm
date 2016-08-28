@@ -16,3 +16,11 @@ lda.w #{y} // a9 80 00
 define z($0870)
 lda {z} // ad 70 08
 lda #{z} // a9 70 08
+
+fill 32
+
+db 0x42
+dw 0xffff
+dl 0x112233
+dd 0xCAFEBABE
+dq 0x1122334455667788
