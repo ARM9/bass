@@ -1,7 +1,12 @@
 bass	:= ../../bass
 
-TARGET	:= $(shell basename $(CURDIR))
+SFILES	:= $(wildcard *.asm)
+BINFILES:= $(SFILES:.asm=.bin)
 
-all:
-	$(bass) -create -o $(TARGET).bin $(TARGET).asm 
+all: $(BINFILES)
 
+%.bin : %.asm
+	$(bass) -create -o $@ $<
+
+clean:
+	rm $(BINFILES)

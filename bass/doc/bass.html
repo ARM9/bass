@@ -299,7 +299,6 @@
     before being used, but can be redefined. Constants can be used before their
     declaration, but subsequently cannot be redefined. Labels are stored as
     constants.</p>
-
     <h4>Example:</h4>
     <pre>
     variable x(16)
@@ -310,6 +309,36 @@
 
     lda #y&nbsp; //64
     constant y(64)
+    </pre>
+
+    <p>The way bass treats numeric literals when an instruction can take several different operand sizes is to:<br/>
+    <ul>
+    <li>Assemble a 4 digit hexadecimal number ($0001) to 4 bytes (01 00, little endian), regardless of the magnitude of the number.</li>
+    <li>Assemble a 16 digit binary number (%0000000000000001) to 2 bytes (01 00), regardless of the magnitude of the number.</li>
+    <li>Assemble a base 10 number into the largest operand size.</li>
+    </ul>
+    </p>
+    <p>Constants are converted to 64 bit integers internally by the assembler. This generally results in constants being used as operands expanding to the largest available size.<br/>
+    Defines expand to their assigned value, verbatim.
+    <br/><b>TODO this may actually be accidental, alluded by the fact that table order gives operand sizes their "priority".</b></p>
+    <h4>Example</h4>
+    <pre>
+    constant x($80)
+    lda x&nbsp; // af 80 00 00
+    lda #x // a9 80 00
+
+    define y($0080)
+    lda {y}&nbsp;&nbsp; // ad 80 00
+    lda.b {y} // a5 80
+    lda.w {y} // ad 80 00
+
+    lda #{y}&nbsp;&nbsp; // a9 80 00
+    lda.b #{y} // a9 80
+    lda.w #{y} // a9 80 00
+
+    define z($0870)
+    lda {z}&nbsp; // ad 70 08
+    lda #{z} // a9 70 08
     </pre>
 
     <h3>Labels</h3>
