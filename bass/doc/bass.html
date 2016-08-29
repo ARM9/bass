@@ -313,7 +313,7 @@
 
     <p>The way bass treats numeric literals when an instruction can take several different operand sizes is to:<br/>
     <ul>
-    <li>Assemble a 4 digit hexadecimal number ($0001) to 4 bytes (01 00, little endian), regardless of the magnitude of the number.</li>
+    <li>Assemble a 4 digit hexadecimal number ($0001) to 2 bytes (01 00, little endian), regardless of the magnitude of the number.</li>
     <li>Assemble a 16 digit binary number (%0000000000000001) to 2 bytes (01 00), regardless of the magnitude of the number.</li>
     <li>Assemble a base 10 number into the largest operand size.</li>
     </ul>
