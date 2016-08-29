@@ -76,7 +76,26 @@ protected:
     string type;
   };
 
-  vector<string> DirectivesEmitBytes = {"db ", "dw ", "dl ", "dd ", "dq "};
+  struct Directives {
+  private:
+    struct _EmitBytesOp {
+      string token;
+      unsigned dataLength;
+    };
+
+  public:
+    vector<_EmitBytesOp> EmitBytes;
+
+    Directives()
+    : EmitBytes ({
+      {"db ", 1}
+    , {"dw ", 2}
+    , {"dl ", 3}
+    , {"dd ", 4}
+    , {"dq ", 8}})
+    {}
+  };
+  Directives directives;
 
   file targetFile;
   lstring sourceFilenames;

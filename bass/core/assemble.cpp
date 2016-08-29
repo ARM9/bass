@@ -188,17 +188,17 @@ bool Bass::assemble(const string& statement) {
 
   //d[bwldq] ("string"|variable) [, ...]
   {
-    const unsigned dataLengths[] = {1, 2, 3, 4, 8};
     unsigned dataLength = 0;
-    unsigned n = 0;
-    for(; n < sizeof(dataLengths)/sizeof(*dataLengths); n++) {
-      if(s.beginsWith(DirectivesEmitBytes[n])) {
-        dataLength = dataLengths[n];
+    unsigned tokenLength = 0;
+    for(auto& d : directives.EmitBytes) {
+      if(s.beginsWith(d.token)) {
+        dataLength = d.dataLength;
+        tokenLength = d.token.length();
         break;
       }
     }
     if(dataLength) {
-      s = s.slice(DirectivesEmitBytes[n].length());  //remove prefix
+      s = s.slice(tokenLength);  //remove prefix
       lstring p = s.qsplit(",").strip();
       for(auto& t : p) {
         if(t.match("\"*\"")) {
@@ -212,36 +212,31 @@ bool Bass::assemble(const string& statement) {
     }
   }
 
-  {
-    unsigned dataLength = 0;
-    if(s.beginsWith("float32 ")) {
-      dataLength = 4;
-      s = s.slice(8);  //remove directive
-      lstring p = s.qsplit(",").strip();
-      for(auto& t : p) {
-        /*if(!t.match("")) {
-          error("invalid single precision float");
-        }*/
-        uint64_t data = 0;
-        *(float*)&data = atof(t);
-        write(data, dataLength);
-      }
-      return true;
+  if(s.beginsWith("float32 ")) {
+    s = s.slice(8);  //remove directive
+    lstring p = s.qsplit(",").strip();
+    for(auto& t : p) {
+      /*if(!t.match("")) {
+        error("invalid single precision float");
+      }*/
+      uint64_t data;
+      *(float*)&data = atof(t);
+      write(data, 4);
     }
-    if(s.beginsWith("float64 ")) {
-      dataLength = 8;
-      s = s.slice(8);  //remove directive
-      lstring p = s.qsplit(",").strip();
-      for(auto& t : p) {
-        /*if(!t.match("")) {
-          error("invalid double precision float");
-        }*/
-        uint64_t data = 0;
-        *(double*)&data = atof(t);
-        write(data, dataLength);
-      }
-      return true;
+    return true;
+  }
+  if(s.beginsWith("float64 ")) {
+    s = s.slice(8);  //remove directive
+    lstring p = s.qsplit(",").strip();
+    for(auto& t : p) {
+      /*if(!t.match("")) {
+        error("invalid double precision float");
+      }*/
+      uint64_t data;
+      *(double*)&data = atof(t);
+      write(data, 8);
     }
+    return true;
   }
 
   //print ("string"|variable) [, ...]

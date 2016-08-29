@@ -228,7 +228,7 @@ void BassTable::parseDirective(string& line) {
   string& token = rhs(0);
   if(token == "EMIT_BYTES") {
     unsigned n = atoi(rhs(1));
-    DirectivesEmitBytes[n] = part(0);
+    directives.EmitBytes[n].token = part(0);
   } else {
     //print("unrecognized `",part(0),"`\n");
   }
@@ -255,6 +255,9 @@ bool BassTable::parseTable(const string& text) {
       parseDirective(line);
     }
     lines.remove(0, line_n);
+  } else {
+    // reset directives
+    directives = Directives();
   }
 
   for(auto& line : lines) {
