@@ -1,5 +1,7 @@
 
 arch(sgi_msp) =
+#include "mipseb/directives.md"
+
 // SGI VICE - MSP MIPS 4000 Instructions
 R"(
 mfc2 *05,v*05[e*01] ; %01001000 %000 ~a ~b >>03c >>02c >>01c ~c %0000000
@@ -303,3 +305,4 @@ sfv v*05[e*01],*07(*01) ; %111010 >>04d >>03d >>02d >>01d ~d ~a %01011 >>03b >>0
 sav v*05[e*01],*07(*01) ; %111010 >>04d >>03d >>02d >>01d ~d ~a %01100 >>03b >>02b >>01b ~b ~c
 stv v*05[e*01],*07(*01) ; %111010 >>04d >>03d >>02d >>01d ~d ~a %01101 >>03b >>02b >>01b ~b ~c
 )";
+// vim:ft=mips

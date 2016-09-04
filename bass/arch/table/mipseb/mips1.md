@@ -1,12 +1,3 @@
-R"(
-//DIRECTIVES
-db ;EMIT_BYTES:0
-dh ;EMIT_BYTES:1
-dl ;EMIT_BYTES:2
-dw ;EMIT_BYTES:3
-dd ;EMIT_BYTES:4
-//INSTRUCTIONS
-)"
 // Pseudo instructions
 R"(
 nop ; %000000 %00 %00000000 %00000000 %00 %000000

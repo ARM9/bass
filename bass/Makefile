@@ -32,3 +32,6 @@ endif
 
 clean:
 	-@$(call delete,obj/*.o)
+
+test:
+	make -C .test
