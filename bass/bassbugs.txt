@@ -1,9 +1,0 @@
-lda #$00		= A9 00
-lda #$0000		= A9 00 00
-lda #0			= A9 00 00
-lda #00			= A9 00 00
-lda #%00000000	= A9 00
-lda #$0			= error: malformed expression
-lda #$1			= error: malformed expression
-lda #$01		= A9 01
-lda #$001		= error: malformed expression
