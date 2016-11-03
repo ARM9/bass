@@ -2,8 +2,13 @@ void Bass::setMacro(const string& name, const lstring& parameters, unsigned ip, 
   if(stackFrame.size() == 0) return;
   auto& macros = stackFrame[local ? stackFrame.size() - 1 : 0].macros;
 
+  validateName(name);
   string scopedName = {name, ":", parameters.size()};
   if(scope.size()) scopedName = {scope.merge("."), ".", scopedName};
+
+  for(auto& pName : parameters) {
+    validateName(pName.split<1>(" ").strip().last());
+  }
 
   if(auto macro = macros.find({scopedName})) {
     macro().parameters = parameters;
@@ -41,6 +46,7 @@ void Bass::setDefine(const string& name, const string& value, bool local) {
   if(stackFrame.size() == 0) return;
   auto& defines = stackFrame[local ? stackFrame.size() - 1 : 0].defines;
 
+  validateName(name);
   string scopedName = name;
   if(scope.size()) scopedName = {scope.merge("."), ".", name};
 
@@ -78,6 +84,7 @@ void Bass::setVariable(const string& name, int64_t value, bool local) {
   if(stackFrame.size() == 0) return;
   auto& variables = stackFrame[local ? stackFrame.size() - 1 : 0].variables;
 
+  validateName(name);
   string scopedName = name;
   if(scope.size()) scopedName = {scope.merge("."), ".", name};
 
@@ -112,6 +119,7 @@ maybe<Bass::Variable&> Bass::findVariable(const string& name) {
 }
 
 void Bass::setConstant(const string& name, int64_t value) {
+  validateName(name);
   string scopedName = name;
   if(scope.size()) scopedName = {scope.merge("."), ".", name};
 
@@ -186,4 +194,20 @@ int64_t Bass::character(string s) {
 unknown:
   warning("unrecognized character constant: ", s);
   return 0;
+}
+
+void Bass::validateName(const string& name) {
+  if(!queryPhase()) return;
+
+  const char* p = name.data();
+  if(!((p[0] >= 'A' && p[0] <= 'Z') || (p[0] >= 'a' && p[0] <= 'z') || p[0] == '_' || p[0] == '#')) {
+    warning("Invalid name: ", name);
+    return;
+  }
+  while(*++p) {
+    if(!((p[0] >= 'A' && p[0] <= 'Z') || (p[0] >= 'a' && p[0] <= 'z') || (p[0] >= '0' && p[0] <= '9') || p[0] == '_' || p[0] == '.' || p[0] == '#')) {
+      warning("Invalid name: ", name);
+      return;
+    }
+  }
 }
