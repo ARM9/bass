@@ -34,7 +34,7 @@ bool Bass::source(const string& filename) {
 
   lstring lines = data.split("\n");
   for(unsigned lineNumber = 0; lineNumber < lines.size(); lineNumber++) {
-    if(auto position = lines[lineNumber].find("//")) lines[lineNumber].resize(position());  //remove comments
+    if(auto position = lines[lineNumber].qfind("//")) lines[lineNumber].resize(position());  //remove comments
 
     reduceWhitespace(lines[lineNumber]);
 
