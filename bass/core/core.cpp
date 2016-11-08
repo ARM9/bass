@@ -128,8 +128,7 @@ void Bass::seek(unsigned offset) {
 }
 
 void Bass::write(uint64_t data, unsigned length) {
-  if(!targetFile.open()) return;
-  if(writePhase()) {
+  if(writePhase() && targetFile.open()) {
     if(endian == Endian::LSB) targetFile.writel(data, length);
     if(endian == Endian::MSB) targetFile.writem(data, length);
   }
