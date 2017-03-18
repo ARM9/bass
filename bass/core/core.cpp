@@ -34,7 +34,7 @@ bool Bass::source(const string& filename) {
 
   lstring lines = data.split("\n");
   for(unsigned lineNumber = 0; lineNumber < lines.size(); lineNumber++) {
-    if(auto position = lines[lineNumber].find("//")) lines[lineNumber].resize(position());  //remove comments
+    if(auto position = lines[lineNumber].qfind("//")) lines[lineNumber].resize(position());  //remove comments
 
     reduceWhitespace(lines[lineNumber]);
 
@@ -128,8 +128,7 @@ void Bass::seek(unsigned offset) {
 }
 
 void Bass::write(uint64_t data, unsigned length) {
-  if(!targetFile.open()) return;
-  if(writePhase()) {
+  if(writePhase() && targetFile.open()) {
     if(endian == Endian::LSB) targetFile.writel(data, length);
     if(endian == Endian::MSB) targetFile.writem(data, length);
   }
