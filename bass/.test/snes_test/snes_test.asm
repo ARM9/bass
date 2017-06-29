@@ -51,7 +51,7 @@ tyx
 wai
 xba
 xce
-
+//
 tcd
 tcs
 tdc
@@ -85,7 +85,7 @@ ora $FE,x
 ora $FEDCBA
 ora $FEDC
 ora $FE
-
+//
 ora.w #$FEDC
 ora.b #$FE
 ora.l $FEDCBA,x
@@ -111,7 +111,7 @@ and $FE,x
 and $FEDCBA
 and $FEDC
 and $FE
-
+//
 and.w #$FEDC
 and.b #$FE
 and.l $FEDCBA,x
@@ -137,7 +137,7 @@ eor $FE,x
 eor $FEDCBA
 eor $FEDC
 eor $FE
-
+//
 eor.w #$FEDC
 eor.b #$FE
 eor.l $FEDCBA,x
@@ -163,7 +163,7 @@ adc $FE,x
 adc $FEDCBA
 adc $FEDC
 adc $FE
-
+//
 adc.w #$FEDC
 adc.b #$FE
 adc.l $FEDCBA,x
@@ -187,7 +187,7 @@ sta $FE,x
 sta $FEDCBA
 sta $FEDC
 sta $FE
-
+//
 sta.l $FEDCBA,x
 sta.w $FEDC,x
 sta.b $FE,x
@@ -211,7 +211,7 @@ lda $FE,x
 lda $FEDCBA
 lda $FEDC
 lda $FE
-
+//
 lda.w #$FEDC
 lda.b #$FE
 lda.l $FEDCBA,x
@@ -237,7 +237,7 @@ cmp $FE,x
 cmp $FEDCBA
 cmp $FEDC
 cmp $FE
-
+//
 cmp.w #$FEDC
 cmp.b #$FE
 cmp.l $FEDCBA,x
@@ -263,7 +263,7 @@ sbc $FE,x
 sbc $FEDCBA
 sbc $FEDC
 sbc $FE
-
+//
 sbc.w #$FEDC
 sbc.b #$FE
 sbc.l $FEDCBA,x
@@ -277,7 +277,7 @@ asl $FEDC,x
 asl $FE,x
 asl $FEDC
 asl $FE
-
+//
 asl.w $FEDC,x
 asl.b $FE,x
 asl.w $FEDC
@@ -287,7 +287,7 @@ lsr $FEDC,x
 lsr $FE,x
 lsr $FEDC
 lsr $FE
-
+//
 lsr.w $FEDC,x
 lsr.b $FE,x
 lsr.w $FEDC
@@ -297,7 +297,7 @@ rol $FEDC,x
 rol $FE,x
 rol $FEDC
 rol $FE
-
+//
 rol.w $FEDC,x
 rol.b $FE,x
 rol.w $FEDC
@@ -307,7 +307,7 @@ ror $FEDC,x
 ror $FE,x
 ror $FEDC
 ror $FE
-
+//
 ror.w $FEDC,x
 ror.b $FE,x
 ror.w $FEDC
@@ -317,7 +317,7 @@ inc $FEDC,x
 inc $FE,x
 inc $FEDC
 inc $FE
-
+//
 inc.w $FEDC,x
 inc.b $FE,x
 inc.w $FEDC
@@ -327,7 +327,7 @@ dec $FEDC,x
 dec $FE,x
 dec $FEDC
 dec $FE
-
+//
 dec.w $FEDC,x
 dec.b $FE,x
 dec.w $FEDC
@@ -339,7 +339,7 @@ bit $FEDC,x
 bit $FE,x
 bit $FEDC
 bit $FE
-
+//
 bit.w #$FEDC
 bit.b #$FE
 bit.w $FEDC,x
@@ -351,7 +351,7 @@ cpx #$FEDC
 cpx #$FE
 cpx $FEDC
 cpx $FE
-
+//
 cpx.w #$FEDC
 cpx.b #$FE
 cpx.w $FEDC
@@ -361,7 +361,7 @@ cpy #$FEDC
 cpy #$FE
 cpy $FEDC
 cpy $FE
-
+//
 cpy.w #$FEDC
 cpy.b #$FE
 cpy.w $FEDC
@@ -373,7 +373,7 @@ ldx $FEDC,y
 ldx $FE,y
 ldx $FEDC
 ldx $FE
-
+//
 ldx.w #$FEDC
 ldx.b #$FE
 ldx.w $FEDC,y
@@ -387,7 +387,7 @@ ldy $FEDC,x
 ldy $FE,x
 ldy $FEDC
 ldy $FE
-
+//
 ldy.w #$FEDC
 ldy.b #$FE
 ldy.w $FEDC,x
@@ -398,14 +398,14 @@ ldy.b $FE
 stx $FE,y
 stx $FEDC
 stx $FE
-
+//
 stx.w $FEDC
 stx.b $FE
 
 sty $FE,x
 sty $FEDC
 sty $FE
-
+//
 sty.w $FEDC
 sty.b $FE
 
@@ -413,7 +413,7 @@ stz $FEDC,x
 stz $FE,x
 stz $FEDC
 stz $FE
-
+//
 stz.w $FEDC,x
 stz.b $FE,x
 stz.w $FEDC
@@ -421,13 +421,13 @@ stz.b $FE
 
 trb $FEDC
 trb $FE
-
+//
 trb.w $FEDC
 trb.b $FE
 
 tsb $FEDC
 tsb $FE
-
+//
 tsb.w $FEDC
 tsb.b $FE
 
