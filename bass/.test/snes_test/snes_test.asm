@@ -53,7 +53,9 @@ xba
 xce
 
 tcd
+tcs
 tdc
+tsc
 
 asl #$FE
 dec #$FE
