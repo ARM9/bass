@@ -10,8 +10,8 @@ macro seek(variable offset) {
 origin 0x7fff
 db $ff
 
-    define pc(r15)
-    define sp(r10)
+    define pc = r15
+    define sp = r10
 
     seek($8000)
     include "test.asm"
