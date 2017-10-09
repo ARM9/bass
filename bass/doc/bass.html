@@ -1,0 +1,617 @@
+<html>
+  <head>
+    <title>bass documentation</title>
+    <style type="text/css">
+      body {
+        background: #fff;
+        color: #000;
+        font-family: arial, helvetica;
+        font-size: 0.9em;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        margin: 0em;
+      }
+
+      h2 {
+        background: #eef;
+        font-size: 1.2em;
+        margin-bottom: 0.25em;
+        padding: 0.25em;
+      }
+
+      h3 {
+        border-bottom: 2px solid #eee;
+        font-size: 0.9em;
+        margin-bottom: 0.25em;
+      }
+
+      h4 {
+        border-bottom: 1px dashed #ccc;
+        font-size: 0.9em;
+        font-weight: normal;
+      }
+
+      p {
+        margin: 0em;
+        margin-bottom: 1em;
+      }
+
+      pre {
+        background: #fee;
+        margin-top: 0.5em;
+        padding: 0.5em;
+        white-space: pre-line;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>bass v15</h1>
+    Author: byuu<br>
+    License: GPLv3<br>
+    <br>
+
+    <h2>Terminal Usage</h2>
+    <pre>bass [options] source [source ...]</pre>
+
+    <h3>Options</h3>
+
+    <p><i>-o target</i> will specify the default target filename, and overwrite
+    any existing file by said filename.</p>
+
+    <p><i>-m target</i> will specify the default target filenamd, and will
+    modify, rather than replace, any existing file by said name.</p>
+
+    <p><i>-d name[=value]</i> will create a define with the given name, and
+    assign to it either an empty value or the value provided.</p>
+
+    <p><i>-c name[=value]</i> will create a constant with the given name, and
+    assign to it either a value of 1 or the value provided.</p>
+
+    <p><i>-strict</i> will abort the assembly process on warnings.</p>
+
+    <p><i>-benchmark</i> will display the time required to assemble the source.
+    </p>
+
+    <h2>Architecture</h2>
+    <p>bass is a multi-pass assembler which can be driven by tables to support
+    multiple architectures.</p>
+
+    <p>Parsing consists of the following phases:</p>
+
+    <h3>Tokenize</h3>
+
+    <p>The <i>tokenize</i> phase will combine all source files, and insert any
+    nested include statements into a single stream of instructions.</p>
+
+    <h3>Analyze</h3>
+
+    <p>The <i>analyze</i> phase will parse blocks, such as macros and functions,
+    and note where they begin and end.</p>
+
+    <h3>Execute</h3>
+
+    <p>The <i>execute</i> phase will recurse macro invocations, substitute
+    defines and evaluate conditional expressions.</p>
+
+    <h3>Query</h3>
+
+    <p>The <i>query</i> phase invokes the <i>execute</i> phase, and computes the
+    values of constants and labels.</p>
+
+    <h3>Write</h3>
+
+    <p>The <i>write</i> phase invokes the <i>execute</i> phase, uses the
+    previously computed values for constants and labels, and writes to any
+    opened output file.</p>
+
+    <h2>Tokenizing</h2>
+    <p>Initially, each source file specified on the terminal is loaded in. For
+    each source file, all tabs (\t) and carriage returns (\r) are converted to
+    spaces, and each line is split by line feeds (\n). Next, each line is
+    clipped at the first appearance of a comment marker (//). Then, each line is
+    split by any semicolons (;) <i>not</i> appearing inside of quoted strings.
+    That is to say, semicolons can be used inside of quoted strings. Using
+    semicolons outside of strings splits the line into multiple statements. The
+    semicolon acts as a statement separator, and not as a statement terminator,
+    meaning that a semicolon is not required at the end of each line. Finally,
+    if the statement is an <i>include</i> directive, the source file parser will
+    be invoked recursively to load in nested source files.</p>
+
+    <h3>Names</h3>
+    <p>Macros, functions, defines, variables and constants must be in the
+    following format:</p>
+    <pre>
+    [_A-Za-z][_A-Za-z0-9.]*
+    </pre>
+
+    <h3>Numbers</h3>
+    <p>Valid numbers must be in one of the following formats:</p>
+    <pre>
+    [0-9]+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; integer
+    0b[01]+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; binary
+    0o[0-7]+&nbsp;&nbsp;&nbsp;&nbsp; octal
+    0x[0-9a-f]+&nbsp;  hex
+    %[01]+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; binary
+    $[0-9a-f]+&nbsp;&nbsp; hex
+    </pre>
+
+    <p>Numbers may be prefixed with - or + if desired.</p>
+
+    <p>Numbers may also use ' as a digit separator. For example:</p>
+    <pre>
+    123'456'789&nbsp; //same as 123456789
+    0b1001'0110&nbsp;  //same as 0b10010110
+    </pre>
+
+    <h3>Strings</h3>
+    <p>Strings are surrounded by double-quotes. They support the following
+    escape sequences:</p>
+
+    <pre>
+    \\ = backslash (\)
+    \s = single-quote (')
+    \d = double-quote (")
+    \c = comma (,)
+    \b = block separator (;)
+    \n = line feed
+    </pre>
+
+    <h3>Characters</h3>
+    <p>Characters are surrounded by single-quotes, and evaluate to integer
+    values which can be used inside of expressions. They support the same escape
+    sequences as strings.</p>
+
+    <p>Note that characters are not escaped for block tokenization. That means
+    you must use '\b' instead of ';' to avoid splitting the character into two
+    separate statements.</p>
+
+    <h2>Execution</h2>
+    <p>Execution acts much like a scripting language. Statements are evaluated
+    and a control flow (stack frame) is maintained.</p>
+
+    <h3>Expressions</h3>
+    <p>Expressions can be used to transform variables or constants by use of
+    parameters. Expressions may be recursive.</p>
+
+    <h4>Example:</h4>
+    <pre>
+    expression sum(x, y) = x + y
+    print sum(1 + 2), "\n"  //prints 3
+    </pre>
+
+    <h3>Defines</h3>
+    <p>Defines can be used to substitute values in expressions. The
+    <i>define</i> keyword allows specifying an exact expression to substitute,
+    whereas the <i>evaluate</i> keyword will evaluate the expression to an
+    integer value. The latter is useful for conditional expressions. Defines
+    must be declared before being used, and can be re-declared later on.</p>
+
+    <h4>Example:</h4>
+    <pre>
+    define x = 1 + 2
+    print "{x}\n"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //prints "1 + 2\n"
+    evaluate x = {x} + 3&nbsp; //x = evaluate(1 + 2 + 3)
+    print "{x}\n"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //prints "6\n"
+    </pre>
+
+    <p>Defines can also take arguments for substitution.</p>
+
+    <h4>Example:</h4>
+    <pre>
+    define sum(x, y) = ({x} + {y})
+    print "{sum(1,2)}\n"  //prints "(1 + 2)\n"
+    </pre>
+
+    <h4>Invocation</h4>
+    <p>Defines can be invoked with: <i>{defineName}</i>. Defines with parameters
+    can be invoked with <i>{defineName(parameter, ...)}</i>. If a define is not
+    matched, there is no error, the literal <i>{defineName}</i> will be passed
+    along to the assembler verbatim.</p>
+
+    <h4>Parsing</h4>
+    <p>Defines are evaluated from right-to-left order, meaning that expressions
+    such as <i>{x{y}}</i> will first expand <i>{y}</i>, and then the result of
+    that expression, <i>{x...}</i>.</p>
+
+    <h4>Existence</h4>
+    <p>It is possible to test if a define has been declared or not by using this
+    special syntax: <i>{defined name}</i></p>
+
+    <pre>
+    //create {value} if it does not yet exist
+    if !{defined value} {
+    &nbsp;&nbsp;define value(...)
+    }
+    </pre>
+
+    <p><i>{defined name}</i> is substituted with either 1 (if a define by the
+    given name exists) or 0 (if it does not.)</p>
+
+    <h3>Macros</h3>
+    <p>Macros are supported. They can take zero or more arguments, and name
+    overloading with differing arity is possible. Recursion is supported, but
+    requires conditionals in order to break infinite recursion. Macros must be
+    declared before being used, and can be re-declared later on.</p>
+
+    <p>By default, macro parameters are simply the names of the values, and are
+    passed in as defines. It is also possible to specify the type of the
+    parameter, which will cause the invocation to pass the value in as the
+    requested type. Supported types are: define, evaluate and variable.</p>
+
+    <h4>Example:</h4>
+    <pre>
+    macro seek(offset) {
+    &nbsp;&nbsp;origin {offset} & 0x3fffff
+    &nbsp;&nbsp;base 0xc00000 | {offset}
+    }
+
+    seek(0xc08000)
+
+    macro test(define a, evaluate b, variable c, d) {
+    &nbsp;&nbsp;//{d} has no type, so it defaults to "define d"
+    }
+
+    test(1+2, 1+2, 1+2, 1+2)&nbsp;  //{a} = 1+2, {b} = 3, c = 3, {d} = 1+2
+    </pre>
+
+    <h4>Invocation Counter</h4>
+    <p>Because expanded macros are passed directly to the assembler, a macro
+    with a label name cannot be expanded twice in the same scope, or the label
+    name will be declared twice, resulting in an error. The special token
+    <i>{#}</i> can be used in a label name, where it will be substituted with a
+    numeric value that increments every time a macro is invoked.</p>
+
+    <p>Note that the invocation counter may not work as expected inside of
+    recursive macros. Only use this for top-level macros.</p>
+
+    <h4>Invocation</h4>
+    <p>Macros can be invoked with the syntax: <i>macroName(parameter, parameter,
+    ...)</i>. If a macro is not matched, there is no error, the literal
+    <i>macroName(...)</i> will be passed along to the assembly phase. Note that
+    macros cannot appear inside expressions: the macro invocation must be the
+    entire statement.</p>
+
+    <h4>Stack Frame</h4>
+    <p>Every time a macro is invoked, a new object stack frame is created, which
+    will supercede all previous stack frames. All macro arguments, as well as
+    any objects declared inside of said macro, are appended to the new frame.
+    When the macro completes execution, said frame is destroyed, and said
+    objects are lost. Note that this does not apply to constants, which must
+    always be placed in the global frame to support forward-declarations.</p>
+
+    <p>It is however possible to access the global frame by prefixing object
+    creation with the <i>global</i> keyword, for example:</p>
+
+    <pre>
+    macro square(value) {
+    &nbsp;&nbsp;global evaluate result({value} * {value})
+    }
+
+    square(16)
+    print "{square.result}\n"&nbsp; //prints 256
+    </pre>
+
+    <p>Further, it is also possible to reference the parent frame by prefixing
+    object creation with the <i>parent</i> keyword, which is useful for
+    recursive macros, or to represent macro return values. For example:</p>
+
+    <pre>
+    macro factorial(variable n) {
+    &nbsp;&nbsp;parent variable result = 1
+    &nbsp;&nbsp;if n >= 1 {
+    &nbsp;&nbsp;&nbsp;&nbsp;factorial(n - 1)
+    &nbsp;&nbsp;&nbsp;&nbsp;result = n * factorial.result
+    &nbsp;&nbsp;}
+    }
+
+    factorial(10)
+    print factorial.result, "\n"  //prints 3628800
+    </pre>
+
+    <h3>Inline Macros</h3>
+    <p>Macros can also be created without a stack frame by using the
+    <i>inline</i> keyword, which will cause any objects created inside of them
+    to appear in the same frame as the macro was invoked in. For example:</p>
+
+    <pre>
+    inline square(variable value) {
+    &nbsp;&nbsp;variable result = value * value
+    }
+
+    function main {
+    &nbsp;&nbsp;square(16)
+    }
+
+    print main.result, "\n"  //prints 256
+    </pre>
+
+    <p>This is obviously not a good idea to use for recursive macros.</p>
+
+    <h3>Conditional Expressions</h3>
+    <p>bass supports traditional conditional expressions.</p>
+
+    <h4>Example:</h4>
+    <pre>
+    define x = 16
+    while {x} > 0 {
+    &nbsp;print "{x}\n"
+    &nbsp;evaluate x = {x} - 1
+    }
+    if {x} > 16 {
+    &nbsp;&nbsp;...
+    } else if {x} > 8 {
+    &nbsp;&nbsp;...
+    } else {
+    &nbsp;&nbsp;...
+    }
+    </pre>
+
+    <p>Variables and constants can be used in conditional expressions. Just note
+    that variables must be declared before they can be used in expressions. Only
+    constants support forward-declaration.</p>
+
+    <h2>Assembly</h2>
+    <p>Any statements that fall through the execute phase are passed into the
+    assembly phase.</p>
+
+    <h3>Variables and Constants</h3>
+    <p>Variables and constants hold integer values. Variables must be declared
+    before being used, but can be redefined. Constants can be used before their
+    declaration, but subsequently cannot be redefined. Labels are stored as
+    constants.</p>
+
+    <h4>Example:</h4>
+    <pre>
+    variable x = 16
+    lda #x&nbsp; //16
+
+    variable x = 32
+    lda #x&nbsp; //32
+
+    lda #y&nbsp; //64
+    constant y = 64
+    </pre>
+
+    <h3>Labels</h3>
+    <p>Labels can be created with the syntax: <i>labelName:</i></p>
+
+    <h4>Example:</h4>
+    <pre>
+    loop:
+    &nbsp;&nbsp;dex; bne loop
+    </pre>
+
+    <h3>Anonymous Labels</h3>
+    <p>Labels without names can be created using <i>-</i> and <i>+</i>.</p>
+
+    <h4>Example:</h4>
+    <pre>
+    -; beq +; lsr; dex; bne -; +
+
+    -; bra ++&nbsp; //A: go to D
+    -; bra +&nbsp;&nbsp; //B: go to C
+    +; bra -&nbsp;&nbsp; //C: go to B
+    +; bra --&nbsp; //D: go to A
+    </pre>
+
+    <h4>Invocation:</h4>
+    <p>The previous - label can be referenced with -, and the next + label can
+    be referenced with +. The second to last - label can be referenced with --,
+    and the second to next + label can be referenced with ++. Deeper scoping is
+    not supported: you will have to switch to named labels at this point.</p>
+
+    <h3>Scoping</h3>
+    <p>Macros, defines, variables and constants can be scoped. This allows reuse
+    of common names like <i>loop</i> and <i>finish</i> inside of scopes, without
+    causing declaration collisions. Note that labels are stored as constants,
+    meaning that scoping also applies to labels.</p>
+
+    <p>It's also important to understand that for macro scoping, the macro
+    name's scope is determined where the macro is declared, and the actual scope
+    used while executing a macro is determined where the macro is invoked.</p>
+
+    <h4>Example:</h4>
+    <pre>
+    variable offset = 16
+
+    namespace information {
+    &nbsp;&nbsp;variable length = 32
+
+    &nbsp;&nbsp;lda #offset  //16
+    &nbsp;&nbsp;lda #length  //32
+    }
+
+    lda #offset  //16
+    lda #information.length  //32
+    </pre>
+
+    <h3>Scoped Labels</h3>
+    <p>It is possible to declare a scope and label at the same time, which is a
+    useful way to mark functions and their boundaries.</p>
+
+    <h4>Example:</h4>
+    <pre>
+    function main {
+    &nbsp;&nbsp;subroutine:
+    }
+
+    jsr main.subroutine
+    </pre>
+
+    <h3>Unscoped Blocks</h3>
+    <p>It is also possible to create blocks which do not create scopes. These
+    are used strictly for code clarity, and have no functional effect.</p>
+
+    <h4>Example:</h4>
+    <pre>
+    labelName: {
+    }
+
+    - {
+    }
+
+    + {
+    }
+
+    {
+    }
+    </pre>
+
+    <h3>include "filename"</h3>
+    <p>Note that this command is parsed in the very first phase, and is only
+    noted here for completeness. It includes another source file in place of
+    this command.</p>
+
+    <p>Do not attempt conditional recursion on the same source file, as this
+    will result in an infinite loop which will eventually exhaust all memory.
+    </p>
+
+    <h3>output "filename" [, create]</h3>
+    <p>This command can be used in place of the <i>-o filename [-create]</i>
+    command-line argument, or in addition to it, and can open multiple files
+    sequentially for output (only one output file can be open at a time.) The
+    create parameter, if specified, states to overwrite the target file if it
+    already exists. Otherwise, the file is opened in modification mode.</p>
+
+    <h3>architecture name</h3>
+    <p>This command will change the currently active architecture. An
+    architecture is essentially a processor that bass supports.</p>
+
+    <p>bass will first try to select any built-in architecture by the given
+    name, which allows bass to support architectures written as C++ modules.
+    Currently, the only built-in architecture is <i>none</i>, which is also the
+    default state at the start of assembly.</p>
+
+    <p>When no built-in architecture is found, bass will instead use its
+    table-driver assembler architecture. This architecture takes a text file as
+    input, which defines all supported opcodes and their encodings for a given
+    processor.</p>
+
+    <p>The name is transformed to <i>name.arch</i>, and bass tries to find said
+    file in two locations: first, in the <i>architectures/</i> subdirectory next
+    to the main bass executable. And second, in
+    <i>~/.local/share/bass/architectures/</i> or
+    <i>%localappdata%/bass/architectures/</i>, depending upon your OS.</p>
+
+    <p>bass ships with a variety of pre-made table architecture files. On
+    Linux/BSD, users should run <i>make install</i> to place these files into
+    the appropriate location to be used.</p>
+
+    <p>bass is also extensible, so users can add their own table architecture
+    files to support additional processors. Architectures written in C++ will
+    however require recompiling bass to include said architecture.</p>
+
+    <p>Note that the architecture command will also change the current endian
+    mode of bass, to match that of the given processor architecture.</p>
+
+    <p>In the event that <i>name</i> does not match a built-in architecture, and
+    no appropriate <i>name.arch</i> file can be found, this command will
+    generate an error.</p>
+
+    <h3>endian (lsb|msb)</h3>
+    <p>This command controls whether multi-byte values (eg from dw and dd) are
+    output in little-endian (lsb) or big-endian (msb) format.</p>
+
+    <h3>origin offset</h3>
+    <p>This command seeks the output file write cursor to the specified
+    location.</p>
+
+    <h3>base offset</h3>
+    <p>This command creates a signed displacement against the origin value,
+    which is used when computing the pc (program counter) value for labels. This
+    command allows mapping file address space into a virtual memory address
+    space.</p>
+
+    <h3>(enqueue|dequeue) variable [, ...]</h3>
+    <p>This can be used to save and restore internal state. Currently supported
+    values are: <i>origin, base, pc</i>.</p>
+
+    <h3>insert [name, ] "filename" [, offset] [, length]</h3>
+    <p>This command inserts a binary file into the target file. You can
+    optionally specify a name, offset and length. If you specify a name, it will
+    create a label by the given name, which contains the address where the data
+    begins, and it will also create name.size, which contains the size of the
+    included data. If you specify an offset, it will seek that far into the
+    referenced filename before copying the data. If you want to specify a
+    length, you must specify an offset first, and the length will determine the
+    maximum number of bytes to copy from the referenced filename.</p>
+
+    <h3>fill length [, with]</h3>
+    <p>Inserts <i>length</i> number of bytes into the target file. The default
+    fill byte is 0x00, but can be specified via <i>with</i>.</p>
+
+    <h3>map 'char' [, value] [, length]</h3>
+    <p>Modifies the mappings for strings passed to db, dw, etc. This can be used
+    to map strings to custom tilemaps that do not follow traditional ASCII
+    values.</p>
+
+    <p><i>char</i> is the first value to modify, <i>value</i> is the value to
+    map said char to, and <i>length</i> can be used for contiguous entries. For
+    instance, if A-Z appear sequentially, give a value of 26 for the length, to
+    avoid having to declare 26 separate assignments. Each step of length
+    increments both the char and value by exactly one, so the characters must be
+    contiguous with both ASCII and your custom map for this to work.</p>
+
+    <p>If you wish to restore the table to its default ASCII values, use the
+    following command:</p>
+
+    <pre>map 0, 0, 256</pre>
+
+    <h3>d[bwldq] ("string"|variable|constant) [, ...]</h3>
+    <p>Inserts binary data directly into the target file. db stores 8-bit
+    values, dw stores 16-bit values, dl stored 24-bit values, dd stored 32-bit
+    values and dq stores 64-bit values.</p>
+
+    <h3>print ("string"|variable) [, ...]</h3>
+    <p>Prints information to the terminal. Useful for debugging.</p>
+
+    <p>The print directive also supports formatting prefixes for variable or
+    constant expressions. These are: <i>binary</i>, <i>hex</i>, and <i>char</i>.
+    Example:</p>
+
+    <pre>
+    print "%", binary:15  //prints %1111
+    print "$", hex:65536  //prints $10000
+    print "'", char:65, "'"  //prints 'A'
+    </pre>
+
+    <h3>notice "string"</h3>
+    <p>Prints a notice to the terminal, but continues assembly.</p>
+
+    <h3>warning "string"</h3>
+    <p>Prints a warning to the terminal, but continues assembly.</p>
+
+    <h3>error "string"</h3>
+    <p>Prints an error to the terminal, and aborts assembly.</p>
+
+    <h2>Functions</h2>
+    <p>bass supports built-in functions. The syntax is equivalent to macros,
+    however they are used in expressions rather than as statements, and they
+    always return a numeric value.</p>
+
+    <h4>Example:</h4>
+    <pre>
+    seek(0x8000)  //this is a macro statement
+    ...
+    if pc() > 0x8fff {  //this is a function used inside an assembler statement
+    &nbsp;&nbsp;...
+    }
+    </pre>
+
+    <h3>origin()</h3>
+    <p>Returns the current origin.</p>
+
+    <h3>base()</h3>
+    <p>Returns the current base.</p>
+
+    <h3>pc()</h3>
+    <p>Returns the current program counter (origin + base.)</p>
+
+    <h2>The End</h2>
+    <p>Hopefully this has been informative. The best way to learn is through
+    practice, so please do experiment and see what you can come up with!</p>
+
+    <p>Thank you for using bass!</p>
+  </body>
+</html>
