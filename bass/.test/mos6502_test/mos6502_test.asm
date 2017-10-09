@@ -1,4 +1,4 @@
-architecture wdc6502
+architecture mos6502
 
 asl
 clc
