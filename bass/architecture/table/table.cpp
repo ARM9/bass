@@ -67,6 +67,12 @@ auto Table::assemble(const string& statement) -> bool {
           }
           break;
         }
+
+        case Format::Type::ShiftRight: {
+          uint data = evaluate(args[format.argument]);
+          writeBits(data >> format.data, opcode.number[format.argument].bits);
+          break;
+        }
       }
     }
 
@@ -229,6 +235,17 @@ auto Table::assembleTableRHS(Opcode& opcode, const string& text) -> void {
       Format format = {Format::Type::Repeat};
       format.argument = item[1] - 'a';
       format.data = toHex((const char*)item + 3);
+      opcode.format.append(format);
+    }
+
+    // >>XXa
+    if(item[0] == '>' && item[1] == '>') {
+      uint argumentId = item[4];
+      Format format = {Format::Type::ShiftRight, Format::Match::Weak};
+      if (argumentId >= 'A' && argumentId <= 'Z') argumentId += 123-'A';
+      argumentId = argumentId-'a';
+      format.argument = argumentId;
+      format.data = (item[2] - '0') * 10 + (item[3] - '0');
       opcode.format.append(format);
     }
   }

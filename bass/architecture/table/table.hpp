@@ -13,7 +13,7 @@ private:
   };
 
   struct Format {
-    enum class Type : uint { Static, Absolute, Relative, Repeat } type;
+    enum class Type : uint { Static, Absolute, Relative, Repeat, ShiftRight } type;
     enum class Match : uint { Exact, Strong, Weak } match;
     uint data;
     uint bits;

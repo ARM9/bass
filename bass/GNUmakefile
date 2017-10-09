@@ -14,8 +14,8 @@ obj/bass.o: bass.cpp bass.hpp $(call rwildcard,core/) $(call rwildcard,architect
 	$(compiler) $(cppflags) $(flags) -o obj/bass.o -c bass.cpp
 
 clean:
-	-@$(call delete,obj/*)
-	-@$(call delete,out/*)
+	-@$(call delete,obj/bass.o)
+	-@$(call delete,out/bass.exe)
 
 install:
 ifeq ($(shell id -un),root)
