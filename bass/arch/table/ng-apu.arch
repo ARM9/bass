@@ -1,0 +1,5 @@
+// Neo-Geo Zilog Z80
+
+arch(ng_apu) =
+#include "z80/z80.md"
+;

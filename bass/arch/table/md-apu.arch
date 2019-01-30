@@ -1,0 +1,5 @@
+// Mega Drive Zilog Z80
+
+arch(md_apu) =
+#include "z80/z80.md"
+;

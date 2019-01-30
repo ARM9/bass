@@ -15,6 +15,10 @@
 #include "sms-cpu.arch"
 #include "msx-cpu.arch"
 #include "msxtr-cpu.arch"
+#include "md-apu.arch"
+#include "md-cpu.arch"
+#include "ng-apu.arch"
+#include "ng-cpu.arch"
 #undef arch
 
 void BassTable::initialize() {
@@ -51,6 +55,10 @@ bool BassTable::assemble(const string& statement) {
     else if(s == "sms.cpu") data = Arch_sms_cpu;
     else if(s == "msx.cpu") data = Arch_msx_cpu;
     else if(s == "msxtr.cpu") data = Arch_msxtr_cpu;
+    else if(s == "md.apu") data = Arch_md_apu;
+    else if(s == "md.cpu") data = Arch_md_cpu;
+    else if(s == "ng.apu") data = Arch_ng_apu;
+    else if(s == "ng.cpu") data = Arch_ng_cpu;
     else if(s.match("\"?*\"")) {
       s.trim<1>("\"");
       s = {dir(sourceFilenames.last()), s};

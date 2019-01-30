@@ -1,0 +1,5 @@
+// Mega Drive Motorola 68000
+
+arch(md_cpu) =
+#include "m68k/m68k.md"
+;

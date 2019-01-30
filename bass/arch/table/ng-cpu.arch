@@ -1,0 +1,5 @@
+// Neo-Geo Motorola 68000
+
+arch(ng_cpu) =
+#include "m68k/m68k.md"
+;
