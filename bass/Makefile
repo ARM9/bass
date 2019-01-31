@@ -2,7 +2,7 @@ include ../nall/Makefile
 
 application := bass
 flags := $(flags) -O3 -fomit-frame-pointer -I..
-link := $(link) -static -static-libgcc -static-libstdc++ -s
+link := $(link) -s
 #flags := $(flags) -g -I..
 #link := $(link)
 objects := obj/bass.o
