@@ -127,7 +127,9 @@ dbeq    d7,DBCC
 dbeq.w  d7,DBCC
 
 dbf     d7,DBCC
+dbra    d7,DBCC
 dbf.w   d7,DBCC
+dbra.w  d7,DBCC
 
 dbge    d7,DBCC
 dbge.w  d7,DBCC
