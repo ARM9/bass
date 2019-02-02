@@ -2125,6 +2125,51 @@ clr.w   $12345678
 clr.l   $12345678
 
 
+move    ($12345678).l,(-$12345678).l
+move.b  ($12345678).l,(-$12345678).l
+move.w  ($12345678).l,(-$12345678).l
+move.l  ($12345678).l,(-$12345678).l
+
+move    ($12345678).l,(-$1234).w
+move.b  ($12345678).l,(-$1234).w
+move.w  ($12345678).l,(-$1234).w
+move.l  ($12345678).l,(-$1234).w
+
+move    ($12345678).l,(-$12,a7,d6.l)
+move.b  ($12345678).l,(-$12,a7,d6.l)
+move.w  ($12345678).l,(-$12,a7,d6.l)
+move.l  ($12345678).l,(-$12,a7,d6.l)
+
+move    ($12345678).l,(-$12,a7,d6.w)
+move.b  ($12345678).l,(-$12,a7,d6.w)
+move.w  ($12345678).l,(-$12,a7,d6.w)
+move.l  ($12345678).l,(-$12,a7,d6.w)
+
+move    ($12345678).l,(-$12,a7,d6)
+move.b  ($12345678).l,(-$12,a7,d6)
+move.w  ($12345678).l,(-$12,a7,d6)
+move.l  ($12345678).l,(-$12,a7,d6)
+
+move    ($12345678).l,(-$1234,a7)
+move.b  ($12345678).l,(-$1234,a7)
+move.w  ($12345678).l,(-$1234,a7)
+move.l  ($12345678).l,(-$1234,a7)
+
+move    ($12345678).l,(a7)
+move.b  ($12345678).l,(a7)
+move.w  ($12345678).l,(a7)
+move.l  ($12345678).l,(a7)
+
+move    ($12345678).l,(a7)+
+move.b  ($12345678).l,(a7)+
+move.w  ($12345678).l,(a7)+
+move.l  ($12345678).l,(a7)+
+
+move    ($12345678).l,-(a7)
+move.b  ($12345678).l,-(a7)
+move.w  ($12345678).l,-(a7)
+move.l  ($12345678).l,-(a7)
+
 move    ($12345678).l,d7
 move.b  ($12345678).l,d7
 move.w  ($12345678).l,d7
@@ -2134,6 +2179,51 @@ move    d7,($12345678).l
 move.b  d7,($12345678).l
 move.w  d7,($12345678).l
 move.l  d7,($12345678).l
+
+move    ($1234).w,(-$12345678).l
+move.b  ($1234).w,(-$12345678).l
+move.w  ($1234).w,(-$12345678).l
+move.l  ($1234).w,(-$12345678).l
+
+move    ($1234).w,(-$1234).w
+move.b  ($1234).w,(-$1234).w
+move.w  ($1234).w,(-$1234).w
+move.l  ($1234).w,(-$1234).w
+
+move    ($1234).w,(-$12,a7,d6.l)
+move.b  ($1234).w,(-$12,a7,d6.l)
+move.w  ($1234).w,(-$12,a7,d6.l)
+move.l  ($1234).w,(-$12,a7,d6.l)
+
+move    ($1234).w,(-$12,a7,d6.w)
+move.b  ($1234).w,(-$12,a7,d6.w)
+move.w  ($1234).w,(-$12,a7,d6.w)
+move.l  ($1234).w,(-$12,a7,d6.w)
+
+move    ($1234).w,(-$12,a7,d6)
+move.b  ($1234).w,(-$12,a7,d6)
+move.w  ($1234).w,(-$12,a7,d6)
+move.l  ($1234).w,(-$12,a7,d6)
+
+move    ($1234).w,(-$1234,a7)
+move.b  ($1234).w,(-$1234,a7)
+move.w  ($1234).w,(-$1234,a7)
+move.l  ($1234).w,(-$1234,a7)
+
+move    ($1234).w,(a7)
+move.b  ($1234).w,(a7)
+move.w  ($1234).w,(a7)
+move.l  ($1234).w,(a7)
+
+move    ($1234).w,(a7)+
+move.b  ($1234).w,(a7)+
+move.w  ($1234).w,(a7)+
+move.l  ($1234).w,(a7)+
+
+move    ($1234).w,-(a7)
+move.b  ($1234).w,-(a7)
+move.w  ($1234).w,-(a7)
+move.l  ($1234).w,-(a7)
 
 move    ($1234).w,d7
 move.b  ($1234).w,d7
@@ -2145,6 +2235,51 @@ move.b  d7,($1234).w
 move.w  d7,($1234).w
 move.l  d7,($1234).w
 
+move    ($12,a7,d6.l),(-$12345678).l
+move.b  ($12,a7,d6.l),(-$12345678).l
+move.w  ($12,a7,d6.l),(-$12345678).l
+move.l  ($12,a7,d6.l),(-$12345678).l
+
+move    ($12,a7,d6.l),(-$1234).w
+move.b  ($12,a7,d6.l),(-$1234).w
+move.w  ($12,a7,d6.l),(-$1234).w
+move.l  ($12,a7,d6.l),(-$1234).w
+
+move    ($12,a7,d6.l),(-$12,a5,d4.l)
+move.b  ($12,a7,d6.l),(-$12,a5,d4.l)
+move.w  ($12,a7,d6.l),(-$12,a5,d4.l)
+move.l  ($12,a7,d6.l),(-$12,a5,d4.l)
+
+move    ($12,a7,d6.l),(-$12,a5,d4.w)
+move.b  ($12,a7,d6.l),(-$12,a5,d4.w)
+move.w  ($12,a7,d6.l),(-$12,a5,d4.w)
+move.l  ($12,a7,d6.l),(-$12,a5,d4.w)
+
+move    ($12,a7,d6.l),(-$12,a5,d4)
+move.b  ($12,a7,d6.l),(-$12,a5,d4)
+move.w  ($12,a7,d6.l),(-$12,a5,d4)
+move.l  ($12,a7,d6.l),(-$12,a5,d4)
+
+move    ($12,a7,d6.l),(-$1234,a5)
+move.b  ($12,a7,d6.l),(-$1234,a5)
+move.w  ($12,a7,d6.l),(-$1234,a5)
+move.l  ($12,a7,d6.l),(-$1234,a5)
+
+move    ($12,a7,d6.l),(a5)
+move.b  ($12,a7,d6.l),(a5)
+move.w  ($12,a7,d6.l),(a5)
+move.l  ($12,a7,d6.l),(a5)
+
+move    ($12,a7,d6.l),(a5)+
+move.b  ($12,a7,d6.l),(a5)+
+move.w  ($12,a7,d6.l),(a5)+
+move.l  ($12,a7,d6.l),(a5)+
+
+move    ($12,a7,d6.l),-(a5)
+move.b  ($12,a7,d6.l),-(a5)
+move.w  ($12,a7,d6.l),-(a5)
+move.l  ($12,a7,d6.l),-(a5)
+
 move    ($12,a7,d6.l),d5
 move.b  ($12,a7,d6.l),d5
 move.w  ($12,a7,d6.l),d5
@@ -2154,6 +2289,51 @@ move    d7,($12,a6,d5.l)
 move.b  d7,($12,a6,d5.l)
 move.w  d7,($12,a6,d5.l)
 move.l  d7,($12,a6,d5.l)
+
+move    ($12,a7,d6.w),(-$12345678).l
+move.b  ($12,a7,d6.w),(-$12345678).l
+move.w  ($12,a7,d6.w),(-$12345678).l
+move.l  ($12,a7,d6.w),(-$12345678).l
+
+move    ($12,a7,d6.w),(-$1234).w
+move.b  ($12,a7,d6.w),(-$1234).w
+move.w  ($12,a7,d6.w),(-$1234).w
+move.l  ($12,a7,d6.w),(-$1234).w
+
+move    ($12,a7,d6.w),(-$12,a5,d4.l)
+move.b  ($12,a7,d6.w),(-$12,a5,d4.l)
+move.w  ($12,a7,d6.w),(-$12,a5,d4.l)
+move.l  ($12,a7,d6.w),(-$12,a5,d4.l)
+
+move    ($12,a7,d6.w),(-$12,a5,d4.w)
+move.b  ($12,a7,d6.w),(-$12,a5,d4.w)
+move.w  ($12,a7,d6.w),(-$12,a5,d4.w)
+move.l  ($12,a7,d6.w),(-$12,a5,d4.w)
+
+move    ($12,a7,d6.w),(-$12,a5,d4)
+move.b  ($12,a7,d6.w),(-$12,a5,d4)
+move.w  ($12,a7,d6.w),(-$12,a5,d4)
+move.l  ($12,a7,d6.w),(-$12,a5,d4)
+
+move    ($12,a7,d6.w),(-$1234,a5)
+move.b  ($12,a7,d6.w),(-$1234,a5)
+move.w  ($12,a7,d6.w),(-$1234,a5)
+move.l  ($12,a7,d6.w),(-$1234,a5)
+
+move    ($12,a7,d6.w),(a5)
+move.b  ($12,a7,d6.w),(a5)
+move.w  ($12,a7,d6.w),(a5)
+move.l  ($12,a7,d6.w),(a5)
+
+move    ($12,a7,d6.w),(a5)+
+move.b  ($12,a7,d6.w),(a5)+
+move.w  ($12,a7,d6.w),(a5)+
+move.l  ($12,a7,d6.w),(a5)+
+
+move    ($12,a7,d6.w),-(a5)
+move.b  ($12,a7,d6.w),-(a5)
+move.w  ($12,a7,d6.w),-(a5)
+move.l  ($12,a7,d6.w),-(a5)
 
 move    ($12,a7,d6.w),d5
 move.b  ($12,a7,d6.w),d5
@@ -2165,6 +2345,51 @@ move.b  d7,($12,a6,d5.w)
 move.w  d7,($12,a6,d5.w)
 move.l  d7,($12,a6,d5.w)
 
+move    ($12,a7,d6),(-$12345678).l
+move.b  ($12,a7,d6),(-$12345678).l
+move.w  ($12,a7,d6),(-$12345678).l
+move.l  ($12,a7,d6),(-$12345678).l
+
+move    ($12,a7,d6),(-$1234).w
+move.b  ($12,a7,d6),(-$1234).w
+move.w  ($12,a7,d6),(-$1234).w
+move.l  ($12,a7,d6),(-$1234).w
+
+move    ($12,a7,d6),(-$12,a5,d4.l)
+move.b  ($12,a7,d6),(-$12,a5,d4.l)
+move.w  ($12,a7,d6),(-$12,a5,d4.l)
+move.l  ($12,a7,d6),(-$12,a5,d4.l)
+
+move    ($12,a7,d6),(-$12,a5,d4.w)
+move.b  ($12,a7,d6),(-$12,a5,d4.w)
+move.w  ($12,a7,d6),(-$12,a5,d4.w)
+move.l  ($12,a7,d6),(-$12,a5,d4.w)
+
+move    ($12,a7,d6),(-$12,a5,d4)
+move.b  ($12,a7,d6),(-$12,a5,d4)
+move.w  ($12,a7,d6),(-$12,a5,d4)
+move.l  ($12,a7,d6),(-$12,a5,d4)
+
+move    ($12,a7,d6),(-$1234,a5)
+move.b  ($12,a7,d6),(-$1234,a5)
+move.w  ($12,a7,d6),(-$1234,a5)
+move.l  ($12,a7,d6),(-$1234,a5)
+
+move    ($12,a7,d6),(a5)
+move.b  ($12,a7,d6),(a5)
+move.w  ($12,a7,d6),(a5)
+move.l  ($12,a7,d6),(a5)
+
+move    ($12,a7,d6),(a5)+
+move.b  ($12,a7,d6),(a5)+
+move.w  ($12,a7,d6),(a5)+
+move.l  ($12,a7,d6),(a5)+
+
+move    ($12,a7,d6),-(a5)
+move.b  ($12,a7,d6),-(a5)
+move.w  ($12,a7,d6),-(a5)
+move.l  ($12,a7,d6),-(a5)
+
 move    ($12,a7,d6),d5
 move.b  ($12,a7,d6),d5
 move.w  ($12,a7,d6),d5
@@ -2174,6 +2399,51 @@ move    d7,($12,a6,d5)
 move.b  d7,($12,a6,d5)
 move.w  d7,($12,a6,d5)
 move.l  d7,($12,a6,d5)
+
+move    ($1234,a7),(-$12345678).l
+move.b  ($1234,a7),(-$12345678).l
+move.w  ($1234,a7),(-$12345678).l
+move.l  ($1234,a7),(-$12345678).l
+
+move    ($1234,a7),(-$1234).w
+move.b  ($1234,a7),(-$1234).w
+move.w  ($1234,a7),(-$1234).w
+move.l  ($1234,a7),(-$1234).w
+
+move    ($1234,a7),(-$12,a6,d5.l)
+move.b  ($1234,a7),(-$12,a6,d5.l)
+move.w  ($1234,a7),(-$12,a6,d5.l)
+move.l  ($1234,a7),(-$12,a6,d5.l)
+
+move    ($1234,a7),(-$12,a6,d5.w)
+move.b  ($1234,a7),(-$12,a6,d5.w)
+move.w  ($1234,a7),(-$12,a6,d5.w)
+move.l  ($1234,a7),(-$12,a6,d5.w)
+
+move    ($1234,a7),(-$12,a6,d5)
+move.b  ($1234,a7),(-$12,a6,d5)
+move.w  ($1234,a7),(-$12,a6,d5)
+move.l  ($1234,a7),(-$12,a6,d5)
+
+move    ($1234,a7),(-$1234,a6)
+move.b  ($1234,a7),(-$1234,a6)
+move.w  ($1234,a7),(-$1234,a6)
+move.l  ($1234,a7),(-$1234,a6)
+
+move    ($1234,a7),(a6)
+move.b  ($1234,a7),(a6)
+move.w  ($1234,a7),(a6)
+move.l  ($1234,a7),(a6)
+
+move    ($1234,a7),(a6)+
+move.b  ($1234,a7),(a6)+
+move.w  ($1234,a7),(a6)+
+move.l  ($1234,a7),(a6)+
+
+move    ($1234,a7),-(a6)
+move.b  ($1234,a7),-(a6)
+move.w  ($1234,a7),-(a6)
+move.l  ($1234,a7),-(a6)
 
 move    ($1234,a7),d6
 move.b  ($1234,a7),d6
@@ -2185,21 +2455,203 @@ move.b  d7,($1234,a6)
 move.w  d7,($1234,a6)
 move.l  d7,($1234,a6)
 
-MOVEPC:
-move    (MOVEPC,pc,d7.l),d6
-move.b  (MOVEPC,pc,d7.l),d6
-move.w  (MOVEPC,pc,d7.l),d6
-move.l  (MOVEPC,pc,d7.l),d6
+move    (MOVEPCL,pc,d7.l),(-$12345678).l
+move.b  (MOVEPCL,pc,d7.l),(-$12345678).l
+move.w  (MOVEPCL,pc,d7.l),(-$12345678).l
+move.l  (MOVEPCL,pc,d7.l),(-$12345678).l
 
-move    (MOVEPC,pc,d7.w),d6
-move.b  (MOVEPC,pc,d7.w),d6
-move.w  (MOVEPC,pc,d7.w),d6
-move.l  (MOVEPC,pc,d7.w),d6
+move    (MOVEPCL,pc,d7.l),(-$1234).w
+move.b  (MOVEPCL,pc,d7.l),(-$1234).w
+move.w  (MOVEPCL,pc,d7.l),(-$1234).w
+move.l  (MOVEPCL,pc,d7.l),(-$1234).w
+
+move    (MOVEPCL,pc,d7.l),(-$12,a6,d5.l)
+move.b  (MOVEPCL,pc,d7.l),(-$12,a6,d5.l)
+move.w  (MOVEPCL,pc,d7.l),(-$12,a6,d5.l)
+move.l  (MOVEPCL,pc,d7.l),(-$12,a6,d5.l)
+
+move    (MOVEPCL,pc,d7.l),(-$12,a6,d5.w)
+move.b  (MOVEPCL,pc,d7.l),(-$12,a6,d5.w)
+move.w  (MOVEPCL,pc,d7.l),(-$12,a6,d5.w)
+move.l  (MOVEPCL,pc,d7.l),(-$12,a6,d5.w)
+
+move    (MOVEPCL,pc,d7.l),(-$12,a6,d5)
+move.b  (MOVEPCL,pc,d7.l),(-$12,a6,d5)
+move.w  (MOVEPCL,pc,d7.l),(-$12,a6,d5)
+move.l  (MOVEPCL,pc,d7.l),(-$12,a6,d5)
+
+MOVEPCL:
+move    (MOVEPCL,pc,d7.l),(-$1234,a6)
+move.b  (MOVEPCL,pc,d7.l),(-$1234,a6)
+move.w  (MOVEPCL,pc,d7.l),(-$1234,a6)
+move.l  (MOVEPCL,pc,d7.l),(-$1234,a6)
+
+move    (MOVEPCL,pc,d7.l),(a6)
+move.b  (MOVEPCL,pc,d7.l),(a6)
+move.w  (MOVEPCL,pc,d7.l),(a6)
+move.l  (MOVEPCL,pc,d7.l),(a6)
+
+move    (MOVEPCL,pc,d7.l),(a6)+
+move.b  (MOVEPCL,pc,d7.l),(a6)+
+move.w  (MOVEPCL,pc,d7.l),(a6)+
+move.l  (MOVEPCL,pc,d7.l),(a6)+
+
+move    (MOVEPCL,pc,d7.l),-(a6)
+move.b  (MOVEPCL,pc,d7.l),-(a6)
+move.w  (MOVEPCL,pc,d7.l),-(a6)
+move.l  (MOVEPCL,pc,d7.l),-(a6)
+
+move    (MOVEPCL,pc,d7.l),d6
+move.b  (MOVEPCL,pc,d7.l),d6
+move.w  (MOVEPCL,pc,d7.l),d6
+move.l  (MOVEPCL,pc,d7.l),d6
+
+move    (MOVEPCW,pc,d7.w),(-$12345678).l
+move.b  (MOVEPCW,pc,d7.w),(-$12345678).l
+move.w  (MOVEPCW,pc,d7.w),(-$12345678).l
+move.l  (MOVEPCW,pc,d7.w),(-$12345678).l
+
+move    (MOVEPCW,pc,d7.w),(-$1234).w
+move.b  (MOVEPCW,pc,d7.w),(-$1234).w
+move.w  (MOVEPCW,pc,d7.w),(-$1234).w
+move.l  (MOVEPCW,pc,d7.w),(-$1234).w
+
+move    (MOVEPCW,pc,d7.w),(-$12,a6,d5.l)
+move.b  (MOVEPCW,pc,d7.w),(-$12,a6,d5.l)
+move.w  (MOVEPCW,pc,d7.w),(-$12,a6,d5.l)
+move.l  (MOVEPCW,pc,d7.w),(-$12,a6,d5.l)
+
+move    (MOVEPCW,pc,d7.w),(-$12,a6,d5.w)
+move.b  (MOVEPCW,pc,d7.w),(-$12,a6,d5.w)
+move.w  (MOVEPCW,pc,d7.w),(-$12,a6,d5.w)
+move.l  (MOVEPCW,pc,d7.w),(-$12,a6,d5.w)
+
+move    (MOVEPCW,pc,d7.w),(-$12,a6,d5)
+move.b  (MOVEPCW,pc,d7.w),(-$12,a6,d5)
+move.w  (MOVEPCW,pc,d7.w),(-$12,a6,d5)
+move.l  (MOVEPCW,pc,d7.w),(-$12,a6,d5)
+
+MOVEPCW:
+move    (MOVEPCW,pc,d7.w),(-$1234,a6)
+move.b  (MOVEPCW,pc,d7.w),(-$1234,a6)
+move.w  (MOVEPCW,pc,d7.w),(-$1234,a6)
+move.l  (MOVEPCW,pc,d7.w),(-$1234,a6)
+
+move    (MOVEPCW,pc,d7.w),(a6)
+move.b  (MOVEPCW,pc,d7.w),(a6)
+move.w  (MOVEPCW,pc,d7.w),(a6)
+move.l  (MOVEPCW,pc,d7.w),(a6)
+
+move    (MOVEPCW,pc,d7.w),(a6)+
+move.b  (MOVEPCW,pc,d7.w),(a6)+
+move.w  (MOVEPCW,pc,d7.w),(a6)+
+move.l  (MOVEPCW,pc,d7.w),(a6)+
+
+move    (MOVEPCW,pc,d7.w),-(a6)
+move.b  (MOVEPCW,pc,d7.w),-(a6)
+move.w  (MOVEPCW,pc,d7.w),-(a6)
+move.l  (MOVEPCW,pc,d7.w),-(a6)
+
+move    (MOVEPCW,pc,d7.w),d6
+move.b  (MOVEPCW,pc,d7.w),d6
+move.w  (MOVEPCW,pc,d7.w),d6
+move.l  (MOVEPCW,pc,d7.w),d6
+
+move    (MOVEPC,pc,d7),(-$12345678).l
+move.b  (MOVEPC,pc,d7),(-$12345678).l
+move.w  (MOVEPC,pc,d7),(-$12345678).l
+move.l  (MOVEPC,pc,d7),(-$12345678).l
+
+move    (MOVEPC,pc,d7),(-$1234).w
+move.b  (MOVEPC,pc,d7),(-$1234).w
+move.w  (MOVEPC,pc,d7),(-$1234).w
+move.l  (MOVEPC,pc,d7),(-$1234).w
+
+move    (MOVEPC,pc,d7),(-$12,a6,d5.l)
+move.b  (MOVEPC,pc,d7),(-$12,a6,d5.l)
+move.w  (MOVEPC,pc,d7),(-$12,a6,d5.l)
+move.l  (MOVEPC,pc,d7),(-$12,a6,d5.l)
+
+move    (MOVEPC,pc,d7),(-$12,a6,d5.w)
+move.b  (MOVEPC,pc,d7),(-$12,a6,d5.w)
+move.w  (MOVEPC,pc,d7),(-$12,a6,d5.w)
+move.l  (MOVEPC,pc,d7),(-$12,a6,d5.w)
+
+move    (MOVEPC,pc,d7),(-$12,a6,d5)
+move.b  (MOVEPC,pc,d7),(-$12,a6,d5)
+move.w  (MOVEPC,pc,d7),(-$12,a6,d5)
+move.l  (MOVEPC,pc,d7),(-$12,a6,d5)
+
+MOVEPC:
+move    (MOVEPC,pc,d7),(-$1234,a6)
+move.b  (MOVEPC,pc,d7),(-$1234,a6)
+move.w  (MOVEPC,pc,d7),(-$1234,a6)
+move.l  (MOVEPC,pc,d7),(-$1234,a6)
+
+move    (MOVEPC,pc,d7),(a6)
+move.b  (MOVEPC,pc,d7),(a6)
+move.w  (MOVEPC,pc,d7),(a6)
+move.l  (MOVEPC,pc,d7),(a6)
+
+move    (MOVEPC,pc,d7),(a6)+
+move.b  (MOVEPC,pc,d7),(a6)+
+move.w  (MOVEPC,pc,d7),(a6)+
+move.l  (MOVEPC,pc,d7),(a6)+
+
+move    (MOVEPC,pc,d7),-(a6)
+move.b  (MOVEPC,pc,d7),-(a6)
+move.w  (MOVEPC,pc,d7),-(a6)
+move.l  (MOVEPC,pc,d7),-(a6)
 
 move    (MOVEPC,pc,d7),d6
 move.b  (MOVEPC,pc,d7),d6
 move.w  (MOVEPC,pc,d7),d6
 move.l  (MOVEPC,pc,d7),d6
+
+move    ($1234,pc),(-$12345678).l
+move.b  ($1234,pc),(-$12345678).l
+move.w  ($1234,pc),(-$12345678).l
+move.l  ($1234,pc),(-$12345678).l
+
+move    ($1234,pc),(-$1234).w
+move.b  ($1234,pc),(-$1234).w
+move.w  ($1234,pc),(-$1234).w
+move.l  ($1234,pc),(-$1234).w
+
+move    ($1234,pc),(-$12,a7,d6.l)
+move.b  ($1234,pc),(-$12,a7,d6.l)
+move.w  ($1234,pc),(-$12,a7,d6.l)
+move.l  ($1234,pc),(-$12,a7,d6.l)
+
+move    ($1234,pc),(-$12,a7,d6.w)
+move.b  ($1234,pc),(-$12,a7,d6.w)
+move.w  ($1234,pc),(-$12,a7,d6.w)
+move.l  ($1234,pc),(-$12,a7,d6.w)
+
+move    ($1234,pc),(-$12,a7,d6)
+move.b  ($1234,pc),(-$12,a7,d6)
+move.w  ($1234,pc),(-$12,a7,d6)
+move.l  ($1234,pc),(-$12,a7,d6)
+
+move    ($1234,pc),(-$1234,a7)
+move.b  ($1234,pc),(-$1234,a7)
+move.w  ($1234,pc),(-$1234,a7)
+move.l  ($1234,pc),(-$1234,a7)
+
+move    ($1234,pc),(a7)
+move.b  ($1234,pc),(a7)
+move.w  ($1234,pc),(a7)
+move.l  ($1234,pc),(a7)
+
+move    ($1234,pc),(a7)+
+move.b  ($1234,pc),(a7)+
+move.w  ($1234,pc),(a7)+
+move.l  ($1234,pc),(a7)+
+
+move    ($1234,pc),-(a7)
+move.b  ($1234,pc),-(a7)
+move.w  ($1234,pc),-(a7)
+move.l  ($1234,pc),-(a7)
 
 move    ($1234,pc),d7
 move.b  ($1234,pc),d7
@@ -2216,6 +2668,51 @@ move    a7,d6
 move.w  a7,d6
 move.l  a7,d6
 
+move    (a7),(-$12345678).l
+move.b  (a7),(-$12345678).l
+move.w  (a7),(-$12345678).l
+move.l  (a7),(-$12345678).l
+
+move    (a7),(-$1234).w
+move.b  (a7),(-$1234).w
+move.w  (a7),(-$1234).w
+move.l  (a7),(-$1234).w
+
+move    (a7),(-$12,a6,d5.l)
+move.b  (a7),(-$12,a6,d5.l)
+move.w  (a7),(-$12,a6,d5.l)
+move.l  (a7),(-$12,a6,d5.l)
+
+move    (a7),(-$12,a6,d5.w)
+move.b  (a7),(-$12,a6,d5.w)
+move.w  (a7),(-$12,a6,d5.w)
+move.l  (a7),(-$12,a6,d5.w)
+
+move    (a7),(-$12,a6,d5)
+move.b  (a7),(-$12,a6,d5)
+move.w  (a7),(-$12,a6,d5)
+move.l  (a7),(-$12,a6,d5)
+
+move    (a7),(-$1234,a6)
+move.b  (a7),(-$1234,a6)
+move.w  (a7),(-$1234,a6)
+move.l  (a7),(-$1234,a6)
+
+move    (a7),(a6)
+move.b  (a7),(a6)
+move.w  (a7),(a6)
+move.l  (a7),(a6)
+
+move    (a7),(a6)+
+move.b  (a7),(a6)+
+move.w  (a7),(a6)+
+move.l  (a7),(a6)+
+
+move    (a7),-(a6)
+move.b  (a7),-(a6)
+move.w  (a7),-(a6)
+move.l  (a7),-(a6)
+
 move    (a7),d6
 move.b  (a7),d6
 move.w  (a7),d6
@@ -2226,6 +2723,51 @@ move.b  d7,(a6)
 move.w  d7,(a6)
 move.l  d7,(a6)
 
+move    (a7)+,(-$12345678).l
+move.b  (a7)+,(-$12345678).l
+move.w  (a7)+,(-$12345678).l
+move.l  (a7)+,(-$12345678).l
+
+move    (a7)+,(-$1234).w
+move.b  (a7)+,(-$1234).w
+move.w  (a7)+,(-$1234).w
+move.l  (a7)+,(-$1234).w
+
+move    (a7)+,(-$12,a6,d5.l)
+move.b  (a7)+,(-$12,a6,d5.l)
+move.w  (a7)+,(-$12,a6,d5.l)
+move.l  (a7)+,(-$12,a6,d5.l)
+
+move    (a7)+,(-$12,a6,d5.w)
+move.b  (a7)+,(-$12,a6,d5.w)
+move.w  (a7)+,(-$12,a6,d5.w)
+move.l  (a7)+,(-$12,a6,d5.w)
+
+move    (a7)+,(-$12,a6,d5)
+move.b  (a7)+,(-$12,a6,d5)
+move.w  (a7)+,(-$12,a6,d5)
+move.l  (a7)+,(-$12,a6,d5)
+
+move    (a7)+,(-$1234,a6)
+move.b  (a7)+,(-$1234,a6)
+move.w  (a7)+,(-$1234,a6)
+move.l  (a7)+,(-$1234,a6)
+
+move    (a7)+,(a6)
+move.b  (a7)+,(a6)
+move.w  (a7)+,(a6)
+move.l  (a7)+,(a6)
+
+move    (a7)+,(a6)+
+move.b  (a7)+,(a6)+
+move.w  (a7)+,(a6)+
+move.l  (a7)+,(a6)+
+
+move    (a7)+,-(a6)
+move.b  (a7)+,-(a6)
+move.w  (a7)+,-(a6)
+move.l  (a7)+,-(a6)
+
 move    (a7)+,d6
 move.b  (a7)+,d6
 move.w  (a7)+,d6
@@ -2235,6 +2777,51 @@ move    d7,(a6)+
 move.b  d7,(a6)+
 move.w  d7,(a6)+
 move.l  d7,(a6)+
+
+move    -(a7),(-$12345678).l
+move.b  -(a7),(-$12345678).l
+move.w  -(a7),(-$12345678).l
+move.l  -(a7),(-$12345678).l
+
+move    -(a7),(-$1234).w
+move.b  -(a7),(-$1234).w
+move.w  -(a7),(-$1234).w
+move.l  -(a7),(-$1234).w
+
+move    -(a7),(-$12,a6,d5.l)
+move.b  -(a7),(-$12,a6,d5.l)
+move.w  -(a7),(-$12,a6,d5.l)
+move.l  -(a7),(-$12,a6,d5.l)
+
+move    -(a7),(-$12,a6,d5.w)
+move.b  -(a7),(-$12,a6,d5.w)
+move.w  -(a7),(-$12,a6,d5.w)
+move.l  -(a7),(-$12,a6,d5.w)
+
+move    -(a7),(-$12,a6,d5)
+move.b  -(a7),(-$12,a6,d5)
+move.w  -(a7),(-$12,a6,d5)
+move.l  -(a7),(-$12,a6,d5)
+
+move    -(a7),(-$1234,a6)
+move.b  -(a7),(-$1234,a6)
+move.w  -(a7),(-$1234,a6)
+move.l  -(a7),(-$1234,a6)
+
+move    -(a7),(a6)
+move.b  -(a7),(a6)
+move.w  -(a7),(a6)
+move.l  -(a7),(a6)
+
+move    -(a7),(a6)+
+move.b  -(a7),(a6)+
+move.w  -(a7),(a6)+
+move.l  -(a7),(a6)+
+
+move    -(a7),-(a6)
+move.b  -(a7),-(a6)
+move.w  -(a7),-(a6)
+move.l  -(a7),-(a6)
 
 move    -(a7),d6
 move.b  -(a7),d6
@@ -2566,6 +3153,280 @@ move    #$FEDC,sr
 move.w  #$FEDC,sr
 
 
+move    ($12,a7,d6.l),-$1234.w
+move.b  ($12,a7,d6.l),-$1234.w
+move.w  ($12,a7,d6.l),-$1234.w
+move.l  ($12,a7,d6.l),-$1234.w
+
+move    ($12,a7,d6.l),-$12345678.l
+move.b  ($12,a7,d6.l),-$12345678.l
+move.w  ($12,a7,d6.l),-$12345678.l
+move.l  ($12,a7,d6.l),-$12345678.l
+
+move    ($12,a7,d6.l),-$12345678
+move.b  ($12,a7,d6.l),-$12345678
+move.w  ($12,a7,d6.l),-$12345678
+move.l  ($12,a7,d6.l),-$12345678
+
+move    ($12,a7,d6.w),-$1234.w
+move.b  ($12,a7,d6.w),-$1234.w
+move.w  ($12,a7,d6.w),-$1234.w
+move.l  ($12,a7,d6.w),-$1234.w
+
+move    ($12,a7,d6.w),-$12345678.l
+move.b  ($12,a7,d6.w),-$12345678.l
+move.w  ($12,a7,d6.w),-$12345678.l
+move.l  ($12,a7,d6.w),-$12345678.l
+
+move    ($12,a7,d6.w),-$12345678
+move.b  ($12,a7,d6.w),-$12345678
+move.w  ($12,a7,d6.w),-$12345678
+move.l  ($12,a7,d6.w),-$12345678
+
+move    ($12,a7,d6),-$1234.w
+move.b  ($12,a7,d6),-$1234.w
+move.w  ($12,a7,d6),-$1234.w
+move.l  ($12,a7,d6),-$1234.w
+
+move    ($12,a7,d6),-$12345678.l
+move.b  ($12,a7,d6),-$12345678.l
+move.w  ($12,a7,d6),-$12345678.l
+move.l  ($12,a7,d6),-$12345678.l
+
+move    ($12,a7,d6),-$12345678
+move.b  ($12,a7,d6),-$12345678
+move.w  ($12,a7,d6),-$12345678
+move.l  ($12,a7,d6),-$12345678
+
+move    ($1234,a7),-$1234.w
+move.b  ($1234,a7),-$1234.w
+move.w  ($1234,a7),-$1234.w
+move.l  ($1234,a7),-$1234.w
+
+move    ($1234,a7),-$12345678.l
+move.b  ($1234,a7),-$12345678.l
+move.w  ($1234,a7),-$12345678.l
+move.l  ($1234,a7),-$12345678.l
+
+move    ($1234,a7),-$12345678
+move.b  ($1234,a7),-$12345678
+move.w  ($1234,a7),-$12345678
+move.l  ($1234,a7),-$12345678
+
+MOVEPCLA:
+move    (MOVEPCLA,pc,d7.l),-$1234.w
+move.b  (MOVEPCLA,pc,d7.l),-$1234.w
+move.w  (MOVEPCLA,pc,d7.l),-$1234.w
+move.l  (MOVEPCLA,pc,d7.l),-$1234.w
+
+move    (MOVEPCLA,pc,d7.l),-$12345678.l
+move.b  (MOVEPCLA,pc,d7.l),-$12345678.l
+move.w  (MOVEPCLA,pc,d7.l),-$12345678.l
+move.l  (MOVEPCLA,pc,d7.l),-$12345678.l
+
+move    (MOVEPCLA,pc,d7.l),-$12345678
+move.b  (MOVEPCLA,pc,d7.l),-$12345678
+move.w  (MOVEPCLA,pc,d7.l),-$12345678
+move.l  (MOVEPCLA,pc,d7.l),-$12345678
+
+MOVEPCWA:
+move    (MOVEPCWA,pc,d7.w),-$1234.w
+move.b  (MOVEPCWA,pc,d7.w),-$1234.w
+move.w  (MOVEPCWA,pc,d7.w),-$1234.w
+move.l  (MOVEPCWA,pc,d7.w),-$1234.w
+
+move    (MOVEPCWA,pc,d7.w),-$12345678.l
+move.b  (MOVEPCWA,pc,d7.w),-$12345678.l
+move.w  (MOVEPCWA,pc,d7.w),-$12345678.l
+move.l  (MOVEPCWA,pc,d7.w),-$12345678.l
+
+move    (MOVEPCWA,pc,d7.w),-$12345678
+move.b  (MOVEPCWA,pc,d7.w),-$12345678
+move.w  (MOVEPCWA,pc,d7.w),-$12345678
+move.l  (MOVEPCWA,pc,d7.w),-$12345678
+
+MOVEPCA:
+move    (MOVEPCA,pc,d7),-$1234.w
+move.b  (MOVEPCA,pc,d7),-$1234.w
+move.w  (MOVEPCA,pc,d7),-$1234.w
+move.l  (MOVEPCA,pc,d7),-$1234.w
+
+move    (MOVEPCA,pc,d7),-$12345678.l
+move.b  (MOVEPCA,pc,d7),-$12345678.l
+move.w  (MOVEPCA,pc,d7),-$12345678.l
+move.l  (MOVEPCA,pc,d7),-$12345678.l
+
+move    (MOVEPCA,pc,d7),-$12345678
+move.b  (MOVEPCA,pc,d7),-$12345678
+move.w  (MOVEPCA,pc,d7),-$12345678
+move.l  (MOVEPCA,pc,d7),-$12345678
+
+move    ($1234,pc),-$1234.w
+move.b  ($1234,pc),-$1234.w
+move.w  ($1234,pc),-$1234.w
+move.l  ($1234,pc),-$1234.w
+
+move    ($1234,pc),-$12345678.l
+move.b  ($1234,pc),-$12345678.l
+move.w  ($1234,pc),-$12345678.l
+move.l  ($1234,pc),-$12345678.l
+
+move    ($1234,pc),-$12345678
+move.b  ($1234,pc),-$12345678
+move.w  ($1234,pc),-$12345678
+move.l  ($1234,pc),-$12345678
+
+move    (a7),-$1234.w
+move.b  (a7),-$1234.w
+move.w  (a7),-$1234.w
+move.l  (a7),-$1234.w
+
+move    (a7),-$12345678.l
+move.b  (a7),-$12345678.l
+move.w  (a7),-$12345678.l
+move.l  (a7),-$12345678.l
+
+move    (a7),-$12345678
+move.b  (a7),-$12345678
+move.w  (a7),-$12345678
+move.l  (a7),-$12345678
+
+move    (a7)+,-$1234.w
+move.b  (a7)+,-$1234.w
+move.w  (a7)+,-$1234.w
+move.l  (a7)+,-$1234.w
+
+move    (a7)+,-$12345678.l
+move.b  (a7)+,-$12345678.l
+move.w  (a7)+,-$12345678.l
+move.l  (a7)+,-$12345678.l
+
+move    (a7)+,-$12345678
+move.b  (a7)+,-$12345678
+move.w  (a7)+,-$12345678
+move.l  (a7)+,-$12345678
+
+move    -(a7),-$1234.w
+move.b  -(a7),-$1234.w
+move.w  -(a7),-$1234.w
+move.l  -(a7),-$1234.w
+
+move    -(a7),-$12345678.l
+move.b  -(a7),-$12345678.l
+move.w  -(a7),-$12345678.l
+move.l  -(a7),-$12345678.l
+
+move    -(a7),-$12345678
+move.b  -(a7),-$12345678
+move.w  -(a7),-$12345678
+move.l  -(a7),-$12345678
+
+move    $1234.w,(-$12,a7,d6.l)
+move.b  $1234.w,(-$12,a7,d6.l)
+move.w  $1234.w,(-$12,a7,d6.l)
+move.l  $1234.w,(-$12,a7,d6.l)
+
+move    $1234.w,(-$12,a7,d6.w)
+move.b  $1234.w,(-$12,a7,d6.w)
+move.w  $1234.w,(-$12,a7,d6.w)
+move.l  $1234.w,(-$12,a7,d6.w)
+
+move    $1234.w,(-$12,a7,d6)
+move.b  $1234.w,(-$12,a7,d6)
+move.w  $1234.w,(-$12,a7,d6)
+move.l  $1234.w,(-$12,a7,d6)
+
+move    $1234.w,(-$1234,a7)
+move.b  $1234.w,(-$1234,a7)
+move.w  $1234.w,(-$1234,a7)
+move.l  $1234.w,(-$1234,a7)
+
+move    $1234.w,(a7)
+move.b  $1234.w,(a7)
+move.w  $1234.w,(a7)
+move.l  $1234.w,(a7)
+
+move    $1234.w,(a7)+
+move.b  $1234.w,(a7)+
+move.w  $1234.w,(a7)+
+move.l  $1234.w,(a7)+
+
+move    $1234.w,-(a7)
+move.b  $1234.w,-(a7)
+move.w  $1234.w,-(a7)
+move.l  $1234.w,-(a7)
+
+move    $12345678.l,(-$12,a7,d6.l)
+move.b  $12345678.l,(-$12,a7,d6.l)
+move.w  $12345678.l,(-$12,a7,d6.l)
+move.l  $12345678.l,(-$12,a7,d6.l)
+
+move    $12345678,(-$12,a7,d6.l)
+move.b  $12345678,(-$12,a7,d6.l)
+move.w  $12345678,(-$12,a7,d6.l)
+move.l  $12345678,(-$12,a7,d6.l)
+
+move    $12345678.l,(-$12,a7,d6.w)
+move.b  $12345678.l,(-$12,a7,d6.w)
+move.w  $12345678.l,(-$12,a7,d6.w)
+move.l  $12345678.l,(-$12,a7,d6.w)
+
+move    $12345678,(-$12,a7,d6.w)
+move.b  $12345678,(-$12,a7,d6.w)
+move.w  $12345678,(-$12,a7,d6.w)
+move.l  $12345678,(-$12,a7,d6.w)
+
+move    $12345678.l,(-$12,a7,d6)
+move.b  $12345678.l,(-$12,a7,d6)
+move.w  $12345678.l,(-$12,a7,d6)
+move.l  $12345678.l,(-$12,a7,d6)
+
+move    $12345678,(-$12,a7,d6)
+move.b  $12345678,(-$12,a7,d6)
+move.w  $12345678,(-$12,a7,d6)
+move.l  $12345678,(-$12,a7,d6)
+
+move    $12345678.l,(-$1234,a7)
+move.b  $12345678.l,(-$1234,a7)
+move.w  $12345678.l,(-$1234,a7)
+move.l  $12345678.l,(-$1234,a7)
+
+move    $12345678,(-$1234,a7)
+move.b  $12345678,(-$1234,a7)
+move.w  $12345678,(-$1234,a7)
+move.l  $12345678,(-$1234,a7)
+
+move    $12345678.l,(a7)
+move.b  $12345678.l,(a7)
+move.w  $12345678.l,(a7)
+move.l  $12345678.l,(a7)
+
+move    $12345678,(a7)
+move.b  $12345678,(a7)
+move.w  $12345678,(a7)
+move.l  $12345678,(a7)
+
+move    $12345678.l,(a7)+
+move.b  $12345678.l,(a7)+
+move.w  $12345678.l,(a7)+
+move.l  $12345678.l,(a7)+
+
+move    $12345678,(a7)+
+move.b  $12345678,(a7)+
+move.w  $12345678,(a7)+
+move.l  $12345678,(a7)+
+
+move    $12345678.l,-(a7)
+move.b  $12345678.l,-(a7)
+move.w  $12345678.l,-(a7)
+move.l  $12345678.l,-(a7)
+
+move    $12345678,-(a7)
+move.b  $12345678,-(a7)
+move.w  $12345678,-(a7)
+move.l  $12345678,-(a7)
+
+
 move.l  a7,usp
 
 move.l  usp,a7
@@ -2642,6 +3503,42 @@ move    #$FEDC,$12345678
 move.b  #$FE,$12345678
 move.w  #$FEDC,$12345678
 move.l  #$FEDCBA98,$12345678
+
+
+move    $1234.w,-$1234.w
+move.b  $1234.w,-$1234.w
+move.w  $1234.w,-$1234.w
+move.l  $1234.w,-$1234.w
+
+move    $1234.w,-$12345678.l
+move.b  $1234.w,-$12345678.l
+move.w  $1234.w,-$12345678.l
+move.l  $1234.w,-$12345678.l
+
+move    $1234.w,-$12345678
+move.b  $1234.w,-$12345678
+move.w  $1234.w,-$12345678
+move.l  $1234.w,-$12345678
+
+move    $12345678.l,-$1234.w
+move.b  $12345678.l,-$1234.w
+move.w  $12345678.l,-$1234.w
+move.l  $12345678.l,-$1234.w
+
+move    $12345678,-$1234.w
+move.b  $12345678,-$1234.w
+move.w  $12345678,-$1234.w
+move.l  $12345678,-$1234.w
+
+move    $12345678.l,-$12345678.l
+move.b  $12345678.l,-$12345678.l
+move.w  $12345678.l,-$12345678.l
+move.l  $12345678.l,-$12345678.l
+
+move    $12345678,-$12345678
+move.b  $12345678,-$12345678
+move.w  $12345678,-$12345678
+move.l  $12345678,-$12345678
 
 
 // MOVEM Register List Encoded Using 16-Bit Immediate
@@ -3149,9 +4046,13 @@ cmp.l   #$FEDCBA98,$12345678
 cmpi.l  #$FEDCBA98,$12345678
 
 
+cmp     (a7)+,(a6)+
 cmpm    (a7)+,(a6)+
+cmp.b   (a7)+,(a6)+
 cmpm.b  (a7)+,(a6)+
+cmp.w   (a7)+,(a6)+
 cmpm.w  (a7)+,(a6)+
+cmp.l   (a7)+,(a6)+
 cmpm.l  (a7)+,(a6)+
 
 
