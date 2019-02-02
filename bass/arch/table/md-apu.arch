@@ -1,4 +1,4 @@
-// Mega Drive Zilog Z80
+// Mega Drive Zilog Z80 APU instruction set
 
 arch(md_apu) =
 #include "z80/z80.md"

@@ -1,5 +1,6 @@
-// Neo-Geo Motorola 68000
+// Neo-Geo Motorola 68000 CPU instruction set
 
 arch(ng_cpu) =
+#include "m68k/directives.md"
 #include "m68k/m68k.md"
 ;

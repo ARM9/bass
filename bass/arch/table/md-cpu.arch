@@ -1,5 +1,6 @@
-// Mega Drive Motorola 68000
+// Mega Drive Motorola 68000 CPU instruction set
 
 arch(md_cpu) =
+#include "m68k/directives.md"
 #include "m68k/m68k.md"
 ;

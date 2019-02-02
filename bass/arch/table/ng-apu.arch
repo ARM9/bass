@@ -1,4 +1,4 @@
-// Neo-Geo Zilog Z80
+// Neo-Geo Zilog Z80 APU instruction set
 
 arch(ng_apu) =
 #include "z80/z80.md"
