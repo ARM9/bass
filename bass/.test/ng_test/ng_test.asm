@@ -2665,6 +2665,51 @@ move.b  d7,d6
 move.w  d7,d6
 move.l  d7,d6
 
+move    a7,(-$12345678).l
+//move.b  a7,(-$12345678).l // Illegal Addressing Mode
+move.w  a7,(-$12345678).l
+move.l  a7,(-$12345678).l
+
+move    a7,(-$1234).w
+//move.b  a7,(-$1234).w // Illegal Addressing Mode
+move.w  a7,(-$1234).w
+move.l  a7,(-$1234).w
+
+move    a7,(-$12,a6,d5.l)
+//move.b  a7,(-$12,a6,d5.l) // Illegal Addressing Mode
+move.w  a7,(-$12,a6,d5.l)
+move.l  a7,(-$12,a6,d5.l)
+
+move    a7,(-$12,a6,d5.w)
+//move.b  a7,(-$12,a6,d5.w) // Illegal Addressing Mode
+move.w  a7,(-$12,a6,d5.w)
+move.l  a7,(-$12,a6,d5.w)
+
+move    a7,(-$12,a6,d5)
+//move.b  a7,(-$12,a6,d5) // Illegal Addressing Mode
+move.w  a7,(-$12,a6,d5)
+move.l  a7,(-$12,a6,d5)
+
+move    a7,(-$1234,a6)
+//move.b  a7,(-$1234,a6) // Illegal Addressing Mode
+move.w  a7,(-$1234,a6)
+move.l  a7,(-$1234,a6)
+
+move    a7,(a6)
+//move.b  a7,(a6) // Illegal Addressing Mode
+move.w  a7,(a6)
+move.l  a7,(a6)
+
+move    a7,(a6)+
+//move.b  a7,(a6)+ // Illegal Addressing Mode
+move.w  a7,(a6)+
+move.l  a7,(a6)+
+
+move    a7,-(a6)
+//move.b  a7,-(a6) // Illegal Addressing Mode
+move.w  a7,-(a6)
+move.l  a7,-(a6)
+
 move    a7,d6
 //move.b  a7,d6 // Illegal Addressing Mode
 move.w  a7,d6
@@ -3464,6 +3509,21 @@ move.b  d7,$12345678
 move.w  d7,$12345678
 move.l  d7,$12345678
 
+move    a7,-$1234.w
+//move.b  a7,-$1234.w // Illegal Addressing Mode
+move.w  a7,-$1234.w
+move.l  a7,-$1234.w
+
+move    a7,-$12345678.l
+//move.b  a7,-$12345678.l // Illegal Addressing Mode
+move.w  a7,-$12345678.l
+move.l  a7,-$12345678.l
+
+move    a7,-$12345678
+//move.b  a7,-$12345678 // Illegal Addressing Mode
+move.w  a7,-$12345678
+move.l  a7,-$12345678
+
 move    $1234.w,a7
 movea   $1234.w,a7
 //move.b  $1234.w,a7 // Illegal Addressing Mode
@@ -3490,6 +3550,36 @@ move.w  $12345678,a7
 movea.w $12345678,a7
 move.l  $12345678,a7
 movea.l $12345678,a7
+
+
+move    $1234.w,ccr
+move.w  $1234.w,ccr
+
+move    $12345678.l,ccr
+move.w  $12345678.l,ccr
+
+move    $12345678,ccr
+move.w  $12345678,ccr
+
+
+move    $1234.w,sr
+move.w  $1234.w,sr
+
+move    sr,$1234.w
+move.w  sr,$1234.w
+
+move    $12345678.l,sr
+move.w  $12345678.l,sr
+
+move    sr,$12345678.l
+move.w  sr,$12345678.l
+
+move    $12345678,sr
+move.w  $12345678,sr
+
+move    sr,$12345678
+move.w  sr,$12345678
+
 
 move    #$FEDC,$1234.w
 move.b  #$FE,$1234.w
