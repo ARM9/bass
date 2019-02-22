@@ -1,0 +1,5 @@
+// ZX Spectrum Zilog Z80
+
+arch(zxs_cpu) =
+#include "z80/z80.md"
+;

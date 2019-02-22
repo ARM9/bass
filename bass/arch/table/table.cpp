@@ -19,6 +19,7 @@
 #include "md-cpu.arch"
 #include "ng-apu.arch"
 #include "ng-cpu.arch"
+#include "zxs-cpu.arch"
 #undef arch
 
 void BassTable::initialize() {
@@ -59,6 +60,7 @@ bool BassTable::assemble(const string& statement) {
     else if(s == "md.cpu") data = Arch_md_cpu;
     else if(s == "ng.apu") data = Arch_ng_apu;
     else if(s == "ng.cpu") data = Arch_ng_cpu;
+    else if(s == "zxs.cpu") data = Arch_zxs_cpu;
     else if(s.match("\"?*\"")) {
       s.trim<1>("\"");
       s = {dir(sourceFilenames.last()), s};
