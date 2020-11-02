@@ -1,3 +1,4 @@
+#include <vector>
 
 struct Bass {
   bool target(const string& filename, bool create);
@@ -5,13 +6,19 @@ struct Bass {
   void define(const string& name, const string& value);
   void constant(const string& name, const string& value);
   bool assemble(bool strict = false);
-
+  unsigned int grabValFromString(const char*, int*);
+  void UpdateIndex(const char*, unsigned int value);
   bool writeSymfile(const string& filename, bool create);
 
 protected:
   enum class Phase : unsigned { Analyze, Query, Write };
   enum class Endian : unsigned { LSB, MSB };
 
+  struct TABLE_PAIR{
+    char symbol[32];
+	unsigned int value;
+  };
+  
   struct Instruction {
     string statement;
     unsigned ip;
@@ -83,6 +90,7 @@ protected:
       unsigned dataLength;
     };
 
+
   public:
     vector<_EmitBytesOp> EmitBytes;
 
@@ -119,7 +127,7 @@ protected:
   unsigned lastLabelCounter = 1;    //- instance counter
   unsigned nextLabelCounter = 1;    //+ instance counter
   bool strict = false;              //upgrade warnings to errors when true
-
+  std::vector<TABLE_PAIR> vTable; 
   bool analyzePhase() const { return phase == Phase::Analyze; }
   bool queryPhase() const { return phase == Phase::Query; }
   bool writePhase() const { return phase == Phase::Write; }

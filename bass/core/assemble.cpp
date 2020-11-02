@@ -7,6 +7,66 @@ void Bass::initialize() {
   base = 0;
   lastLabelCounter = 1;
   nextLabelCounter = 1;
+  TABLE_PAIR tp;
+  for(unsigned int n = 1; n < 256; n++){
+    sprintf(tp.symbol, "%c", n);
+	tp.value = n;
+	vTable.push_back(tp);
+  }
+}
+
+unsigned int Bass::grabValFromString(const char* s, int* sz){
+	
+  int n = vTable.size();
+  int szMax = 0;
+  int indexMax = 0;
+  int sl = 0;
+  
+  for(int i = 0; i < n; i++){
+	  
+	sl = strlen(vTable[i].symbol);
+	
+    if(!strncmp(vTable[i].symbol, s, sl)){
+		
+		if(sl > szMax){
+		  szMax = sl;
+		  indexMax = i;
+		}
+		
+	}
+
+  }
+  
+  if(szMax){
+	  *sz = szMax;
+	  return vTable[indexMax].value;
+  }
+  else{
+	  *sz = 1;
+	  return 0;
+  }
+}
+
+void Bass::UpdateIndex(const char* s, unsigned int value){
+	
+  int n = vTable.size();
+  
+  for(int i = 0; i < n; i++){
+	  
+    if(!strcmp(vTable[i].symbol, s)){
+		
+		vTable[i].value = value;
+		return;
+		
+	}
+	
+  }
+ 
+  TABLE_PAIR tp;
+  tp.value = value;
+  strcpy(tp.symbol, s);
+  vTable.push_back(tp);
+  
 }
 
 bool Bass::assemble(const string& statement) {
@@ -186,11 +246,34 @@ bool Bass::assemble(const string& statement) {
     }
     return true;
   }
+  
+  if(s.match("table ?*")) {
+	char line[128];
+	lstring p = s.ltrim<1>("table ").qsplit(",").strip();
+	sprintf(line, "%s", p.take(0).trim<1>("\"").data());
+	FILE* h = fopen(line, "r");
+	if(!h){
+		printf("can't open table file [%s]\n", line);
+		exit(1);
+	}
+	int64_t value;
+	char index[64];
+	
+	while(fgets(line, sizeof(line), h)){
+		
+		sscanf(line, "%x=%[^\n]", &value, index);
+		UpdateIndex(index, value);
+	}
+	
+	fclose(h);
+    return true;
+  }
 
   //d[bwldq] ("string"|variable) [, ...]
   {
     unsigned dataLength = 0;
     unsigned tokenLength = 0;
+	int sz = 0;
     for(auto& d : directives.EmitBytes) {
       if(s.beginsWith(d.token)) {
         dataLength = d.dataLength;
@@ -204,7 +287,13 @@ bool Bass::assemble(const string& statement) {
       for(auto& t : p) {
         if(t.match("\"*\"")) {
           t = text(t);
-          for(auto& b : t) write(stringTable[b], dataLength);
+		  std::string s = "";
+		  for(auto& b : t) s += b;
+		  for(int i = 0; i < strlen(s.c_str()); i++){
+			  unsigned int val = grabValFromString(&s[i], &sz);
+			  write(val, dataLength);
+			  i += sz - 1;
+		  }
         } else {
           write(evaluate(t), dataLength);
         }
