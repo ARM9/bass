@@ -78,7 +78,8 @@ auto Bass::assemble(const string& statement) -> bool {
   //output "filename" [, create]
   if(s.match("output ?*")) {
     auto p = split(s.trimLeft("output ", 1L));
-    string filename = {filepath(), p.take(0).trim("\"", "\"", 1L)};
+    if(!p(0).match("\"*\"")) error("missing filename");
+    string filename = {filepath(), text(p.take(0))};
     bool create = (p.size() && p(0) == "create");
     target(filename, create);
     return true;
@@ -89,7 +90,7 @@ auto Bass::assemble(const string& statement) -> bool {
     s.trimLeft("architecture ", 1L);
     if(s == "none") architecture = new Architecture{*this};
     else {
-      string location{Path::local(), "bass/architectures/", s, ".arch"};
+      string location{Path::userData(), "bass/architectures/", s, ".arch"};
       if(!file::exists(location)) location = {Path::program(), "architectures/", s, ".arch"};
       if(!file::exists(location)) error("unknown architecture: ", s);
       architecture = new Table{*this, string::read(location)};
@@ -158,15 +159,34 @@ auto Bass::assemble(const string& statement) -> bool {
     return true;
   }
 
+  //copy source, target, length
+  if(s.match("copy ?*")) {
+    auto p = split(s.trimLeft("copy ", 1L));
+    if(p.size() == 3) {
+      auto origin = targetFile.offset();
+      auto source = evaluate(p(0));
+      auto target = evaluate(p(1));
+      auto length = evaluate(p(2));
+      vector<u8> memory;
+      memory.resize(length);
+      targetFile.seek(source);
+      targetFile.read(memory);
+      targetFile.seek(target);
+      for(uint offset : range(length)) write(memory[offset]);
+      targetFile.seek(origin);
+      return true;
+    }
+  }
+
   //insert [name, ] filename [, offset] [, length]
   if(s.match("insert ?*")) {
     auto p = split(s.trimLeft("insert ", 1L));
     string name;
     if(!p(0).match("\"*\"")) name = p.take(0);
     if(!p(0).match("\"*\"")) error("missing filename");
-    string filename = {filepath(), p.take(0).trim("\"", "\"", 1L)};
-    file fp;
-    if(!fp.open(filename, file::mode::read)) error("file not found: ", filename);
+    string filename = {filepath(), text(p.take(0))};
+    auto fp = file::open(filename, file::mode::read);
+    if(!fp) error("file not found: ", filename);
     uint offset = p.size() ? evaluate(p.take(0)) : 0;
     if(offset > fp.size()) offset = fp.size();
     uint length = p.size() ? evaluate(p.take(0)) : 0;
@@ -177,6 +197,22 @@ auto Bass::assemble(const string& statement) -> bool {
     }
     fp.seek(offset);
     while(!fp.end() && length--) write(fp.read());
+    return true;
+  }
+
+  //delete filename
+  if(s.match("delete ?*")) {
+    auto p = split(s.trimLeft("delete ", 1L));
+    if(!p(0).match("\"*\"")) error("missing filename");
+    string filename = {filepath(), text(p.take(0))};
+    if(!file::exists(filename)) {
+      warning("file not found: ", filename);
+      return true;
+    }
+    if(!file::remove(filename)) {
+      warning("unable to delete file: ", filename);
+      return true;
+    }
     return true;
   }
 
@@ -222,57 +258,91 @@ auto Bass::assemble(const string& statement) -> bool {
     return true;
   }
 
+  //ds amount
+  if(s.match("ds ?*")) {
+    s.trimLeft("ds ", 1L);
+    origin += evaluate(s);
+    seek(origin);
+    return true;
+  }
+
+  //tracker enable|disable|reset
+  if(s.match("tracker ?*")) {
+    s.trimLeft("tracker ", 1L).strip();
+    if(s == "enable") {
+      if(writePhase()) tracker.enable = true;
+      return true;
+    }
+    if(s == "disable") {
+      if(writePhase()) tracker.enable = false;
+      return true;
+    }
+    if(s == "reset") {
+      if(writePhase()) tracker.addresses.reset();
+      return true;
+    }
+  }
+
   //print ("string"|[cast:]variable) [, ...]
   if(s.match("print ?*")) {
-    s.trimLeft("print ", 1L).strip();
     if(writePhase()) {
-      auto p = split(s);
-      for(auto& t : p) {
-        if(t.match("\"*\"")) {
-          print(stderr, text(t));
-        } else if(t.match("binary:?*")) {
-          t.trimLeft("binary:", 1L);
-          print(stderr, binary(evaluate(t)));
-        } else if(t.match("hex:?*")) {
-          t.trimLeft("hex:", 1L);
-          print(stderr, hex(evaluate(t)));
-        } else if(t.match("char:?*")) {
-          t.trimLeft("char:", 1L);
-          print(stderr, (char)evaluate(t));
-        } else {
-          print(stderr, evaluate(t));
-        }
-      }
+      s.trimLeft("print ", 1L).strip();
+      print(stderr, assembleString(s));
     }
     return true;
   }
 
-  //notice "string"
-  if(s.match("notice \"*\"")) {
+  //notice ("string"|[cast:]variable) [, ...]
+  if(s.match("notice ?*")) {
     if(writePhase()) {
       s.trimLeft("notice ", 1L).strip();
-      notice(text(s));
+      notice(assembleString(s));
     }
     return true;
   }
 
-  //warning "string"
-  if(s.match("warning \"*\"")) {
+  //warning ("string"|[cast:]variable) [, ...]
+  if(s.match("warning ?*")) {
     if(writePhase()) {
       s.trimLeft("warning ", 1L).strip();
-      warning(text(s));
+      warning(assembleString(s));
     }
     return true;
   }
 
-  //error "string"
-  if(s.match("error \"*\"")) {
+  //error ("string"|[cast:]variable) [, ...]
+  if(s.match("error ?*")) {
     if(writePhase()) {
       s.trimLeft("error ", 1L).strip();
-      error(text(s));
+      error(assembleString(s));
     }
     return true;
   }
 
-  return architecture->assemble(statement);
+  charactersUseMap = true;
+  bool result = architecture->assemble(statement);
+  charactersUseMap = false;
+  return result;
+}
+
+auto Bass::assembleString(const string& parameters) -> string {
+  string result;
+  auto p = split(parameters);
+  for(auto& t : p) {
+    if(t.match("\"*\"")) {
+      result.append(text(t));
+    } else if(t.match("binary:?*")) {
+      t.trimLeft("binary:", 1L);
+      result.append(binary(evaluate(t)));
+    } else if(t.match("hex:?*")) {
+      t.trimLeft("hex:", 1L);
+      result.append(hex(evaluate(t)));
+    } else if(t.match("char:?*")) {
+      t.trimLeft("char:", 1L);
+      result.append((char)evaluate(t));
+    } else {
+      result.append(evaluate(t));
+    }
+  }
+  return result;
 }

@@ -3,7 +3,7 @@
 //httpMessage: base class for httpRequest and httpResponse
 //provides shared functionality
 
-namespace nall { namespace HTTP {
+namespace nall::HTTP {
 
 struct Variable {
   string name;
@@ -11,17 +11,22 @@ struct Variable {
 };
 
 struct SharedVariable {
-  SharedVariable(const string& name = "", const string& value = "") : shared(new Variable{name, value}) {}
+  SharedVariable(const nall::string& name = "", const nall::string& value = "") : shared(new Variable{name, value}) {}
 
   explicit operator bool() const { return (bool)shared->name; }
   auto operator()() const { return shared->value; }
-  auto& operator=(const string& value) { shared->value = value; return *this; }
+  auto& operator=(const nall::string& value) { shared->value = value; return *this; }
 
   auto name() const { return shared->name; }
   auto value() const { return shared->value; }
+  auto string() const { return nall::string{shared->value}.strip().replace("\r", ""); }
+  auto boolean() const { return string() == "true"; }
+  auto integer() const { return string().integer(); }
+  auto natural() const { return string().natural(); }
+  auto real() const { return string().real(); }
 
-  auto& setName(const string& name) { shared->name = name; return *this; }
-  auto& setValue(const string& value = "") { shared->value = value; return *this; }
+  auto& setName(const nall::string& name) { shared->name = name; return *this; }
+  auto& setValue(const nall::string& value = "") { shared->value = value; return *this; }
 
   shared_pointer<Variable> shared;
 };
@@ -66,7 +71,7 @@ struct Variables {
   }
 
   auto remove(const string& name) -> void {
-    for(auto n : rrange(variables)) {
+    for(auto n : reverse(range(variables.size()))) {
       if(variables[n].shared->name.iequals(name)) variables.remove(n);
     }
   }
@@ -96,4 +101,4 @@ struct Message {
   string _body;
 };
 
-}}
+}

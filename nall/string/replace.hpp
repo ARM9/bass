@@ -3,7 +3,7 @@
 namespace nall {
 
 template<bool Insensitive, bool Quoted>
-auto string::_replace(string_view from, string_view to, long limit) -> string& {
+inline auto string::_replace(string_view from, string_view to, long limit) -> string& {
   if(limit <= 0 || from.size() == 0) return *this;
 
   int size = this->size();
@@ -48,7 +48,7 @@ auto string::_replace(string_view from, string_view to, long limit) -> string& {
       if(Quoted) { if(p[n] == '\"') { quoted ^= 1; n++; continue; } if(quoted) { n++; continue; } }
       if(_compare<Insensitive>(p + n, size - n, from.data(), from.size())) { n++; continue; }
 
-      if(offset) memory::move(p + offset, p + base, n - base);
+      if(base) memory::move(p + offset, p + base, n - base);
       memory::copy(p + offset + (n - base), to.data(), to.size());
       offset += (n - base) + to.size();
 
@@ -86,9 +86,9 @@ auto string::_replace(string_view from, string_view to, long limit) -> string& {
   return *this;
 }
 
-auto string::replace(string_view from, string_view to, long limit) -> string& { return _replace<0, 0>(from, to, limit); }
-auto string::ireplace(string_view from, string_view to, long limit) -> string& { return _replace<1, 0>(from, to, limit); }
-auto string::qreplace(string_view from, string_view to, long limit) -> string& { return _replace<0, 1>(from, to, limit); }
-auto string::iqreplace(string_view from, string_view to, long limit) -> string& { return _replace<1, 1>(from, to, limit); }
+inline auto string::replace(string_view from, string_view to, long limit) -> string& { return _replace<0, 0>(from, to, limit); }
+inline auto string::ireplace(string_view from, string_view to, long limit) -> string& { return _replace<1, 0>(from, to, limit); }
+inline auto string::qreplace(string_view from, string_view to, long limit) -> string& { return _replace<0, 1>(from, to, limit); }
+inline auto string::iqreplace(string_view from, string_view to, long limit) -> string& { return _replace<1, 1>(from, to, limit); }
 
 };

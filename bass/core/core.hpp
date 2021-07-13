@@ -66,6 +66,19 @@ struct Bass {
 
   using Constant = Variable;  //Variable and Constant structures are identical
 
+  struct Array {
+    Array() {}
+    Array(const string& name) : name(name) {}
+    Array(const string& name, vector<int64_t> values) : name(name), values(values) {}
+
+    auto hash() const -> uint { return name.hash(); }
+    auto operator==(const Array& source) const -> bool { return name == source.name; }
+    auto operator< (const Array& source) const -> bool { return name <  source.name; }
+
+    string name;
+    vector<int64_t> values;
+  };
+
   struct Frame {
     enum class Level : uint {
       Inline,  //use deepest frame (eg for parameters)
@@ -81,11 +94,17 @@ struct Bass {
     hashset<Define> defines;
     hashset<Expression> expressions;
     hashset<Variable> variables;
+    hashset<Array> arrays;
   };
 
   struct Block {
     uint ip;
     string type;
+  };
+
+  struct Tracker {
+    bool enable = false;
+    set<int64_t> addresses;
   };
 
 protected:
@@ -96,6 +115,7 @@ protected:
   //core.cpp
   auto pc() const -> uint;
   auto seek(uint offset) -> void;
+  auto track(uint length) -> void;
   auto write(uint64_t data, uint length = 1) -> void;
 
   auto printInstruction() -> void;
@@ -106,9 +126,12 @@ protected:
   //evaluate.cpp
   auto evaluate(const string& expression, Evaluation mode = Evaluation::Default) -> int64_t;
   auto evaluate(Eval::Node* node, Evaluation mode) -> int64_t;
+  auto quantifyParameters(Eval::Node* node) -> int64_t;
   auto evaluateParameters(Eval::Node* node, Evaluation mode) -> vector<int64_t>;
   auto evaluateExpression(Eval::Node* node, Evaluation mode) -> int64_t;
+  auto evaluateString(Eval::Node* node) -> string;
   auto evaluateLiteral(Eval::Node* node, Evaluation mode) -> int64_t;
+  auto evaluateSubscript(Eval::Node* node, Evaluation mode) -> int64_t;
   auto evaluateAssign(Eval::Node* node, Evaluation mode) -> int64_t;
 
   //analyze.cpp
@@ -122,6 +145,7 @@ protected:
   //assemble.cpp
   auto initialize() -> void;
   auto assemble(const string& statement) -> bool;
+  auto assembleString(const string& parameters) -> string;
 
   //utility.cpp
   auto setMacro(const string& name, const string_vector& parameters, uint ip, bool inlined, Frame::Level level) -> void;
@@ -138,6 +162,9 @@ protected:
 
   auto setConstant(const string& name, int64_t value) -> void;
   auto findConstant(const string& name) -> maybe<Constant&>;
+
+  auto setArray(const string& name, const vector<int64_t>& values, Frame::Level level) -> void;
+  auto findArray(const string& name) -> maybe<Array&>;
 
   auto evaluateDefines(string& statement) -> void;
 
@@ -161,15 +188,17 @@ protected:
   int64_t stringTable[256];       //overrides for d[bwldq] text strings
   Phase phase;                    //phase of assembly
   Endian endian = Endian::LSB;    //used for multi-byte writes (d[bwldq], etc)
+  Tracker tracker;                //used to track writes to detect overwrites
   uint macroInvocationCounter;    //used for {#} support
   uint ip = 0;                    //instruction pointer into program
   uint origin = 0;                //file offset
   int base = 0;                   //file offset to memory map displacement
   uint lastLabelCounter = 1;      //- instance counter
   uint nextLabelCounter = 1;      //+ instance counter
+  bool charactersUseMap = false;  //0 = '*' parses as ASCII; 1 = '*' uses stringTable[]
   bool strict = false;            //upgrade warnings to errors when true
 
-  file targetFile;
+  file_buffer targetFile;
   string_vector sourceFilenames;
 
   shared_pointer<Architecture> architecture;

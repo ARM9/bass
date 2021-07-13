@@ -23,20 +23,28 @@ template<typename T> vector<T>::operator bool() const {
   return _size;
 }
 
-template<typename T> auto vector<T>::capacity() const -> uint {
-  return _left + _size + _right;
+template<typename T> vector<T>::operator array_span<T>() {
+  return {data(), size()};
 }
 
-template<typename T> auto vector<T>::size() const -> uint {
-  return _size;
+template<typename T> vector<T>::operator array_view<T>() const {
+  return {data(), size()};
 }
 
-template<typename T> auto vector<T>::data() -> T* {
-  return _pool;
+template<typename T> template<typename Cast> auto vector<T>::capacity() const -> uint64_t {
+  return (_left + _size + _right) * sizeof(T) / sizeof(Cast);
 }
 
-template<typename T> auto vector<T>::data() const -> const T* {
-  return _pool;
+template<typename T> template<typename Cast> auto vector<T>::size() const -> uint64_t {
+  return _size * sizeof(T) / sizeof(Cast);
+}
+
+template<typename T> template<typename Cast> auto vector<T>::data() -> Cast* {
+  return (Cast*)_pool;
+}
+
+template<typename T> template<typename Cast> auto vector<T>::data() const -> const Cast* {
+  return (const Cast*)_pool;
 }
 
 }

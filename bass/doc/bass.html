@@ -46,9 +46,9 @@
     </style>
   </head>
   <body>
-    <h1>bass v15</h1>
+    <h1>bass v17</h1>
     Author: byuu<br>
-    License: GPLv3<br>
+    License: ISC<br>
     <br>
 
     <h2>Terminal Usage</h2>
@@ -150,11 +150,17 @@
 
     <pre>
     \\ = backslash (\)
-    \s = single-quote (')
-    \d = double-quote (")
-    \c = comma (,)
-    \b = block separator (;)
-    \n = line feed
+    \' = single-quote (')
+    \" = double-quote (")
+    \n = new line
+    \t = tab
+    </pre>
+
+    <p>Strings may also be concatenated via the ~ operator, which is useful
+    for string construction via defines:</p>
+
+    <pre>
+    "foo" ~ "bar"  //equivalent to "foobar"
     </pre>
 
     <h3>Characters</h3>
@@ -177,7 +183,7 @@
     <h4>Example:</h4>
     <pre>
     expression sum(x, y) = x + y
-    print sum(1 + 2), "\n"  //prints 3
+    print sum(1, 2), "\n"  //prints 3
     </pre>
 
     <h3>Defines</h3>
@@ -373,6 +379,23 @@
     constant y = 64
     </pre>
 
+    <h3>Arrays</h3>
+    <p>Arrays of variables can be created. The size of the array is fixed once
+    it has been created, but the array can be redefined later on to another
+    size if desired. Array elements not specified initially are initialized to
+    zeroes.</p>
+
+    <h4>Example:</h4>
+    <pre>
+    array[4] x = 1,2,4,8
+    array[2] y
+
+    y[1] = x[3]
+    print y[0], ",", y[1], "\n"&nbsp;  //prints 0,8
+
+    array[8] x&nbsp; //recreates a new array with eight entries
+    </pre>
+
     <h3>Labels</h3>
     <p>Labels can be created with the syntax: <i>labelName:</i></p>
 
@@ -527,6 +550,12 @@
     <p>This can be used to save and restore internal state. Currently supported
     values are: <i>origin, base, pc</i>.</p>
 
+    <h3>copy source, target, length</h3>
+    <p>This command copies a block from the currently open file to another
+    location within the file. It does this by reading the entire block in first,
+    and then writing said block out, so be careful with overlapping addresses.
+    </p>
+
     <h3>insert [name, ] "filename" [, offset] [, length]</h3>
     <p>This command inserts a binary file into the target file. You can
     optionally specify a name, offset and length. If you specify a name, it will
@@ -536,6 +565,10 @@
     referenced filename before copying the data. If you want to specify a
     length, you must specify an offset first, and the length will determine the
     maximum number of bytes to copy from the referenced filename.</p>
+
+    <h3>delete "filename"</h3>
+    <p>This command deletes a file from disk. Useful for removing temporary work
+    files needed by a project being assembled.</p>
 
     <h3>fill length [, with]</h3>
     <p>Inserts <i>length</i> number of bytes into the target file. The default
@@ -576,6 +609,22 @@
     print "'", char:65, "'"  //prints 'A'
     </pre>
 
+    <h3>ds offset</h3>
+    <p>Seeks forward or backward from the current output file write address. The
+    value can be positive (to seek forward) or negative (to seek backward.) This
+    is useful for skipping bytes when in file modification mode.</p>
+
+    <h3>tracker enable|disable|reset</h3>
+    <p>Tracks writes to a given output file when enabled. Selecting a new output
+    file automatically clears the tracking list. This is useful when using bass
+    as a patching assembler to detect when the same file address is written to
+    more than once. If this happens while the tracker is enabled, an error is
+    produced.</p>
+
+    <p>Note: disabling the tracker does not clear the previously tracked
+    addresses, in case you only wish to intentionally disable it for a short
+    time. If you want to clear the tracking history, use the reset argument.</p>
+
     <h3>notice "string"</h3>
     <p>Prints a notice to the terminal, but continues assembly.</p>
 
@@ -598,6 +647,35 @@
     &nbsp;&nbsp;...
     }
     </pre>
+
+    <h3>array.size(name)</h3>
+    <p>Returns the number of elements in an array, or produces an error if the
+    array is not defined.</p>
+
+    <h3>array.sort(name)</h3>
+    <p>Sorts the specified array in ascending order.</p>
+
+    <h3>assert(expression)</h3>
+    <p>Produces an error if the expression evaluates to zero.</p>
+
+    <h3>file.size("filename")</h3>
+    <p>Returns the size of "filename" on disk, or produces an error if the file
+    is not found.</p>
+
+    <h3>file.exists("filename")</h3>
+    <p>Returns 1 if "filename" exists, or 0 if not.</p>
+
+    <h3>read(address)</h3>
+    <p>Reads a byte from the currently open output file, or produces an error if
+    there is no file currently open. The address provided is the origin, or
+    literal file address. The base offset is not factored in when this function
+    is used.</p>
+
+    <p>Important note: the resulting values read from a target file are only
+    valid during the write phase of assembly! If you rely on the value read
+    back during a previous pass to control outputting code, bass may assemble
+    the source code incorrectly. Use this function with caution. It is mostly
+    intended for when bass is used in patching mode.</p>
 
     <h3>origin()</h3>
     <p>Returns the current origin.</p>

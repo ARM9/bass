@@ -5,7 +5,7 @@
 #include "utility.cpp"
 
 auto Bass::target(const string& filename, bool create) -> bool {
-  if(targetFile.open()) targetFile.close();
+  if(targetFile) targetFile.close();
   if(!filename) return true;
 
   //cannot modify a file unless it exists
@@ -16,6 +16,7 @@ auto Bass::target(const string& filename, bool create) -> bool {
     return false;
   }
 
+  tracker.addresses.reset();
   return true;
 }
 
@@ -32,20 +33,22 @@ auto Bass::source(const string& filename) -> bool {
   data.transform("\t\r", "  ");
 
   auto lines = data.split("\n");
-  for(uint lineNumber : range(lines)) {
+  for(uint lineNumber : range(lines.size())) {
+    //remove single-line comments
     if(auto position = lines[lineNumber].qfind("//")) {
-      lines[lineNumber].resize(position());  //remove comments
+      lines[lineNumber].resize(position());
     }
 
+    //allow multiple statements per line, separated by ';'
     auto blocks = lines[lineNumber].qsplit(";").strip();
-    for(uint blockNumber : range(blocks)) {
+    for(uint blockNumber : range(blocks.size())) {
       string statement = blocks[blockNumber];
       strip(statement);
       if(!statement) continue;
 
       if(statement.match("include \"?*\"")) {
-        statement.trim("include \"", "\"", 1L);
-        source({Location::path(filename), statement});
+        statement.trimLeft("include ", 1L).strip();
+        source({Location::path(filename), text(statement)});
       } else {
         Instruction instruction;
         instruction.statement = statement;
@@ -99,18 +102,30 @@ auto Bass::pc() const -> uint {
 }
 
 auto Bass::seek(uint offset) -> void {
-  if(!targetFile.open()) return;
+  if(!targetFile) return;
   if(writePhase()) targetFile.seek(offset);
+}
+
+auto Bass::track(uint length) -> void {
+  if(!tracker.enable) return;
+  uint64_t address = targetFile.offset();
+  for(auto n : range(length)) {
+    if(tracker.addresses.find(address + n)) {
+      error("overwrite detected at address 0x", hex(address + n), " [0x", hex(base + address + n), "]");
+    }
+    tracker.addresses.insert(address + n);
+  }
 }
 
 auto Bass::write(uint64_t data, uint length) -> void {
   if(writePhase()) {
-    if(targetFile.open()) {
+    if(targetFile) {
+      track(length);
       if(endian == Endian::LSB) targetFile.writel(data, length);
       if(endian == Endian::MSB) targetFile.writem(data, length);
     } else if(!isatty(fileno(stdout))) {
-      if(endian == Endian::LSB) for(auto n :  range(length)) fputc(data >> n * 8, stdout);
-      if(endian == Endian::MSB) for(auto n : rrange(length)) fputc(data >> n * 8, stdout);
+      if(endian == Endian::LSB) for(uint n : range(length)) fputc(data >> n * 8, stdout);
+      if(endian == Endian::MSB) for(uint n : reverse(range(length))) fputc(data >> n * 8, stdout);
     }
   }
   origin += length;
@@ -125,13 +140,13 @@ auto Bass::printInstruction() -> void {
 
 template<typename... P> auto Bass::notice(P&&... p) -> void {
   string s{forward<P>(p)...};
-  print(stderr, "notice: ", s, "\n");
+  print(stderr, terminal::color::gray("notice: "), s, "\n");
   printInstruction();
 }
 
 template<typename... P> auto Bass::warning(P&&... p) -> void {
   string s{forward<P>(p)...};
-  print(stderr, "warning: ", s, "\n");
+  print(stderr, terminal::color::yellow("warning: "), s, "\n");
   printInstruction();
 
   if(!strict) return;
@@ -141,7 +156,7 @@ template<typename... P> auto Bass::warning(P&&... p) -> void {
 
 template<typename... P> auto Bass::error(P&&... p) -> void {
   string s{forward<P>(p)...};
-  print(stderr, "error: ", s, "\n");
+  print(stderr, terminal::color::red("error: "), s, "\n");
   printInstruction();
 
   struct BassError {};

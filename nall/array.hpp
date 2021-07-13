@@ -1,53 +1,89 @@
 #pragma once
 
+#include <nall/array-span.hpp>
+#include <nall/array-view.hpp>
 #include <nall/range.hpp>
+#include <nall/view.hpp>
 
 namespace nall {
 
-template<typename T, uint Capacity>
-struct array {
-  auto capacity() const -> uint { return Capacity; }
-  auto size() const -> uint { return _size; }
+template<typename T> struct array;
 
-  auto reset() -> void {
-    for(uint n : range(_size)) _pool.t[n].~T();
-    _size = 0;
+//usage: int x[256] => array<int[256]> x
+template<typename T, uint Size> struct array<T[Size]> {
+  array() = default;
+
+  array(const initializer_list<T>& source) {
+    uint index = 0;
+    for(auto& value : source) {
+      operator[](index++) = value;
+    }
   }
 
-  auto operator[](uint index) -> T& {
-    return _pool.t[index];
+  operator array_span<T>() {
+    return {data(), size()};
   }
 
-  auto operator[](uint index) const -> const T& {
-    return _pool.t[index];
+  operator array_view<T>() const {
+    return {data(), size()};
   }
 
-  auto append() -> T& {
-    new(_pool.t + _size) T;
-    return _pool.t[_size++];
+  alwaysinline auto operator[](uint index) -> T& {
+    #ifdef DEBUG
+    struct out_of_bounds {};
+    if(index >= Size) throw out_of_bounds{};
+    #endif
+    return values[index];
   }
 
-  auto append(const T& value) -> void {
-    new(_pool.t + _size++) T(value);
+  alwaysinline auto operator[](uint index) const -> const T& {
+    #ifdef DEBUG
+    struct out_of_bounds {};
+    if(index >= Size) throw out_of_bounds{};
+    #endif
+    return values[index];
   }
 
-  auto append(T&& value) -> void {
-    new(_pool.t + _size++) T(move(value));
+  alwaysinline auto operator()(uint index, const T& fallback = {}) const -> const T& {
+    if(index >= Size) return fallback;
+    return values[index];
   }
 
-  auto begin() { return &_pool.t[0]; }
-  auto end() { return &_pool.t[_size]; }
+  auto fill(const T& fill = {}) -> array& {
+    for(auto& value : values) value = fill;
+    return *this;
+  }
 
-  auto begin() const { return &_pool.t[0]; }
-  auto end() const { return &_pool.t[_size]; }
+  auto data() -> T* { return values; }
+  auto data() const -> const T* { return values; }
+  auto size() const -> uint { return Size; }
+
+  auto begin() -> T* { return &values[0]; }
+  auto end() -> T* { return &values[Size]; }
+
+  auto begin() const -> const T* { return &values[0]; }
+  auto end() const -> const T* { return &values[Size]; }
 
 private:
-  union U {
-    U() {}
-    ~U() {}
-    T t[Capacity];
-  } _pool;
-  uint _size = 0;
+  T values[Size];
 };
+
+template<typename T, T... p> inline auto from_array(uint index) -> T {
+  static const array<T[sizeof...(p)]> table{p...};
+  struct out_of_bounds {};
+  #if defined(DEBUG)
+  if(index >= sizeof...(p)) throw out_of_bounds{};
+  #endif
+  return table[index];
+}
+
+template<int64_t... p> inline auto from_array(uint index) -> int64_t {
+  static const array<int64_t[sizeof...(p)]> table{p...};
+  struct out_of_bounds {};
+  #if defined(DEBUG)
+  if(index >= sizeof...(p)) throw out_of_bounds{};
+  #endif
+  return table[index];
+}
 
 }

@@ -1,8 +1,8 @@
 #pragma once
 
-namespace nall { namespace Encode {
+namespace nall::Encode {
 
-inline auto URL(const string& input) -> string {
+inline auto URL(string_view input) -> string {
   string output;
   for(auto c : input) {
     //unreserved characters
@@ -24,4 +24,4 @@ inline auto URL(const string& input) -> string {
   return output;
 }
 
-}}
+}

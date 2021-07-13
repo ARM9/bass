@@ -87,6 +87,35 @@ auto Bass::executeInstruction(Instruction& i) -> bool {
     return true;
   }
 
+  if(s.match("array[?*] ?*")) {
+    auto a = s.trimLeft("array[", 1L).split("]", 1L);
+    auto size = evaluate(a(0));
+    auto p = a(1).split("=", 1L).strip();
+    auto parameters = split(p(1));
+    vector<int64_t> values;
+    for(auto& parameter : parameters) values.append(evaluate(parameter));
+    if(values.size() > size) error("too many array elements: ", values.size(), " > ", size);
+    values.resize(size);  //zero-initialize additional elements
+    setArray(p(0), values, level);
+    return true;
+  }
+
+  //evaluate() will evaluate array[index] to a value prior to evaluating =
+  //as a result, array[index] assignment must be manually captured early
+  if(s.match("?*[?*] = ?*")) {
+    auto a = s.split("[", 1L).strip();
+    auto b = a(1).split("]", 1L).strip();
+    auto c = b(1).split("=", 1L).strip();
+    if(auto array = findArray(a(0))) {
+      auto index = evaluate(b(0));
+      if(index >= array->values.size()) error("array subscript out of bounds: ", index, " >= ", array->values.size());
+      auto value = evaluate(c(1));
+      array->values[index] = value;
+      return true;
+    }
+    //fallthrough: this may have matched another expression that wasn't an array[index] assignment
+  }
+
   if(global || parent) error("invalid frame specifier");
 
   if(s.match("if ?* {")) {
@@ -149,7 +178,7 @@ auto Bass::executeInstruction(Instruction& i) -> bool {
       if(!frames.right().inlined) scope.append(p(0));
 
       setDefine("#", {}, {"_", macroInvocationCounter++, "_"}, Frame::Level::Inline);
-      for(uint n : range(parameters)) {
+      for(uint n : range(parameters.size())) {
         auto p = macro().parameters(n).split(" ", 1L).strip();
         if(p.size() == 1) p.prepend("define");
 

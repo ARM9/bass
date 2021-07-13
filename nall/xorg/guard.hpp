@@ -2,8 +2,8 @@
 #define NALL_XORG_GUARD_HPP
 
 #define Atom XlibAtom
-#define Bool XlibBool
 #define Display XlibDisplay
+#define Font XlibFont
 #define Screen XlibScreen
 #define Window XlibWindow
 
@@ -11,10 +11,14 @@
 #undef NALL_XORG_GUARD_HPP
 
 #undef Atom
-#undef Bool
 #undef Display
+#undef Font
 #undef Screen
 #undef Window
+
+#undef Above
+#undef Below
+#undef Bool
 
 #ifndef NALL_XORG_GUARD_CONSTANTS
 #define NALL_XORG_GUARD_CONSTANTS
@@ -40,5 +44,8 @@ enum XlibConstants : int {
 #undef False
 #undef None
 #undef True
+
+#undef MAX
+#undef MIN
 
 #endif

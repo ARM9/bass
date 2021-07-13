@@ -11,7 +11,7 @@ template<typename T> struct shared_pointer;
 
 struct shared_pointer_manager {
   void* pointer = nullptr;
-  function<auto (void*) -> void> deleter;
+  function<void (void*)> deleter;
   uint strong = 0;
   uint weak = 0;
 
@@ -21,9 +21,15 @@ struct shared_pointer_manager {
 
 template<typename T> struct shared_pointer;
 template<typename T> struct shared_pointer_weak;
+template<typename T> struct shared_pointer_this;
+struct shared_pointer_this_base{};
 
 template<typename T>
 struct shared_pointer {
+  template<typename... P> static auto create(P&&... p) {
+    return shared_pointer<T>{new T{forward<P>(p)...}};
+  }
+
   using type = T;
   shared_pointer_manager* manager = nullptr;
 
@@ -41,7 +47,9 @@ struct shared_pointer {
 
   shared_pointer(T* source, const function<void (T*)>& deleter) {
     operator=(source);
-    manager->deleter = [=](void* p) { deleter((T*)p); };
+    manager->deleter = function<void (void*)>([=](void* p) {
+      deleter((T*)p);
+    });
   }
 
   shared_pointer(const shared_pointer& source) {
@@ -84,6 +92,9 @@ struct shared_pointer {
     if(source) {
       manager = new shared_pointer_manager((void*)source);
       manager->strong++;
+      if constexpr(is_base_of_v<shared_pointer_this_base, T>) {
+        source->weak = *this;
+      }
     }
     return *this;
   }
@@ -177,6 +188,10 @@ struct shared_pointer {
     return manager && manager->strong == 1;
   }
 
+  auto references() const -> uint {
+    return manager ? manager->strong : 0;
+  }
+
   auto reset() -> void {
     if(manager && manager->strong) {
       //pointer may contain weak references; if strong==0 it may destroy manager
@@ -256,10 +271,21 @@ struct shared_pointer_weak {
 };
 
 template<typename T>
+struct shared_pointer_this : shared_pointer_this_base {
+  shared_pointer_weak<T> weak;
+  auto shared() -> shared_pointer<T> { return weak; }
+  auto shared() const -> shared_pointer<T const> { return weak; }
+};
+
+template<typename T, typename... P>
+auto shared_pointer_make(P&&... p) -> shared_pointer<T> {
+  return shared_pointer<T>{new T{forward<P>(p)...}};
+}
+
+template<typename T>
 struct shared_pointer_new : shared_pointer<T> {
-  template<typename... P>
-  shared_pointer_new(P&&... p) : shared_pointer<T>(new T(forward<P>(p)...)) {
-  }
+  shared_pointer_new(const shared_pointer<T>& source) : shared_pointer<T>(source) {}
+  template<typename... P> shared_pointer_new(P&&... p) : shared_pointer<T>(new T(forward<P>(p)...)) {}
 };
 
 }

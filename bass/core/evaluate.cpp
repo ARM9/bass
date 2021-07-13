@@ -13,6 +13,8 @@ auto Bass::evaluate(const string& expression, Evaluation mode) -> int64_t {
   Eval::Node* node = nullptr;
   try {
     node = Eval::parse(expression);
+  } catch(const char* reason) {
+    error("malformed expression: ", expression, " [", reason, "]");
   } catch(...) {
     error("malformed expression: ", expression);
   }
@@ -26,6 +28,7 @@ auto Bass::evaluate(Eval::Node* node, Evaluation mode) -> int64_t {
   case Eval::Node::Type::Null: return 0;  //empty expressions
   case Eval::Node::Type::Function: return evaluateExpression(node, mode);
   case Eval::Node::Type::Literal: return evaluateLiteral(node, mode);
+  case Eval::Node::Type::Subscript: return evaluateSubscript(node, mode);
   case Eval::Node::Type::LogicalNot: return !p(0);
   case Eval::Node::Type::BitwiseNot: return ~p(0);
   case Eval::Node::Type::Positive: return +p(0);
@@ -54,6 +57,14 @@ auto Bass::evaluate(Eval::Node* node, Evaluation mode) -> int64_t {
 
   #undef p
   error("unsupported operator");
+  return 0;
+}
+
+//calculates the number of parameters to a function without evaluating its arguments yet
+auto Bass::quantifyParameters(Eval::Node* node) -> int64_t {
+  if(node->type == Eval::Node::Type::Null) return 0;
+  if(node->type == Eval::Node::Type::Separator) return node->link.size();
+  return 1;  //any other type here signifies one argument
 }
 
 auto Bass::evaluateParameters(Eval::Node* node, Evaluation mode) -> vector<int64_t> {
@@ -65,15 +76,58 @@ auto Bass::evaluateParameters(Eval::Node* node, Evaluation mode) -> vector<int64
 }
 
 auto Bass::evaluateExpression(Eval::Node* node, Evaluation mode) -> int64_t {
-  auto parameters = evaluateParameters(node->link[1], mode);
   string name = node->link[0]->literal;
-  if(parameters) name.append("#", parameters.size());
+  if(auto parameters = quantifyParameters(node->link[1])) name.append("#", parameters);
 
+  if(name == "array.size#1") {
+    string s = evaluateString(node->link[1]);
+    if(auto array = findArray(s)) {
+      return array->values.size();
+    }
+    error("unrecognized array: ", s);
+    return 0;
+  }
+  if(name == "array.sort#1") {
+    string s = evaluateString(node->link[1]);
+    if(auto array = findArray(s)) {
+      array->values.sort();
+      return 0;
+    }
+    error("unrecognized array: ", s);
+    return 0;
+  }
+  if(name == "assert#1") {
+    int64_t result = evaluate(node->link[1], mode);
+    if(result == 0) error("assertion failed");
+    return 0;
+  }
+  if(name == "file.size#1") {
+    string filename = evaluateString(node->link[1]).trim("\"", "\"", 1L);
+    string location = {filepath(), filename};
+    if(file::exists(location)) return file::size(location);
+    error("file not found: ", filename);
+    return 0;
+  }
+  if(name == "file.exists#1") {
+    string filename = evaluateString(node->link[1]).trim("\"", "\"", 1L);
+    string location = {filepath(), filename};
+    return file::exists(location);
+  }
+  if(name == "read#1") {
+    if(!targetFile) error("no target file open for reading");
+    int64_t address = evaluate(node->link[1], mode);
+    auto origin = targetFile.offset();
+    targetFile.seek(address);
+    uint8_t data = targetFile.read();
+    targetFile.seek(origin);
+    return data;
+  }
   if(name == "origin") return origin;
   if(name == "base") return base;
   if(name == "pc") return pc();
 
   if(auto expression = findExpression(name)) {
+    auto parameters = evaluateParameters(node->link[1], mode);
     if(parameters) frames.append({0, true});
     for(auto n : range(parameters.size())) {
       setVariable(expression().parameters(n), evaluate(parameters(n)), Frame::Level::Inline);
@@ -84,6 +138,21 @@ auto Bass::evaluateExpression(Eval::Node* node, Evaluation mode) -> int64_t {
   }
 
   error("unrecognized expression: ", name);
+  return 0;
+}
+
+//bass' evaluate() only returns int64_t types.
+//this function is used to parse string arguments while performing trivial string concatenation
+//eg "foo" ~ "bar" => "foobar"
+auto Bass::evaluateString(Eval::Node* node) -> string {
+  if(node->type == Eval::Node::Type::Literal) return node->literal;
+  if(node->type == Eval::Node::Type::Concatenate) {
+    string lhs = evaluateString(node->link[0]).trim("\"", "\"", 1L);
+    string rhs = evaluateString(node->link[1]).trim("\"", "\"", 1L);
+    return {"\"", lhs, rhs, "\""};
+  };
+  error("unrecognized string expression");
+  return {};
 }
 
 auto Bass::evaluateLiteral(Eval::Node* node, Evaluation mode) -> int64_t {
@@ -102,6 +171,22 @@ auto Bass::evaluateLiteral(Eval::Node* node, Evaluation mode) -> int64_t {
   if(mode != Evaluation::Strict && queryPhase()) return pc();
 
   error("unrecognized variable: ", s);
+  return 0;
+}
+
+auto Bass::evaluateSubscript(Eval::Node* node, Evaluation mode) -> int64_t {
+  string& s = node->link[0]->literal;
+
+  if(auto array = findArray(s)) {
+    auto index = evaluate(node->link[1], mode);
+    if(index >= array->values.size()) {
+      error("array subscript out of bounds: ", index, " >= ", array->values.size());
+    }
+    return array->values[index];
+  }
+
+  error("unrecognized array: ", s);
+  return 0;
 }
 
 auto Bass::evaluateAssign(Eval::Node* node, Evaluation mode) -> int64_t {
@@ -113,4 +198,5 @@ auto Bass::evaluateAssign(Eval::Node* node, Evaluation mode) -> int64_t {
   }
 
   error("unrecognized variable assignment: ", s);
+  return 0;
 }

@@ -5,9 +5,9 @@ namespace nall {
 //nall::format is a vector<string> of parameters that can be applied to a string
 //each {#} token will be replaced with its appropriate format parameter
 
-auto string::format(const nall::string_format& params) -> type& {
+inline auto string::format(const nall::string_format& params) -> type& {
   auto size = (int)this->size();
-  auto data = (char*)memory::allocate(size);
+  auto data = memory::allocate<char>(size);
   memory::copy(data, this->data(), size);
 
   int x = 0;
@@ -41,7 +41,7 @@ auto string::format(const nall::string_format& params) -> type& {
 
     if(sourceSize > targetSize) {
       uint difference = sourceSize - targetSize;
-      memory::move(&data[x], &data[x + difference], remaining);
+      memory::move(&data[x], &data[x + difference], remaining - difference);
       size -= difference;
     } else if(targetSize > sourceSize) {
       uint difference = targetSize - sourceSize;
@@ -59,32 +59,34 @@ auto string::format(const nall::string_format& params) -> type& {
   return *this;
 }
 
-template<typename T, typename... P> auto string_format::append(const T& value, P&&... p) -> string_format& {
+template<typename T, typename... P> inline auto string_format::append(const T& value, P&&... p) -> string_format& {
   vector<string>::append(value);
   return append(forward<P>(p)...);
 }
 
-auto string_format::append() -> string_format& {
+inline auto string_format::append() -> string_format& {
   return *this;
 }
 
-template<typename... P> auto print(P&&... p) -> void {
+template<typename... P> inline auto print(P&&... p) -> void {
   string s{forward<P>(p)...};
   fwrite(s.data(), 1, s.size(), stdout);
+  fflush(stdout);
 }
 
-template<typename... P> auto print(FILE* fp, P&&... p) -> void {
+template<typename... P> inline auto print(FILE* fp, P&&... p) -> void {
   string s{forward<P>(p)...};
   fwrite(s.data(), 1, s.size(), fp);
+  if(fp == stdout || fp == stderr) fflush(fp);
 }
 
-template<typename T> auto pad(const T& value, long precision, char padchar) -> string {
+template<typename T> inline auto pad(const T& value, long precision, char padchar) -> string {
   string buffer{value};
   if(precision) buffer.size(precision, padchar);
   return buffer;
 }
 
-auto hex(uintmax value, long precision, char padchar) -> string {
+inline auto hex(uintmax value, long precision, char padchar) -> string {
   string buffer;
   buffer.resize(sizeof(uintmax) * 2);
   char* p = buffer.get();
@@ -101,7 +103,7 @@ auto hex(uintmax value, long precision, char padchar) -> string {
   return buffer;
 }
 
-auto octal(uintmax value, long precision, char padchar) -> string {
+inline auto octal(uintmax value, long precision, char padchar) -> string {
   string buffer;
   buffer.resize(sizeof(uintmax) * 3);
   char* p = buffer.get();
@@ -117,7 +119,7 @@ auto octal(uintmax value, long precision, char padchar) -> string {
   return buffer;
 }
 
-auto binary(uintmax value, long precision, char padchar) -> string {
+inline auto binary(uintmax value, long precision, char padchar) -> string {
   string buffer;
   buffer.resize(sizeof(uintmax) * 8);
   char* p = buffer.get();
@@ -131,16 +133,6 @@ auto binary(uintmax value, long precision, char padchar) -> string {
   buffer.reverse();
   if(precision) buffer.size(precision, padchar);
   return buffer;
-}
-
-auto pointer(uintptr value, long precision) -> string {
-  if(value == 0) return "(nullptr)";
-  return {"0x", hex(value, precision)};
-}
-
-template<typename T> auto pointer(const T* value, long precision) -> string {
-  if(value == nullptr) return "(nullptr)";
-  return {"0x", hex((uintptr)value, precision)};
 }
 
 }

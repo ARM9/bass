@@ -1,11 +1,11 @@
 #pragma once
 
-namespace nall { namespace Markup {
+namespace nall::Markup {
 
-auto ManagedNode::_evaluate(string query) const -> bool {
+inline auto ManagedNode::_evaluate(string query) const -> bool {
   if(!query) return true;
 
-  for(auto& rule : query.replace(" ", "").split(",")) {
+  for(auto& rule : query.split(",")) {
     enum class Comparator : uint { ID, EQ, NE, LT, LE, GT, GE };
     auto comparator = Comparator::ID;
          if(rule.match("*!=*")) comparator = Comparator::NE;
@@ -20,7 +20,7 @@ auto ManagedNode::_evaluate(string query) const -> bool {
       return false;
     }
 
-    string_vector side;
+    vector<string> side;
     switch(comparator) {
     case Comparator::EQ: side = rule.split ("=", 1L); break;
     case Comparator::NE: side = rule.split("!=", 1L); break;
@@ -34,7 +34,7 @@ auto ManagedNode::_evaluate(string query) const -> bool {
     if(side(0)) {
       auto result = _find(side(0));
       if(result.size() == 0) return false;
-      data = result[0].value();
+      data = result[0].text();  //strips whitespace so rules can match without requiring it
     }
 
     switch(comparator) {
@@ -52,7 +52,7 @@ auto ManagedNode::_evaluate(string query) const -> bool {
   return true;
 }
 
-auto ManagedNode::_find(const string& query) const -> vector<Node> {
+inline auto ManagedNode::_find(const string& query) const -> vector<Node> {
   vector<Node> result;
 
   auto path = query.split("/");
@@ -96,7 +96,12 @@ auto ManagedNode::_find(const string& query) const -> vector<Node> {
   return result;
 }
 
-auto ManagedNode::_lookup(const string& path) const -> Node {
+//operator[](string)
+inline auto ManagedNode::_lookup(const string& path) const -> Node {
+  auto result = _find(path);
+  return result ? result[0] : Node{};
+
+/*//faster, but cannot search
   if(auto position = path.find("/")) {
     auto name = slice(path, 0, *position);
     for(auto& node : _children) {
@@ -108,9 +113,10 @@ auto ManagedNode::_lookup(const string& path) const -> Node {
     if(path == node->_name) return node;
   }
   return {};
+*/
 }
 
-auto ManagedNode::_create(const string& path) -> Node {
+inline auto ManagedNode::_create(const string& path) -> Node {
   if(auto position = path.find("/")) {
     auto name = slice(path, 0, *position);
     for(auto& node : _children) {
@@ -128,4 +134,4 @@ auto ManagedNode::_create(const string& path) -> Node {
   return _children.right();
 }
 
-}}
+}

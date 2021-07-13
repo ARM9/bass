@@ -2,10 +2,15 @@
 
 #include <nall/hash/hash.hpp>
 
-namespace nall { namespace Hash {
+namespace nall::Hash {
 
 struct CRC16 : Hash {
-  nallHash(CRC16)
+  using Hash::input;
+
+  CRC16(array_view<uint8_t> buffer = {}) {
+    reset();
+    input(buffer);
+  }
 
   auto reset() -> void override {
     checksum = ~0;
@@ -17,7 +22,7 @@ struct CRC16 : Hash {
 
   auto output() const -> vector<uint8_t> override {
     vector<uint8_t> result;
-    for(auto n : rrange(2)) result.append(~checksum >> n * 8);
+    for(auto n : reverse(range(2))) result.append(~checksum >> n * 8);
     return result;
   }
 
@@ -47,4 +52,4 @@ private:
   uint16_t checksum = 0;
 };
 
-}}
+}

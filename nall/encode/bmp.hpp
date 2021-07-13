@@ -1,18 +1,18 @@
 #pragma once
 
-namespace nall { namespace Encode {
+namespace nall::Encode {
 
 struct BMP {
-  static auto create(const string& filename, const uint32_t* data, unsigned width, unsigned height, bool alpha) -> bool {
-    file fp{filename, file::mode::write};
+  static auto create(const string& filename, const void* data, uint pitch, uint width, uint height, bool alpha) -> bool {
+    auto fp = file::open(filename, file::mode::write);
     if(!fp) return false;
 
-    unsigned bitsPerPixel  = alpha ? 32 : 24;
-    unsigned bytesPerPixel = bitsPerPixel / 8;
-    unsigned alignedWidth  = width * bytesPerPixel;
-    unsigned paddingLength = 0;
-    unsigned imageSize     = alignedWidth * height;
-    unsigned fileSize      = 0x36 + imageSize;
+    uint bitsPerPixel  = alpha ? 32 : 24;
+    uint bytesPerPixel = bitsPerPixel / 8;
+    uint alignedWidth  = width * bytesPerPixel;
+    uint paddingLength = 0;
+    uint imageSize     = alignedWidth * height;
+    uint fileSize      = 0x36 + imageSize;
     while(alignedWidth % 4) alignedWidth++, paddingLength++;
 
     fp.writel(0x4d42, 2);        //signature
@@ -33,8 +33,9 @@ struct BMP {
     fp.writel(0, 4);             //palette size
     fp.writel(0, 4);             //important color count
 
+    pitch >>= 2;
     for(auto y : range(height)) {
-      const uint32_t* p = data + y * width;
+      auto p = (const uint32_t*)data + y * pitch;
       for(auto x : range(width)) fp.writel(*p++, bytesPerPixel);
       if(paddingLength) fp.writel(0, paddingLength);
     }
@@ -43,4 +44,4 @@ struct BMP {
   }
 };
 
-}}
+}

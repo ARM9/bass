@@ -2,9 +2,15 @@
 
 #include <nall/arithmetic.hpp>
 
-namespace nall { namespace MAC {
+namespace nall::MAC {
 
 struct Poly1305 {
+  auto authenticate(array_view<uint8_t> memory, uint256_t nonce) -> uint128_t {
+    initialize(nonce);
+    process(memory.data(), memory.size());
+    return finish();
+  }
+
   auto initialize(uint256_t key) -> void {
     uint64_t t0 = key >>  0;
     uint64_t t1 = key >> 64;
@@ -69,7 +75,7 @@ struct Poly1305 {
     r[0] = 0, r[1] = 0, r[2] = 0;
     h[0] = 0, h[1] = 0, h[2] = 0;
     pad[0] = 0, pad[1] = 0;
-    memory::fill(buffer, 16);
+    memory::fill(buffer, sizeof(buffer));
     offset = 0;
 
     return uint128_t(h1) << 64 | h0;
@@ -113,4 +119,4 @@ private:
   uint offset;
 };
 
-}}
+}

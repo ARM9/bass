@@ -19,23 +19,23 @@
 
 namespace nall {
 
-string::string() : _data(nullptr), _capacity(SSO - 1), _size(0) {
+inline string::string() : _data(nullptr), _capacity(SSO - 1), _size(0) {
 }
 
 template<typename T>
-auto string::get() -> T* {
+inline auto string::get() -> T* {
   if(_capacity < SSO) return (T*)_text;
   if(*_refs > 1) _copy();
   return (T*)_data;
 }
 
 template<typename T>
-auto string::data() const -> const T* {
+inline auto string::data() const -> const T* {
   if(_capacity < SSO) return (const T*)_text;
   return (const T*)_data;
 }
 
-auto string::reset() -> type& {
+inline auto string::reset() -> type& {
   if(_capacity >= SSO && !--*_refs) memory::free(_data);
   _data = nullptr;
   _capacity = SSO - 1;
@@ -43,7 +43,7 @@ auto string::reset() -> type& {
   return *this;
 }
 
-auto string::reserve(uint capacity) -> type& {
+inline auto string::reserve(uint capacity) -> type& {
   if(capacity <= _capacity) return *this;
   capacity = bit::round(capacity + 1) - 1;
   if(_capacity < SSO) {
@@ -59,13 +59,13 @@ auto string::reserve(uint capacity) -> type& {
   return *this;
 }
 
-auto string::resize(uint size) -> type& {
+inline auto string::resize(uint size) -> type& {
   reserve(size);
   get()[_size = size] = 0;
   return *this;
 }
 
-auto string::operator=(const string& source) -> type& {
+inline auto string::operator=(const string& source) -> type& {
   if(&source == this) return *this;
   reset();
   if(source._capacity >= SSO) {
@@ -82,7 +82,7 @@ auto string::operator=(const string& source) -> type& {
   return *this;
 }
 
-auto string::operator=(string&& source) -> type& {
+inline auto string::operator=(string&& source) -> type& {
   if(&source == this) return *this;
   reset();
   memory::copy(this, &source, sizeof(string));
@@ -93,18 +93,18 @@ auto string::operator=(string&& source) -> type& {
 }
 
 //SSO -> COW
-auto string::_allocate() -> void {
+inline auto string::_allocate() -> void {
   char _temp[SSO];
   memory::copy(_temp, _text, SSO);
-  _data = (char*)memory::allocate(_capacity + 1 + sizeof(uint));
+  _data = memory::allocate<char>(_capacity + 1 + sizeof(uint));
   memory::copy(_data, _temp, SSO);
   _refs = (uint*)(_data + _capacity + 1);  //always aligned by 32 via reserve()
   *_refs = 1;
 }
 
 //COW -> Unique
-auto string::_copy() -> void {
-  auto _temp = (char*)memory::allocate(_capacity + 1 + sizeof(uint));
+inline auto string::_copy() -> void {
+  auto _temp = memory::allocate<char>(_capacity + 1 + sizeof(uint));
   memory::copy(_temp, _data, _size = min(_capacity, _size));
   _temp[_size] = 0;
   --*_refs;
@@ -114,8 +114,8 @@ auto string::_copy() -> void {
 }
 
 //COW -> Resize
-auto string::_resize() -> void {
-  _data = (char*)memory::resize(_data, _capacity + 1 + sizeof(uint));
+inline auto string::_resize() -> void {
+  _data = memory::resize<char>(_data, _capacity + 1 + sizeof(uint));
   _refs = (uint*)(_data + _capacity + 1);
   *_refs = 1;
 }

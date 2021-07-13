@@ -2,11 +2,11 @@
 
 #include <nall/string.hpp>
 
-namespace nall { namespace Path {
+namespace nall::Path {
 
 inline auto active() -> string {
   char path[PATH_MAX] = "";
-  auto unused = getcwd(path, PATH_MAX);
+  (void)getcwd(path, PATH_MAX);
   string result = path;
   if(!result) result = ".";
   result.transform("\\", "/");
@@ -69,9 +69,19 @@ inline auto user() -> string {
   return result;
 }
 
+// /home/username/Desktop/
+// c:/users/username/Desktop/
+inline auto desktop(string_view name = {}) -> string {
+  return {user(), "Desktop/", name};
+}
+
+//todo: MacOS uses the same location for userData() and userSettings()
+//... is there a better option here?
+
 // /home/username/.config/
+// ~/Library/Application Support/
 // c:/users/username/appdata/roaming/
-inline auto config() -> string {
+inline auto userSettings() -> string {
   #if defined(PLATFORM_WINDOWS)
   wchar_t path[PATH_MAX] = L"";
   SHGetFolderPathW(nullptr, CSIDL_APPDATA | CSIDL_FLAG_CREATE, nullptr, 0, path);
@@ -88,8 +98,9 @@ inline auto config() -> string {
 }
 
 // /home/username/.local/share/
+// ~/Library/Application Support/
 // c:/users/username/appdata/local/
-inline auto local() -> string {
+inline auto userData() -> string {
   #if defined(PLATFORM_WINDOWS)
   wchar_t path[PATH_MAX] = L"";
   SHGetFolderPathW(nullptr, CSIDL_LOCAL_APPDATA | CSIDL_FLAG_CREATE, nullptr, 0, path);
@@ -108,7 +119,7 @@ inline auto local() -> string {
 // /usr/share
 // /Library/Application Support/
 // c:/ProgramData/
-inline auto shared() -> string {
+inline auto sharedData() -> string {
   #if defined(PLATFORM_WINDOWS)
   wchar_t path[PATH_MAX] = L"";
   SHGetFolderPathW(nullptr, CSIDL_COMMON_APPDATA | CSIDL_FLAG_CREATE, nullptr, 0, path);
@@ -126,7 +137,7 @@ inline auto shared() -> string {
 
 // /tmp
 // c:/users/username/AppData/Local/Temp/
-inline auto temp() -> string {
+inline auto temporary() -> string {
   #if defined(PLATFORM_WINDOWS)
   wchar_t path[PATH_MAX] = L"";
   GetTempPathW(PATH_MAX, path);
@@ -141,4 +152,4 @@ inline auto temp() -> string {
   return result;
 }
 
-}}
+}

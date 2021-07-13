@@ -1,6 +1,6 @@
 #pragma once
 
-namespace nall { namespace Eval {
+namespace nall::Eval {
 
 inline auto isLiteral(const char*& s) -> bool {
   char n = s[0];
@@ -67,7 +67,10 @@ inline auto literalString(const char*& s) -> string {
   const char* p = s;
   char escape = *p++;
 
-  while(p[0] && p[0] != escape) p++;
+  while(p[0] && p[0] != escape) {
+    if(p[0] == '\\') p++;
+    p++;
+  }
   if(*p++ != escape) throw "unclosed string literal";
 
   string result = slice(s, 0, p - s);
@@ -96,4 +99,4 @@ inline auto literal(const char*& s) -> string {
   throw "invalid literal";
 }
 
-}}
+}

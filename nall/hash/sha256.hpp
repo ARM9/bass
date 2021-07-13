@@ -2,10 +2,15 @@
 
 #include <nall/hash/hash.hpp>
 
-namespace nall { namespace Hash {
+namespace nall::Hash {
 
 struct SHA256 : Hash {
-  nallHash(SHA256)
+  using Hash::input;
+
+  SHA256(array_view<uint8_t> buffer = {}) {
+    reset();
+    input(buffer);
+  }
 
   auto reset() -> void override {
     for(auto& n : queue) n = 0;
@@ -24,7 +29,7 @@ struct SHA256 : Hash {
     self.finish();
     vector<uint8_t> result;
     for(auto h : self.h) {
-      for(auto n : rrange(4)) result.append(h >> n * 8);
+      for(auto n : reverse(range(4))) result.append(h >> n * 8);
     }
     return result;
   }
@@ -98,4 +103,4 @@ private:
   uint64_t length = 0;
 };
 
-}}
+}

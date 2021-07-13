@@ -3,7 +3,7 @@
 #include <nall/range.hpp>
 #include <nall/shared-pointer.hpp>
 
-namespace nall { namespace vfs {
+namespace nall::vfs {
 
 struct file {
   enum class mode : uint { read, write, modify, create };
@@ -57,7 +57,7 @@ struct file {
   }
 
   auto writem(uintmax data, uint bytes) -> void {
-    for(auto n : rrange(bytes)) write(data >> n * 8);
+    for(auto n : reverse(range(bytes))) write(data >> n * 8);
   }
 
   auto writes(const string& s) -> void {
@@ -65,11 +65,8 @@ struct file {
   }
 };
 
-}}
+}
 
-namespace nall { namespace vfs { namespace shared {
-  using file = shared_pointer<vfs::file>;
-}}}
-
-#include <nall/vfs/fs/file.hpp>
-#include <nall/vfs/memory/file.hpp>
+#include <nall/vfs/cdrom.hpp>
+#include <nall/vfs/disk.hpp>
+#include <nall/vfs/memory.hpp>

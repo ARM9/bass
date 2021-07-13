@@ -20,23 +20,25 @@ cons:
 
 namespace nall {
 
-string::string() {
+inline string::string() {
   _data = nullptr;
   _capacity = SSO - 1;
   _size = 0;
 }
 
-auto string::get() -> char* {
-  if(_capacity < SSO) return _text;
-  return _data;
+template<typename T>
+inline auto string::get() -> T* {
+  if(_capacity < SSO) return (T*)_text;
+  return (T*)_data;
 }
 
-auto string::data() const -> const char* {
-  if(_capacity < SSO) return _text;
-  return _data;
+template<typename T>
+inline auto string::data() const -> const T* {
+  if(_capacity < SSO) return (const T*)_text;
+  return (const T*)_data;
 }
 
-auto string::reset() -> type& {
+inline auto string::reset() -> type& {
   if(_capacity >= SSO) memory::free(_data);
   _data = nullptr;
   _capacity = SSO - 1;
@@ -44,31 +46,31 @@ auto string::reset() -> type& {
   return *this;
 }
 
-auto string::reserve(uint capacity) -> type& {
+inline auto string::reserve(uint capacity) -> type& {
   if(capacity <= _capacity) return *this;
   capacity = bit::round(capacity + 1) - 1;
   if(_capacity < SSO) {
     char _temp[SSO];
     memory::copy(_temp, _text, SSO);
-    _data = (char*)memory::allocate(_capacity = capacity + 1);
+    _data = memory::allocate<char>(_capacity = capacity + 1);
     memory::copy(_data, _temp, SSO);
   } else {
-    _data = (char*)memory::resize(_data, _capacity = capacity + 1);
+    _data = memory::resize<char>(_data, _capacity = capacity + 1);
   }
   return *this;
 }
 
-auto string::resize(uint size) -> type& {
+inline auto string::resize(uint size) -> type& {
   reserve(size);
   get()[_size = size] = 0;
   return *this;
 }
 
-auto string::operator=(const string& source) -> type& {
+inline auto string::operator=(const string& source) -> type& {
   if(&source == this) return *this;
   reset();
   if(source._capacity >= SSO) {
-    _data = (char*)memory::allocate(source._capacity + 1);
+    _data = memory::allocate<char>(source._capacity + 1);
     _capacity = source._capacity;
     _size = source._size;
     memory::copy(_data, source._data, source._size + 1);
@@ -80,7 +82,7 @@ auto string::operator=(const string& source) -> type& {
   return *this;
 }
 
-auto string::operator=(string&& source) -> type& {
+inline auto string::operator=(string&& source) -> type& {
   if(&source == this) return *this;
   reset();
   memory::copy(this, &source, sizeof(string));

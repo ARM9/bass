@@ -3,7 +3,7 @@ auto Bass::setMacro(const string& name, const string_vector& parameters, uint ip
   string scopedName = {scope.merge("."), scope ? "." : "", name};
   if(parameters) scopedName.append("#", parameters.size());
 
-  for(int n : rrange(frames.size())) {
+  for(int n : reverse(range(frames.size()))) {
     if(level != Frame::Level::Inline) {
       if(frames[n].inlined) continue;
       if(level == Frame::Level::Global && n) { continue; }
@@ -24,7 +24,7 @@ auto Bass::setMacro(const string& name, const string_vector& parameters, uint ip
 }
 
 auto Bass::findMacro(const string& name) -> maybe<Macro&> {
-  for(int n : rrange(frames.size())) {
+  for(int n : reverse(range(frames.size()))) {
     auto& macros = frames[n].macros;
     auto s = scope;
     while(true) {
@@ -45,7 +45,7 @@ auto Bass::setDefine(const string& name, const string_vector& parameters, const 
   string scopedName = {scope.merge("."), scope ? "." : "", name};
   if(parameters) scopedName.append("#", parameters.size());
 
-  for(int n : rrange(frames.size())) {
+  for(int n : reverse(range(frames.size()))) {
     if(level != Frame::Level::Inline) {
       if(frames[n].inlined) continue;
       if(level == Frame::Level::Global && n) { continue; }
@@ -65,7 +65,7 @@ auto Bass::setDefine(const string& name, const string_vector& parameters, const 
 }
 
 auto Bass::findDefine(const string& name) -> maybe<Define&> {
-  for(int n : rrange(frames.size())) {
+  for(int n : reverse(range(frames.size()))) {
     auto& defines = frames[n].defines;
     auto s = scope;
     while(true) {
@@ -86,7 +86,7 @@ auto Bass::setExpression(const string& name, const string_vector& parameters, co
   string scopedName = {scope.merge("."), scope ? "." : "", name};
   if(parameters) scopedName.append("#", parameters.size());
 
-  for(int n : rrange(frames.size())) {
+  for(int n : reverse(range(frames.size()))) {
     if(level != Frame::Level::Inline) {
       if(frames[n].inlined) continue;
       if(level == Frame::Level::Global && n) { continue; }
@@ -106,7 +106,7 @@ auto Bass::setExpression(const string& name, const string_vector& parameters, co
 }
 
 auto Bass::findExpression(const string& name) -> maybe<Expression&> {
-  for(int n : rrange(frames.size())) {
+  for(int n : reverse(range(frames.size()))) {
     auto& expressions = frames[n].expressions;
     auto s = scope;
     while(true) {
@@ -126,7 +126,7 @@ auto Bass::setVariable(const string& name, int64_t value, Frame::Level level) ->
   if(!validate(name)) error("invalid variable identifier: ", name);
   string scopedName = {scope.merge("."), scope ? "." : "", name};
 
-  for(int n : rrange(frames.size())) {
+  for(int n : reverse(range(frames.size()))) {
     if(level != Frame::Level::Inline) {
       if(frames[n].inlined) continue;
       if(level == Frame::Level::Global && n) { continue; }
@@ -145,7 +145,7 @@ auto Bass::setVariable(const string& name, int64_t value, Frame::Level level) ->
 }
 
 auto Bass::findVariable(const string& name) -> maybe<Variable&> {
-  for(int n : rrange(frames.size())) {
+  for(int n : reverse(range(frames.size()))) {
     auto& variables = frames[n].variables;
     auto s = scope;
     while(true) {
@@ -182,6 +182,45 @@ auto Bass::findConstant(const string& name) -> maybe<Constant&> {
     }
     if(!s) break;
     s.removeRight();
+  }
+
+  return nothing;
+}
+
+auto Bass::setArray(const string& name, const vector<int64_t>& values, Frame::Level level) -> void {
+  if(!validate(name)) error("invalid array identifier: ", name);
+  string scopedName = {scope.merge("."), scope ? "." : "", name};
+
+  for(int n : reverse(range(frames.size()))) {
+    if(level != Frame::Level::Inline) {
+      if(frames[n].inlined) continue;
+      if(level == Frame::Level::Global && n) { continue; }
+      if(level == Frame::Level::Parent && n) { level = Frame::Level::Active; continue; }
+    }
+
+    auto& arrays = frames[n].arrays;
+    if(auto array = arrays.find({scopedName})) {
+      array().values = values;
+    } else {
+      arrays.insert({scopedName, values});
+    }
+
+    return;
+  }
+}
+
+auto Bass::findArray(const string& name) -> maybe<Array&> {
+  for(int n : reverse(range(frames.size()))) {
+    auto& arrays = frames[n].arrays;
+    auto s = scope;
+    while(true) {
+      string scopedName = {s.merge("."), s ? "." : "", name};
+      if(auto array = arrays.find({scopedName})) {
+        return array();
+      }
+      if(!s) break;
+      s.removeRight();
+    }
   }
 
   return nothing;
@@ -239,9 +278,18 @@ auto Bass::split(const string& s) -> string_vector {
   uint offset = 0;
   char quoted = 0;
   uint depth = 0;
+  bool escaped = 0;
   for(uint n : range(s.size())) {
+    if(s[n] == '\\' && quoted) {
+      escaped = 1;
+      continue;
+    }
+    if(escaped) {
+      escaped = 0;
+      continue;
+    }
     if(!quoted) {
-      if(s[n] == '"' || s[n] == '\'') quoted = s[n];
+      if(s[n] == '\"' || s[n] == '\'') quoted = s[n];
     } else if(quoted == s[n]) {
       quoted = 0;
     }
@@ -290,29 +338,34 @@ auto Bass::validate(const string& s) -> bool {
 
 auto Bass::text(string s) -> string {
   if(!s.match("\"*\"")) warning("string value is unquoted: ", s);
-  s.trim("\"", "\"", 1L);
-  s.replace("\\s", "\'");
-  s.replace("\\d", "\"");
-  s.replace("\\c", ",");
-  s.replace("\\b", ";");
-  s.replace("\\n", "\n");
-  s.replace("\\\\", "\\");
-  return s;
+
+  auto parts = s.qsplit("~").strip();
+  for(auto& p : parts) {
+    p.trim("\"", "\"", 1L);
+    p.replace("\\\\", "\\");
+    p.replace("\\n", "\n");
+    p.replace("\\t", "\t");
+  }
+  return parts.merge();
 }
 
 auto Bass::character(const string& s) -> int64_t {
-  if(s[0] != '\'') goto unknown;
-  if(s[2] == '\'') return s[1];
-  if(s[3] != '\'') goto unknown;
-  if(s[1] != '\\') goto unknown;
-  if(s[2] == 's') return '\'';
-  if(s[2] == 'd') return '\"';
-  if(s[2] == 'c') return ',';
-  if(s[2] == 'b') return ';';
-  if(s[2] == 'n') return '\n';
-  if(s[2] == '\\') return '\\';
+  maybe<uint8_t> result;
+  if(s[0] == '\'') {
+    if(0);
+    else if(s[1] == '\\' && s[2] == '\\' && s[3] == '\'') result = '\\';
+    else if(s[1] == '\\' && s[2] == '\'' && s[3] == '\'') result = '\'';
+    else if(s[1] == '\\' && s[2] == '\"' && s[3] == '\'') result = '\"';
+    else if(s[1] == '\\' && s[2] == 'n'  && s[3] == '\'') result = '\n';
+    else if(s[1] == '\\' && s[2] == 't'  && s[3] == '\'') result = '\t';
+    else if(s[2] == '\'') result = s[1];
+  }
 
-unknown:
-  warning("unrecognized character constant: ", s);
-  return 0;
+  if(!result) {
+    warning("unrecognized character constant: ", s);
+    return 0;
+  }
+
+  if(charactersUseMap) result = stringTable[*result];
+  return *result;
 }

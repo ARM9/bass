@@ -1,8 +1,10 @@
 #pragma once
 
+#include <nall/dsp/dsp.hpp>
+
 //transposed direct form II biquadratic second-order IIR filter
 
-namespace nall { namespace DSP { namespace IIR {
+namespace nall::DSP::IIR {
 
 struct Biquad {
   enum class Type : uint {
@@ -15,10 +17,11 @@ struct Biquad {
     HighShelf,
   };
 
-  inline auto reset(Type type, double cutoffFrequency, double samplingFrequency, double quality, double gain = 0.0) -> void;
-  inline auto process(double in) -> double;  //normalized sample (-1.0 to +1.0)
+  auto reset(Type type, double cutoffFrequency, double samplingFrequency, double quality, double gain = 0.0) -> void;
+  auto process(double in) -> double;  //normalized sample (-1.0 to +1.0)
 
-  inline static auto butterworth(uint order, uint phase) -> double;
+  static auto shelf(double gain, double slope) -> double;
+  static auto butterworth(uint order, uint phase) -> double;
 
 private:
   Type type;
@@ -30,7 +33,7 @@ private:
   double z1, z2;              //second-order IIR
 };
 
-auto Biquad::reset(Type type, double cutoffFrequency, double samplingFrequency, double quality, double gain) -> void {
+inline auto Biquad::reset(Type type, double cutoffFrequency, double samplingFrequency, double quality, double gain) -> void {
   this->type = type;
   this->cutoffFrequency = cutoffFrequency;
   this->samplingFrequency = samplingFrequency;
@@ -103,53 +106,59 @@ auto Biquad::reset(Type type, double cutoffFrequency, double samplingFrequency, 
 
   case Type::LowShelf:
     if(gain >= 0) {
-      n = 1 / (1 + sqrt(2) * k + k * k);
-      a0 = (1 + sqrt(2 * v) * k + v * k * k) * n;
+      n = 1 / (1 + k / q + k * k);
+      a0 = (1 + sqrt(v) / q * k + v * k * k) * n;
       a1 = 2 * (v * k * k - 1) * n;
-      a2 = (1 - sqrt(2 * v) * k + v * k * k) * n;
+      a2 = (1 - sqrt(v) / q * k + v * k * k) * n;
       b1 = 2 * (k * k - 1) * n;
-      b2 = (1 - sqrt(2) * k + k * k) * n;
+      b2 = (1 - k / q + k * k) * n;
     } else {
-      n = 1 / (1 + sqrt(2 * v) * k + v * k * k);
-      a0 = (1 + sqrt(2) * k + k * k) * n;
+      n = 1 / (1 + sqrt(v) / q * k + v * k * k);
+      a0 = (1 + k / q + k * k) * n;
       a1 = 2 * (k * k - 1) * n;
-      a2 = (1 - sqrt(2) * k + k * k) * n;
+      a2 = (1 - k / q + k * k) * n;
       b1 = 2 * (v * k * k - 1) * n;
-      b2 = (1 - sqrt(2 * v) * k + v * k * k) * n;
+      b2 = (1 - sqrt(v) / q * k + v * k * k) * n;
     }
     break;
 
   case Type::HighShelf:
     if(gain >= 0) {
-      n = 1 / (1 + sqrt(2) * k + k * k);
-      a0 = (v + sqrt(2 * v) * k + k * k) * n;
+      n = 1 / (1 + k / q + k * k);
+      a0 = (v + sqrt(v) / q * k + k * k) * n;
       a1 = 2 * (k * k - v) * n;
-      a2 = (v - sqrt(2 * v) * k + k * k) * n;
+      a2 = (v - sqrt(v) / q * k + k * k) * n;
       b1 = 2 * (k * k - 1) * n;
-      b2 = (1 - sqrt(2) * k + k * k) * n;
+      b2 = (1 - k / q + k * k) * n;
     } else {
-      n = 1 / (v + sqrt(2 * v) * k + k * k);
-      a0 = (1 + sqrt(2) * k + k * k) * n;
+      n = 1 / (v + sqrt(v) / q * k + k * k);
+      a0 = (1 + k / q + k * k) * n;
       a1 = 2 * (k * k - 1) * n;
-      a2 = (1 - sqrt(2) * k + k * k) * n;
+      a2 = (1 - k / q + k * k) * n;
       b1 = 2 * (k * k - v) * n;
-      b2 = (v - sqrt(2 * v) * k + k * k) * n;
+      b2 = (v - sqrt(v) / q * k + k * k) * n;
     }
     break;
 
   }
 }
 
-auto Biquad::process(double in) -> double {
+inline auto Biquad::process(double in) -> double {
   double out = in * a0 + z1;
   z1 = in * a1 + z2 - b1 * out;
   z2 = in * a2 - b2 * out;
   return out;
 }
 
-//compute Q values for N-order butterworth filtering
-auto Biquad::butterworth(uint order, uint phase) -> double {
+//compute Q values for low-shelf and high-shelf filtering
+inline auto Biquad::shelf(double gain, double slope) -> double {
+  double a = pow(10, gain / 40);
+  return 1 / sqrt((a + 1 / a) * (1 / slope - 1) + 2);
+}
+
+//compute Q values for Nth-order butterworth filtering
+inline auto Biquad::butterworth(uint order, uint phase) -> double {
   return -0.5 / cos(Math::Pi * (phase + order + 0.5) / order);
 }
 
-}}}
+}

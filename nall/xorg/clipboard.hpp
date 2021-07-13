@@ -2,13 +2,13 @@
 
 #include <nall/xorg/xorg.hpp>
 
-namespace nall { namespace Clipboard {
+namespace nall::Clipboard {
 
-auto clear() -> void {
+inline auto clear() -> void {
   XDisplay display;
   if(auto atom = XInternAtom(display, "CLIPBOARD", XlibTrue)) {
     XSetSelectionOwner(display, atom, XlibNone, XlibCurrentTime);
   }
 }
 
-}}
+}
