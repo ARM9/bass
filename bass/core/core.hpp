@@ -168,6 +168,8 @@ protected:
 
   auto evaluateDefines(string& statement) -> void;
 
+  auto readArchitecture(const string& s) -> string;
+
   auto filepath() -> string;
   auto split(const string& s) -> string_vector;
   auto strip(string& s) -> void;

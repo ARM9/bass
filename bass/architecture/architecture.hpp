@@ -23,6 +23,10 @@ struct Architecture {
     self.endian = endian;
   }
 
+  auto readArchitecture(const string& s) -> string {
+    return self.readArchitecture(s);
+  }
+
   auto evaluate(const string& expression, Bass::Evaluation mode = Bass::Evaluation::Default) -> int64_t {
     return self.evaluate(expression, mode);
   }

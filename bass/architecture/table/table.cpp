@@ -129,6 +129,12 @@ auto Table::parseTable(const string& text) -> bool {
 
     if(line == "endian lsb") { setEndian(Bass::Endian::LSB); continue; }
     if(line == "endian msb") { setEndian(Bass::Endian::MSB); continue; }
+    if(auto position = line.find("include ") ) {
+      line.trimLeft("include ", 1L);
+      auto more = readArchitecture(line.strip());
+      parseTable(more);
+      continue;
+    }
 
     auto part = line.split(";", 1L).strip();
     if(part.size() != 2) continue;

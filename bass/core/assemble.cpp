@@ -86,14 +86,13 @@ auto Bass::assemble(const string& statement) -> bool {
   }
 
   //architecture name
-  if(s.match("architecture ?*")) {
+  if(s.match("architecture ?*") || s.match("arch ?*")) {
     s.trimLeft("architecture ", 1L);
+    s.trimLeft("arch ", 1L);
+
     if(s == "none") architecture = new Architecture{*this};
     else {
-      string location{Path::userData(), "bass/architectures/", s, ".arch"};
-      if(!file::exists(location)) location = {Path::program(), "architectures/", s, ".arch"};
-      if(!file::exists(location)) error("unknown architecture: ", s);
-      architecture = new Table{*this, string::read(location)};
+      architecture = new Table{*this, readArchitecture(s)};
     }
     return true;
   }
