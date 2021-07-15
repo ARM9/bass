@@ -55,7 +55,9 @@ auto Table::assemble(const string& statement) -> bool {
           int data = evaluate(args[format.argument]) - (pc + format.displacement);
           uint bits = opcode.number[format.argument].bits;
           int min = -(1 << (bits - 1)), max = +(1 << (bits - 1)) - 1;
-          if(data < min || data > max) error("branch out of bounds");
+          if(data < min || data > max) {
+            error("branch out of bounds: ", data);
+          }
           writeBits(data, opcode.number[format.argument].bits);
           break;
         }
@@ -67,6 +69,45 @@ auto Table::assemble(const string& statement) -> bool {
           }
           break;
         }
+
+        case Format::Type::ShiftRight: {
+          uint64_t data = evaluate(args[format.argument]);
+          writeBits(data >> format.data, opcode.number[format.argument].bits);
+          break;
+        }
+
+        case Format::Type::ShiftLeft: {
+          uint64_t data = evaluate(args[format.argument]);
+          writeBits(data << format.data, opcode.number[format.argument].bits);
+          break;
+        }
+
+        case Format::Type::RelativeShiftRight: {
+          int data = evaluate(args[format.argument]) - (pc + format.displacement);
+          unsigned bits = opcode.number[format.argument].bits;
+          int min = -(1 << (bits - 1)), max = +(1 << (bits - 1)) - 1;
+          if(data < min || data > max) error("branch out of bounds");
+          bits -= format.data;
+          if (endian() == Bass::Endian::LSB) {
+            writeBits(data >> format.data, bits);
+          } else {
+            data >>= format.data;
+            writeBits(swapEndian(data, bits), bits);
+          }
+          break;
+        }
+
+        case Format::Type::Negative: {
+          unsigned data = evaluate(args[format.argument]);
+          writeBits(-data, opcode.number[format.argument].bits);
+          break;
+        }
+
+        case Format::Type::NegativeShiftRight: {
+          uint64_t data = evaluate(args[format.argument]);
+          writeBits(-data >> format.data, opcode.number[format.argument].bits);
+          break;
+        }        
       }
     }
 
@@ -192,50 +233,122 @@ auto Table::assembleTableRHS(Opcode& opcode, const string& text) -> void {
       opcode.format.append(format);
     }
 
-    if(item[0] == '%') {
+// >>XXa
+    else if(item[0] == '>' && item[1] == '>') {
+      Format format = {Format::Type::ShiftRight, Format::Match::Weak};
+      format.argument = item[4] - 'a';
+      format.data = (item[2] - '0') * 10 + (item[3] - '0');
+      opcode.format.append(format);
+    }
+
+    else if(item[0] == '<' && item[1] == '<') {
+      Format format = {Format::Type::ShiftLeft, Format::Match::Weak};
+      format.argument = item[4] - 'a';
+      format.data = (item[2] - '0') * 10 + (item[3] - '0');
+      opcode.format.append(format);
+    }
+
+    // +X>>YYa
+    else if(item[0] == '+' && item[2] == '>' && item[3] == '>') {
+      Format format = {Format::Type::RelativeShiftRight, Format::Match::Weak};
+      format.argument = item[6] - 'a';
+      format.displacement = +(item[1] - '0');
+      format.data = (item[4] - '0') * 10 + (item[5] - '0');
+      opcode.format.append(format);
+    }
+
+    // N>>XXa
+    else if(item[0] == 'N' && item[1] == '>' && item[2] == '>') {
+      Format format = {Format::Type::NegativeShiftRight, Format::Match::Weak};
+      format.argument = item[5] - 'a';
+      format.data = (item[3] - '0') * 10 + (item[4] - '0');
+      opcode.format.append(format);
+    }
+
+    // Na
+    else if(item[0] == 'N' && item[1] != '>') {
+      Format format = {Format::Type::Negative, Format::Match::Weak};
+      format.argument = item[1] - 'a';
+      opcode.format.append(format);
+    }
+
+    else if(item[0] == '%') {
       Format format = {Format::Type::Static};
       format.data = toBinary((const char*)item + 1);
       format.bits = (item.length() - 1);
       opcode.format.append(format);
     }
 
-    if(item[0] == '!') {
+    else if(item[0] == '!') {
       Format format = {Format::Type::Absolute, Format::Match::Exact};
       format.argument = item[1] - 'a';
       opcode.format.append(format);
     }
 
-    if(item[0] == '=') {
+    else if(item[0] == '=') {
       Format format = {Format::Type::Absolute, Format::Match::Strong};
       format.argument = item[1] - 'a';
       opcode.format.append(format);
     }
 
-    if(item[0] == '~') {
+    else if(item[0] == '~') {
       Format format = {Format::Type::Absolute, Format::Match::Weak};
       format.argument = item[1] - 'a';
       opcode.format.append(format);
     }
 
-    if(item[0] == '+') {
+    else if(item[0] == '+') {
       Format format = {Format::Type::Relative};
       format.argument = item[2] - 'a';
       format.displacement = +(item[1] - '0');
       opcode.format.append(format);
     }
 
-    if(item[0] == '-') {
+    else if(item[0] == '-') {
       Format format = {Format::Type::Relative};
       format.argument = item[2] - 'a';
       format.displacement = -(item[1] - '0');
       opcode.format.append(format);
     }
 
-    if(item[0] == '*') {
+    else if(item[0] == '*') {
       Format format = {Format::Type::Repeat};
       format.argument = item[1] - 'a';
       format.data = toHex((const char*)item + 3);
       opcode.format.append(format);
     }
   }
+}
+
+auto Table::swapEndian(uint64_t data, unsigned bits) -> uint64_t {
+  int t_data = 0;
+  switch((bits - 1) / 8) {
+    case 3: { // 4 bytes
+      t_data = ((data & 0xFF000000) >> 24) | \
+               ((data & 0x00FF0000) >> 8) | \
+               ((data & 0x0000FF00) << 8) | \
+               ((data & 0x000000FF) << 24);
+      break;
+    }
+    case 2: { // 3 bytes
+      t_data = ((data & 0xFF0000) >> 16) | \
+               ((data & 0x00FF00)) | \
+               ((data & 0x0000FF) << 16);
+      break;
+    }
+    case 1: { // 2 bytes
+      t_data = ((data & 0xFF00) >> 8) | \
+               ((data & 0x00FF) << 8);
+      break;
+    }
+    case 0: { // byte
+      t_data = data;
+      break;
+    }
+    default: {
+      error("Invalid number of bits for BassTable::swapEndian");
+      break;
+    }
+  }
+  return t_data;
 }
