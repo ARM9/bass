@@ -1,0 +1,1121 @@
+Compiling bass.cpp ...
+In file included from core/core.cpp:1:0,
+                 from bass.cpp:6:
+core/evaluate.cpp: In member function 'int64_t Bass::evaluateLiteral(nall::Eval::Node*, Bass::Evaluation)':
+core/evaluate.cpp:161:9: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+   if(s[0] == '0' && s[1] == 'b') return toBinary(s);
+         ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:1:0,
+                 from bass.cpp:6:
+core/evaluate.cpp:161:9: note: candidate 2: operator[](const char*, int) <built-in>
+   if(s[0] == '0' && s[1] == 'b') return toBinary(s);
+         ^
+core/evaluate.cpp:161:24: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+   if(s[0] == '0' && s[1] == 'b') return toBinary(s);
+                        ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:1:0,
+                 from bass.cpp:6:
+core/evaluate.cpp:161:24: note: candidate 2: operator[](const char*, int) <built-in>
+   if(s[0] == '0' && s[1] == 'b') return toBinary(s);
+                        ^
+core/evaluate.cpp:162:9: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+   if(s[0] == '0' && s[1] == 'o') return toOctal(s);
+         ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:1:0,
+                 from bass.cpp:6:
+core/evaluate.cpp:162:9: note: candidate 2: operator[](const char*, int) <built-in>
+   if(s[0] == '0' && s[1] == 'o') return toOctal(s);
+         ^
+core/evaluate.cpp:162:24: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+   if(s[0] == '0' && s[1] == 'o') return toOctal(s);
+                        ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:1:0,
+                 from bass.cpp:6:
+core/evaluate.cpp:162:24: note: candidate 2: operator[](const char*, int) <built-in>
+   if(s[0] == '0' && s[1] == 'o') return toOctal(s);
+                        ^
+core/evaluate.cpp:163:9: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+   if(s[0] == '0' && s[1] == 'x') return toHex(s);
+         ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:1:0,
+                 from bass.cpp:6:
+core/evaluate.cpp:163:9: note: candidate 2: operator[](const char*, int) <built-in>
+   if(s[0] == '0' && s[1] == 'x') return toHex(s);
+         ^
+core/evaluate.cpp:163:24: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+   if(s[0] == '0' && s[1] == 'x') return toHex(s);
+                        ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:1:0,
+                 from bass.cpp:6:
+core/evaluate.cpp:163:24: note: candidate 2: operator[](const char*, int) <built-in>
+   if(s[0] == '0' && s[1] == 'x') return toHex(s);
+                        ^
+core/evaluate.cpp:164:9: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+   if(s[0] >= '0' && s[0] <= '9') return toInteger(s);
+         ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:1:0,
+                 from bass.cpp:6:
+core/evaluate.cpp:164:9: note: candidate 2: operator[](const char*, int) <built-in>
+   if(s[0] >= '0' && s[0] <= '9') return toInteger(s);
+         ^
+core/evaluate.cpp:164:24: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+   if(s[0] >= '0' && s[0] <= '9') return toInteger(s);
+                        ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:1:0,
+                 from bass.cpp:6:
+core/evaluate.cpp:164:24: note: candidate 2: operator[](const char*, int) <built-in>
+   if(s[0] >= '0' && s[0] <= '9') return toInteger(s);
+                        ^
+core/evaluate.cpp:165:9: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+   if(s[0] == '%') return toBinary(s);
+         ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:1:0,
+                 from bass.cpp:6:
+core/evaluate.cpp:165:9: note: candidate 2: operator[](const char*, int) <built-in>
+   if(s[0] == '%') return toBinary(s);
+         ^
+core/evaluate.cpp:166:9: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+   if(s[0] == '$') return toHex(s);
+         ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:1:0,
+                 from bass.cpp:6:
+core/evaluate.cpp:166:9: note: candidate 2: operator[](const char*, int) <built-in>
+   if(s[0] == '$') return toHex(s);
+         ^
+In file included from core/core.cpp:5:0,
+                 from bass.cpp:6:
+core/utility.cpp: In member function 'void Bass::evaluateDefines(nall::string&)':
+core/utility.cpp:231:11: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     if(s[x] == '}') y = x;
+           ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:5:0,
+                 from bass.cpp:6:
+core/utility.cpp:231:11: note: candidate 2: operator[](const char*, int) <built-in>
+     if(s[x] == '}') y = x;
+           ^
+core/utility.cpp:232:11: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     if(s[x] == '{' && y > x) {
+           ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:5:0,
+                 from bass.cpp:6:
+core/utility.cpp:232:11: note: candidate 2: operator[](const char*, int) <built-in>
+     if(s[x] == '{' && y > x) {
+           ^
+core/utility.cpp: In member function 'int64_t Bass::character(const nall::string&)':
+core/utility.cpp:361:9: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+   if(s[0] == '\'') {
+         ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:5:0,
+                 from bass.cpp:6:
+core/utility.cpp:361:9: note: candidate 2: operator[](const char*, int) <built-in>
+   if(s[0] == '\'') {
+         ^
+core/utility.cpp:363:16: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     else if(s[1] == '\\' && s[2] == '\\' && s[3] == '\'') result = '\\';
+                ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:5:0,
+                 from bass.cpp:6:
+core/utility.cpp:363:16: note: candidate 2: operator[](const char*, int) <built-in>
+     else if(s[1] == '\\' && s[2] == '\\' && s[3] == '\'') result = '\\';
+                ^
+core/utility.cpp:363:32: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     else if(s[1] == '\\' && s[2] == '\\' && s[3] == '\'') result = '\\';
+                                ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:5:0,
+                 from bass.cpp:6:
+core/utility.cpp:363:32: note: candidate 2: operator[](const char*, int) <built-in>
+     else if(s[1] == '\\' && s[2] == '\\' && s[3] == '\'') result = '\\';
+                                ^
+core/utility.cpp:363:48: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     else if(s[1] == '\\' && s[2] == '\\' && s[3] == '\'') result = '\\';
+                                                ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:5:0,
+                 from bass.cpp:6:
+core/utility.cpp:363:48: note: candidate 2: operator[](const char*, int) <built-in>
+     else if(s[1] == '\\' && s[2] == '\\' && s[3] == '\'') result = '\\';
+                                                ^
+core/utility.cpp:364:16: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     else if(s[1] == '\\' && s[2] == '\'' && s[3] == '\'') result = '\'';
+                ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:5:0,
+                 from bass.cpp:6:
+core/utility.cpp:364:16: note: candidate 2: operator[](const char*, int) <built-in>
+     else if(s[1] == '\\' && s[2] == '\'' && s[3] == '\'') result = '\'';
+                ^
+core/utility.cpp:364:32: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     else if(s[1] == '\\' && s[2] == '\'' && s[3] == '\'') result = '\'';
+                                ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:5:0,
+                 from bass.cpp:6:
+core/utility.cpp:364:32: note: candidate 2: operator[](const char*, int) <built-in>
+     else if(s[1] == '\\' && s[2] == '\'' && s[3] == '\'') result = '\'';
+                                ^
+core/utility.cpp:364:48: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     else if(s[1] == '\\' && s[2] == '\'' && s[3] == '\'') result = '\'';
+                                                ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:5:0,
+                 from bass.cpp:6:
+core/utility.cpp:364:48: note: candidate 2: operator[](const char*, int) <built-in>
+     else if(s[1] == '\\' && s[2] == '\'' && s[3] == '\'') result = '\'';
+                                                ^
+core/utility.cpp:365:16: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     else if(s[1] == '\\' && s[2] == '\"' && s[3] == '\'') result = '\"';
+                ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:5:0,
+                 from bass.cpp:6:
+core/utility.cpp:365:16: note: candidate 2: operator[](const char*, int) <built-in>
+     else if(s[1] == '\\' && s[2] == '\"' && s[3] == '\'') result = '\"';
+                ^
+core/utility.cpp:365:32: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     else if(s[1] == '\\' && s[2] == '\"' && s[3] == '\'') result = '\"';
+                                ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:5:0,
+                 from bass.cpp:6:
+core/utility.cpp:365:32: note: candidate 2: operator[](const char*, int) <built-in>
+     else if(s[1] == '\\' && s[2] == '\"' && s[3] == '\'') result = '\"';
+                                ^
+core/utility.cpp:365:48: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     else if(s[1] == '\\' && s[2] == '\"' && s[3] == '\'') result = '\"';
+                                                ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:5:0,
+                 from bass.cpp:6:
+core/utility.cpp:365:48: note: candidate 2: operator[](const char*, int) <built-in>
+     else if(s[1] == '\\' && s[2] == '\"' && s[3] == '\'') result = '\"';
+                                                ^
+core/utility.cpp:366:16: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     else if(s[1] == '\\' && s[2] == 'n'  && s[3] == '\'') result = '\n';
+                ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:5:0,
+                 from bass.cpp:6:
+core/utility.cpp:366:16: note: candidate 2: operator[](const char*, int) <built-in>
+     else if(s[1] == '\\' && s[2] == 'n'  && s[3] == '\'') result = '\n';
+                ^
+core/utility.cpp:366:32: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     else if(s[1] == '\\' && s[2] == 'n'  && s[3] == '\'') result = '\n';
+                                ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:5:0,
+                 from bass.cpp:6:
+core/utility.cpp:366:32: note: candidate 2: operator[](const char*, int) <built-in>
+     else if(s[1] == '\\' && s[2] == 'n'  && s[3] == '\'') result = '\n';
+                                ^
+core/utility.cpp:366:48: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     else if(s[1] == '\\' && s[2] == 'n'  && s[3] == '\'') result = '\n';
+                                                ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:5:0,
+                 from bass.cpp:6:
+core/utility.cpp:366:48: note: candidate 2: operator[](const char*, int) <built-in>
+     else if(s[1] == '\\' && s[2] == 'n'  && s[3] == '\'') result = '\n';
+                                                ^
+core/utility.cpp:367:16: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     else if(s[1] == '\\' && s[2] == 't'  && s[3] == '\'') result = '\t';
+                ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:5:0,
+                 from bass.cpp:6:
+core/utility.cpp:367:16: note: candidate 2: operator[](const char*, int) <built-in>
+     else if(s[1] == '\\' && s[2] == 't'  && s[3] == '\'') result = '\t';
+                ^
+core/utility.cpp:367:32: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     else if(s[1] == '\\' && s[2] == 't'  && s[3] == '\'') result = '\t';
+                                ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:5:0,
+                 from bass.cpp:6:
+core/utility.cpp:367:32: note: candidate 2: operator[](const char*, int) <built-in>
+     else if(s[1] == '\\' && s[2] == 't'  && s[3] == '\'') result = '\t';
+                                ^
+core/utility.cpp:367:48: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     else if(s[1] == '\\' && s[2] == 't'  && s[3] == '\'') result = '\t';
+                                                ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:5:0,
+                 from bass.cpp:6:
+core/utility.cpp:367:48: note: candidate 2: operator[](const char*, int) <built-in>
+     else if(s[1] == '\\' && s[2] == 't'  && s[3] == '\'') result = '\t';
+                                                ^
+core/utility.cpp:368:16: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     else if(s[2] == '\'') result = s[1];
+                ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:5:0,
+                 from bass.cpp:6:
+core/utility.cpp:368:16: note: candidate 2: operator[](const char*, int) <built-in>
+     else if(s[2] == '\'') result = s[1];
+                ^
+core/utility.cpp:368:39: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     else if(s[2] == '\'') result = s[1];
+                                       ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from core/core.cpp:5:0,
+                 from bass.cpp:6:
+core/utility.cpp:368:39: note: candidate 2: operator[](const char*, int) <built-in>
+     else if(s[2] == '\'') result = s[1];
+                                       ^
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp: In member function 'void Table::assembleTableRHS(Table::Opcode&, const nall::string&)':
+architecture/table/table.cpp:230:14: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     if(item[0] == '$' && item.length() == 3) {
+              ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:230:14: note: candidate 2: operator[](const char*, int) <built-in>
+     if(item[0] == '$' && item.length() == 3) {
+              ^
+architecture/table/table.cpp:237:14: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     if(item[0] == '%') {
+              ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:237:14: note: candidate 2: operator[](const char*, int) <built-in>
+     if(item[0] == '%') {
+              ^
+architecture/table/table.cpp:244:14: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     if(item[0] == '!') {
+              ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:244:14: note: candidate 2: operator[](const char*, int) <built-in>
+     if(item[0] == '!') {
+              ^
+architecture/table/table.cpp:246:31: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+       format.argument = item[1] - 'a';
+                               ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:246:31: note: candidate 2: operator[](const char*, int) <built-in>
+       format.argument = item[1] - 'a';
+                               ^
+architecture/table/table.cpp:250:14: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     if(item[0] == '=') {
+              ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:250:14: note: candidate 2: operator[](const char*, int) <built-in>
+     if(item[0] == '=') {
+              ^
+architecture/table/table.cpp:252:31: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+       format.argument = item[1] - 'a';
+                               ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:252:31: note: candidate 2: operator[](const char*, int) <built-in>
+       format.argument = item[1] - 'a';
+                               ^
+architecture/table/table.cpp:256:14: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     if(item[0] == '~') {
+              ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:256:14: note: candidate 2: operator[](const char*, int) <built-in>
+     if(item[0] == '~') {
+              ^
+architecture/table/table.cpp:258:31: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+       format.argument = item[1] - 'a';
+                               ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:258:31: note: candidate 2: operator[](const char*, int) <built-in>
+       format.argument = item[1] - 'a';
+                               ^
+architecture/table/table.cpp:262:14: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     if(item[0] == '+') {
+              ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:262:14: note: candidate 2: operator[](const char*, int) <built-in>
+     if(item[0] == '+') {
+              ^
+architecture/table/table.cpp:264:31: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+       format.argument = item[2] - 'a';
+                               ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:264:31: note: candidate 2: operator[](const char*, int) <built-in>
+       format.argument = item[2] - 'a';
+                               ^
+architecture/table/table.cpp:265:37: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+       format.displacement = +(item[1] - '0');
+                                     ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:265:37: note: candidate 2: operator[](const char*, int) <built-in>
+       format.displacement = +(item[1] - '0');
+                                     ^
+architecture/table/table.cpp:269:14: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     if(item[0] == '-') {
+              ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:269:14: note: candidate 2: operator[](const char*, int) <built-in>
+     if(item[0] == '-') {
+              ^
+architecture/table/table.cpp:271:31: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+       format.argument = item[2] - 'a';
+                               ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:271:31: note: candidate 2: operator[](const char*, int) <built-in>
+       format.argument = item[2] - 'a';
+                               ^
+architecture/table/table.cpp:272:37: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+       format.displacement = -(item[1] - '0');
+                                     ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:272:37: note: candidate 2: operator[](const char*, int) <built-in>
+       format.displacement = -(item[1] - '0');
+                                     ^
+architecture/table/table.cpp:276:14: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     if(item[0] == '*') {
+              ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:276:14: note: candidate 2: operator[](const char*, int) <built-in>
+     if(item[0] == '*') {
+              ^
+architecture/table/table.cpp:278:31: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+       format.argument = item[1] - 'a';
+                               ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:278:31: note: candidate 2: operator[](const char*, int) <built-in>
+       format.argument = item[1] - 'a';
+                               ^
+architecture/table/table.cpp:284:14: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     if(item[0] == '>' && item[1] == '>') {
+              ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:284:14: note: candidate 2: operator[](const char*, int) <built-in>
+     if(item[0] == '>' && item[1] == '>') {
+              ^
+architecture/table/table.cpp:284:32: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     if(item[0] == '>' && item[1] == '>') {
+                                ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:284:32: note: candidate 2: operator[](const char*, int) <built-in>
+     if(item[0] == '>' && item[1] == '>') {
+                                ^
+architecture/table/table.cpp:286:31: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+       format.argument = item[4] - 'a';
+                               ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:286:31: note: candidate 2: operator[](const char*, int) <built-in>
+       format.argument = item[4] - 'a';
+                               ^
+architecture/table/table.cpp:287:28: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+       format.data = (item[2] - '0') * 10 + (item[3] - '0');
+                            ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:287:28: note: candidate 2: operator[](const char*, int) <built-in>
+       format.data = (item[2] - '0') * 10 + (item[3] - '0');
+                            ^
+architecture/table/table.cpp:287:51: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+       format.data = (item[2] - '0') * 10 + (item[3] - '0');
+                                                   ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:287:51: note: candidate 2: operator[](const char*, int) <built-in>
+       format.data = (item[2] - '0') * 10 + (item[3] - '0');
+                                                   ^
+architecture/table/table.cpp:291:14: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     if(item[0] == '<' && item[1] == '<') {
+              ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:291:14: note: candidate 2: operator[](const char*, int) <built-in>
+     if(item[0] == '<' && item[1] == '<') {
+              ^
+architecture/table/table.cpp:291:32: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     if(item[0] == '<' && item[1] == '<') {
+                                ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:291:32: note: candidate 2: operator[](const char*, int) <built-in>
+     if(item[0] == '<' && item[1] == '<') {
+                                ^
+architecture/table/table.cpp:293:31: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+       format.argument = item[4] - 'a';
+                               ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:293:31: note: candidate 2: operator[](const char*, int) <built-in>
+       format.argument = item[4] - 'a';
+                               ^
+architecture/table/table.cpp:294:28: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+       format.data = (item[2] - '0') * 10 + (item[3] - '0');
+                            ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:294:28: note: candidate 2: operator[](const char*, int) <built-in>
+       format.data = (item[2] - '0') * 10 + (item[3] - '0');
+                            ^
+architecture/table/table.cpp:294:51: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+       format.data = (item[2] - '0') * 10 + (item[3] - '0');
+                                                   ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:294:51: note: candidate 2: operator[](const char*, int) <built-in>
+       format.data = (item[2] - '0') * 10 + (item[3] - '0');
+                                                   ^
+architecture/table/table.cpp:299:14: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     if(item[0] == '+' && item[2] == '>' && item[3] == '>') {
+              ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:299:14: note: candidate 2: operator[](const char*, int) <built-in>
+     if(item[0] == '+' && item[2] == '>' && item[3] == '>') {
+              ^
+architecture/table/table.cpp:299:32: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     if(item[0] == '+' && item[2] == '>' && item[3] == '>') {
+                                ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:299:32: note: candidate 2: operator[](const char*, int) <built-in>
+     if(item[0] == '+' && item[2] == '>' && item[3] == '>') {
+                                ^
+architecture/table/table.cpp:299:50: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     if(item[0] == '+' && item[2] == '>' && item[3] == '>') {
+                                                  ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:299:50: note: candidate 2: operator[](const char*, int) <built-in>
+     if(item[0] == '+' && item[2] == '>' && item[3] == '>') {
+                                                  ^
+architecture/table/table.cpp:301:31: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+       format.argument = item[6] - 'a';
+                               ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:301:31: note: candidate 2: operator[](const char*, int) <built-in>
+       format.argument = item[6] - 'a';
+                               ^
+architecture/table/table.cpp:302:37: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+       format.displacement = +(item[1] - '0');
+                                     ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:302:37: note: candidate 2: operator[](const char*, int) <built-in>
+       format.displacement = +(item[1] - '0');
+                                     ^
+architecture/table/table.cpp:303:28: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+       format.data = (item[4] - '0') * 10 + (item[5] - '0');
+                            ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:303:28: note: candidate 2: operator[](const char*, int) <built-in>
+       format.data = (item[4] - '0') * 10 + (item[5] - '0');
+                            ^
+architecture/table/table.cpp:303:51: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+       format.data = (item[4] - '0') * 10 + (item[5] - '0');
+                                                   ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:303:51: note: candidate 2: operator[](const char*, int) <built-in>
+       format.data = (item[4] - '0') * 10 + (item[5] - '0');
+                                                   ^
+architecture/table/table.cpp:308:14: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     if(item[0] == 'N' && item[1] == '>' && item[2] == '>') {
+              ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:308:14: note: candidate 2: operator[](const char*, int) <built-in>
+     if(item[0] == 'N' && item[1] == '>' && item[2] == '>') {
+              ^
+architecture/table/table.cpp:308:32: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     if(item[0] == 'N' && item[1] == '>' && item[2] == '>') {
+                                ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:308:32: note: candidate 2: operator[](const char*, int) <built-in>
+     if(item[0] == 'N' && item[1] == '>' && item[2] == '>') {
+                                ^
+architecture/table/table.cpp:308:50: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     if(item[0] == 'N' && item[1] == '>' && item[2] == '>') {
+                                                  ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:308:50: note: candidate 2: operator[](const char*, int) <built-in>
+     if(item[0] == 'N' && item[1] == '>' && item[2] == '>') {
+                                                  ^
+architecture/table/table.cpp:310:31: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+       format.argument = item[5] - 'a';
+                               ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:310:31: note: candidate 2: operator[](const char*, int) <built-in>
+       format.argument = item[5] - 'a';
+                               ^
+architecture/table/table.cpp:311:28: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+       format.data = (item[3] - '0') * 10 + (item[4] - '0');
+                            ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:311:28: note: candidate 2: operator[](const char*, int) <built-in>
+       format.data = (item[3] - '0') * 10 + (item[4] - '0');
+                            ^
+architecture/table/table.cpp:311:51: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+       format.data = (item[3] - '0') * 10 + (item[4] - '0');
+                                                   ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:311:51: note: candidate 2: operator[](const char*, int) <built-in>
+       format.data = (item[3] - '0') * 10 + (item[4] - '0');
+                                                   ^
+architecture/table/table.cpp:316:14: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     if(item[0] == 'N' && item[1] != '>') {
+              ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:316:14: note: candidate 2: operator[](const char*, int) <built-in>
+     if(item[0] == 'N' && item[1] != '>') {
+              ^
+architecture/table/table.cpp:316:32: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+     if(item[0] == 'N' && item[1] != '>') {
+                                ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:316:32: note: candidate 2: operator[](const char*, int) <built-in>
+     if(item[0] == 'N' && item[1] != '>') {
+                                ^
+architecture/table/table.cpp:318:31: warning: ISO C++ says that these are ambiguous, even though the worst conversion for the first is better than the worst conversion for the second:
+       format.argument = item[1] - 'a';
+                               ^
+In file included from ../nall/string.hpp:344:0,
+                 from ../nall/arithmetic.hpp:7,
+                 from ../nall/nall.hpp:11,
+                 from bass.hpp:2,
+                 from bass.cpp:5:
+../nall/string/core.hpp:18:13: note: candidate 1: const char& nall::string::operator[](nall::uint) const
+ inline auto string::operator[](uint position) const -> const char& {
+             ^~~~~~
+In file included from bass.cpp:7:0:
+architecture/table/table.cpp:318:31: note: candidate 2: operator[](const char*, int) <built-in>
+       format.argument = item[1] - 'a';
+                               ^
+Linking out/bass ...

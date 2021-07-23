@@ -1,0 +1,11 @@
+
+// ASCII R800
+mulub a,b       ; $ED $C1
+muluw hl,bc     ; $ED $C3
+mulub a,c       ; $ED $C9
+mulub a,d       ; $ED $D1
+mulub a,e       ; $ED $D9
+mulub a,h       ; $ED $E1
+mulub a,l       ; $ED $E9
+mulub a,a       ; $ED $F1
+muluw hl,sp     ; $ED $F3
