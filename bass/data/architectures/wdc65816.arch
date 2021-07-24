@@ -1,4 +1,4 @@
-endian lsb
+#endian lsb
 
 asl            ;$0a
 clc            ;$18

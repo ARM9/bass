@@ -168,13 +168,19 @@ auto Table::parseTable(const string& text) -> bool {
   for(auto& line : lines) {
     if(auto position = line.find("//")) line.resize(position());  //remove comments
 
-    if(line == "endian lsb") { setEndian(Bass::Endian::LSB); continue; }
-    if(line == "endian msb") { setEndian(Bass::Endian::MSB); continue; }
-    if(auto position = line.find("include ") ) {
-      line.trimLeft("include ", 1L);
-      auto more = readArchitecture(line.strip());
-      parseTable(more);
-      continue;
+    if(line[0] == '#') {
+      if(line == "#endian lsb") { setEndian(Bass::Endian::LSB); continue; }
+      if(line == "#endian msb") { setEndian(Bass::Endian::MSB); continue; }
+
+      if(auto position = line.find("#include ") ) {
+        line.trimLeft("#include ", 1L);
+        auto more = readArchitecture(line.strip());
+        parseTable(more);
+        continue;
+      }
+      if(auto position = line.find("#directive ") ) {
+        parseDirective(line);
+      }
     }
 
     auto part = line.split(";", 1L).strip();
@@ -188,6 +194,30 @@ auto Table::parseTable(const string& text) -> bool {
 
   return true;
 }
+
+// #directive <name> <byte_size>
+auto Table::parseDirective(string& line) -> void {
+  auto work = line.strip();
+  work.trimLeft("#directive ", 1L);
+  
+  auto items = work.split(" ");
+  if(items.size() != 2) {
+    error("Wrong syntax: '",line , "'\n");
+  }
+
+  auto& key = items[0];
+  uint value = atoi(items[1]);
+  
+  for(auto& d : directives().EmitBytes) {
+    if(key.beginsWith(d.token)) {
+      d.dataLength = value;
+      return;
+    }
+  }
+  
+  directives().add(key, value);
+}
+
 
 auto Table::assembleTableLHS(Opcode& opcode, const string& text) -> void {
   uint offset = 0;

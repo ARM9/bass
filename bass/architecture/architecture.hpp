@@ -23,6 +23,10 @@ struct Architecture {
     self.endian = endian;
   }
 
+  auto directives() -> Bass::Directives& {
+    return self.directives;
+  }
+
   auto readArchitecture(const string& s) -> string {
     return self.readArchitecture(s);
   }

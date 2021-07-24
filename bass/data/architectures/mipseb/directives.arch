@@ -1,7 +1,6 @@
-//DIRECTIVES
-db ;EMIT_BYTES:0
-dh ;EMIT_BYTES:1
-dl ;EMIT_BYTES:2
-dw ;EMIT_BYTES:3
-dd ;EMIT_BYTES:4
-//INSTRUCTIONS
+#directive db 1
+#directive dh 2
+#directive dl 3
+#directive dw 4
+#directive dd 8
+#directive dq 16

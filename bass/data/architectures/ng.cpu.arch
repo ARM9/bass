@@ -1,5 +1,5 @@
 // Neo-Geo Motorola 68000 CPU instruction set
-endian msb
+#endian msb
 
-include m68k/directives
-include m68k/m68000
+#include m68k/directives
+#include m68k/m68000

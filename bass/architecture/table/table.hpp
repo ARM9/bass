@@ -39,6 +39,7 @@ private:
   auto bitLength(string& text) const -> uint;
   auto writeBits(uint64_t data, uint bits) -> void;
   auto parseTable(const string& text) -> bool;
+  auto parseDirective(string& line) -> void;
   auto assembleTableLHS(Opcode& opcode, const string& text) -> void;
   auto assembleTableRHS(Opcode& opcode, const string& text) -> void;
   auto swapEndian(uint64_t data, unsigned bits) -> uint64_t;

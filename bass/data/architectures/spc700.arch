@@ -1,4 +1,4 @@
-endian lsb
+#endian lsb
 
 nop              ;$00
 brk              ;$0f

@@ -1,10 +1,10 @@
 // N64 MIPS vr4300 CPU instruction set
-endian msb
+#endian msb
 
-include mipseb/directives
-include mipseb/mips1
-include mipseb/mips1cop0
-include mipseb/mips1cop1
-include mipseb/mips1divmul
-include mipseb/mips2
-include mipseb/mips3
+#include mipseb/directives
+#include mipseb/mips1
+#include mipseb/mips1cop0
+#include mipseb/mips1cop1
+#include mipseb/mips1divmul
+#include mipseb/mips2
+#include mipseb/mips3

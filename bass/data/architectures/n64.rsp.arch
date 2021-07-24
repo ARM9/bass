@@ -1,13 +1,13 @@
-endian msb
+#endian msb
 
-include mipseb/directives
+#include mipseb/directives
 
 // RSP MIPS 4000 Instructions
 mfc2 *05,v*05[e*01] ; %01001000 %000 ~a ~b >>03c >>02c >>01c ~c %0000000
 mtc2 *05,v*05[e*01] ; %01001000 %100 ~a ~b >>03c >>02c >>01c ~c %0000000
 
-include mipseb/mips1
-include mipseb/mips1-pseudo
+#include mipseb/mips1
+#include mipseb/mips1-pseudo
 
 // RSP MIPS 4000 CP2 Vector Operation Instructions (COP2):
 vmulf v*01,v*05,v*05[e*01] ; %0100101 >>03d >>02d >>01d ~d ~c ~b >>04a >>03a >>02a >>01a ~a %000000

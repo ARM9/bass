@@ -238,13 +238,16 @@ auto Bass::assemble(const string& statement) -> bool {
 
   //d[bwldq] ("string"|variable) [, ...]
   uint dataLength = 0;
-  if(s.beginsWith("db ")) dataLength = 1;
-  if(s.beginsWith("dw ")) dataLength = 2;
-  if(s.beginsWith("dl ")) dataLength = 3;
-  if(s.beginsWith("dd ")) dataLength = 4;
-  if(s.beginsWith("dq ")) dataLength = 8;
+  uint tokenLength = 0;
+  for(auto& d : directives.EmitBytes) {
+    if(s.beginsWith(d.token)) {
+      dataLength = d.dataLength;
+      tokenLength = d.token.length();
+      break;
+    }
+  }
   if(dataLength) {
-    s = slice(s, 3);  //remove prefix
+    s = slice(s, tokenLength+1);  //remove prefix +space
     auto p = split(s);
     for(auto& t : p) {
       if(t.match("\"*\"")) {

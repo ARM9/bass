@@ -107,6 +107,25 @@ struct Bass {
     set<int64_t> addresses;
   };
 
+  struct Directives {
+  private:
+    struct _EmitBytesOp {
+      string token;
+      uint dataLength;
+    };
+
+  public:
+    vector<_EmitBytesOp> EmitBytes;
+
+    Directives()
+    : EmitBytes ({ {"db", 1}, {"dw", 2}, {"dl", 3}, {"dd", 4}, {"dq", 8}})
+    {}
+    
+    void add(string token, uint dataLength) {
+      EmitBytes.append( {token, dataLength} );
+    }
+  };
+
 protected:
   auto analyzePhase() const -> bool { return phase == Phase::Analyze; }
   auto queryPhase() const -> bool { return phase == Phase::Query; }
@@ -199,6 +218,7 @@ protected:
   uint nextLabelCounter = 1;      //+ instance counter
   bool charactersUseMap = false;  //0 = '*' parses as ASCII; 1 = '*' uses stringTable[]
   bool strict = false;            //upgrade warnings to errors when true
+  Directives directives;          //active directives
 
   file_buffer targetFile;
   string_vector sourceFilenames;
