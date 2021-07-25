@@ -1,6 +1,6 @@
 # Bass
 
-Bass is an table based, multi architecture, cross platform, macro assembler written by Near until version 17. This tool targets at developers or hackers interested into old videogame systems such as NES, SNES, MegaDrive and others.
+Bass is an table based, multi architecture and cross platform, macro assembler written by Near until version 17. This tool targets at developers or hackers interested into old videogame systems such as NES, SNES, MegaDrive and others.
 
 The original documentation can be found at `/bass/doc/bass.html` inside of each source-package. 
 
@@ -15,30 +15,17 @@ The original documentation can be found at `/bass/doc/bass.html` inside of each 
   * you look for a higher 'real' programming language
   * you expect an complete toolchain that takes care about all of your needs
 
-You need an higher language compiler for platform *x* that takes care about everything? This is not for you. But maybe part of an Toolchain that
+You need an higher language compiler for platform *x* that takes care about everything? Then Bass is not for you. But maybe part of an toolchain that you will use.
 
 
-```as
-architecture snes.cpu
-
-constant x = $80
-lda x       // af 80 00 00
-lda #x      // a9 80 00
-
-define y = $0080
-lda {y}     // ad 80 00
-lda.b {y}   // a5 80
-lda.w {y}   // ad 80 00
-```
-
-
-**Note:**<br/> Bass works using an multi-pass approach. On the first time it will solve all macro functions, on the second pass it will generate the binary output.
+>**Note:**<br/> 
+>Bass works using an multi-pass approach. On the first time it will solve all macro functions, on the second pass it will generate the binary output.
 
 ## Basic's
-TODO speak about the compiling pipeline and stages
+`TODO` speak about the compiling pipeline and stages
 
 ### Data Types
-TODO
+`TODO`
 
 ### Variables and Constants
 Variables and constants are what you would expect them to be. Please keep in mind that both are constructs inside of the macro engine. They will (by default) not be present on the target system but only in the compilers virtual machine.
@@ -153,8 +140,37 @@ Why? Because `print <evaluation n, ...>` takes each argument as evaluating param
 
 
 ### Labels and Scopes
+Like in every other assembler its possible to 'label' an certain point in your code and use this adress inside of your program.
 
+```as
+architecture snes.cpu
 
+start:
+  constant x = $80
+  lda x       // af 80 00 00
+mid:
+  lda #x      // a9 80 00
+  jmp start   // 4c 00 00
+  jmp mid     // 4c 04 00
+```
+
+An label can be set with `<name>:` valid names are the same, as for constants. In fact: Labels *are* constants.
+
+```as
+architecture snes.cpu
+
+start:
+  constant x = $80
+  lda x       // af 80 00 00
+mid:
+  lda #x      // a9 80 00
+  jmp start   // 4c 00 00
+  jmp mid     // 4c 04 00
+
+print hex:start, " - ", hex:mid, "\n" // 0 - 4
+
+constant start = 12   // error: cannot be modified
+```
 
 ### Macros and Function
 Write here about parameters in general
