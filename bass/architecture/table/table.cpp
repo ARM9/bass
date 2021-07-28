@@ -206,10 +206,12 @@ auto Table::parseDirective(string& line) -> void {
   }
 
   auto& key = items[0];
+  key.append(" ");
+  
   uint value = atoi(items[1]);
   
   for(auto& d : directives().EmitBytes) {
-    if(key.beginsWith(d.token)) {
+    if(key.equals(d.token)) {
       d.dataLength = value;
       return;
     }

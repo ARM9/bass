@@ -118,7 +118,7 @@ struct Bass {
     vector<_EmitBytesOp> EmitBytes;
 
     Directives()
-    : EmitBytes ({ {"db", 1}, {"dw", 2}, {"dl", 3}, {"dd", 4}, {"dq", 8}})
+    : EmitBytes ({ {"db ", 1}, {"dw ", 2}, {"dl ", 3}, {"dd ", 4}, {"dq ", 8}})
     {}
     
     void add(string token, uint dataLength) {

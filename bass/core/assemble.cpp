@@ -241,9 +241,9 @@ auto Bass::assemble(const string& statement) -> bool {
   uint tokenLength = 0;
   for(auto& d : directives.EmitBytes) {
     // make sure to have & consume a space
-    if(s.beginsWith(d.token.append(" "))) {
+    if(s.beginsWith(d.token)) {
       dataLength = d.dataLength;
-      tokenLength = d.token.length()+1;
+      tokenLength = d.token.length();
       break;
     }
   }
