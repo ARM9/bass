@@ -4,7 +4,7 @@ auto Bass::analyze() -> bool {
 
   while(ip < program.size()) {
     Instruction& i = program(ip++);
-    if(!analyzeInstruction(i)) error("unrecognized directive: ", i.lineNumber, ": " i.statement);
+    if(!analyzeInstruction(i)) error("unrecognized directive: ", i.lineNumber, ": ", i.statement);
   }
 
   return true;
