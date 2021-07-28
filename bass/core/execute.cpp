@@ -33,6 +33,11 @@ auto Bass::executeInstruction(Instruction& i) -> bool {
   if(global) s.trimLeft("global ", 1L), level = Frame::Level::Global;
   if(parent) s.trimLeft("parent ", 1L), level = Frame::Level::Parent;
 
+  if(s.equals("exit()")) {
+    ip = program.size()+1;
+    return true;
+  }
+
   if(s.match("macro ?*(*) {")) {
     bool inlined = false;
     s.trim("macro ", ") {", 1L);
