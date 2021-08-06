@@ -1,0 +1,72 @@
+name: Build Latest
+on:
+  push:
+    branches: [ master ]
+    tags:
+      - 'v*'
+jobs:
+  build:
+    strategy:
+      matrix:
+        os:
+        - name: ubuntu
+          version: latest
+        - name: windows
+          version: latest
+        - name: macos
+          version: latest
+    runs-on: ${{ matrix.os.name }}-${{ matrix.os.version }}
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Init
+      run: |
+        mkdir bass/obj
+        mkdir bass/out
+        mkdir dist
+        cp -R bass/data/* bass/out/
+        cp -R doc bass/out/
+    
+    - name: Make
+      run: make
+      working-directory: bass      
+
+    - name: Pack
+      uses: papeloto/action-zip@v1
+      with:
+        files: bass/out/
+        dest: dist/bass-${{ matrix.os.name }}.zip
+
+    - name: Upload
+      uses: actions/upload-artifact@v2
+      with:
+        name: bass-${{ matrix.os.name }}
+        path: dist/bass*.zip
+
+  release:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set Version
+      id: version
+      run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}    
+    
+    - name: Download
+      uses: actions/download-artifact@v2
+      with:
+        path: dist
+    
+    - name: Crunch down files
+      run: |
+        find . -name \*.zip -exec cp {} . \;
+        ls -lisah
+      working-directory: dist
+    
+    - uses: "marvinpinto/action-automatic-releases@v1.2.1"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "${{ steps.version.outputs.tag }}"
+        title: "Release ${{ steps.version.outputs.tag }}"
+        prerelease: false
+        files: dist/bass-*.zip
