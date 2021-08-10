@@ -1,7 +1,7 @@
 # Bass Core Features
 Bass brings a strong macro language that offers alot of comfort compared to most classic assemblers. Thats why it's important to never get confused about the macros, and the actual program to be written. 
 
-Macros are 'smart copy scripts' to move code around for you. But they work on the base of copy and paste. They do not understand the data they handle. They dont extend the syntax of the assembly language itself and therefore they are not an extension or even an real 'programming Language'.
+Macros are 'smart copy scripts' to move code around for you. But they work on the base of copy and paste. They do not understand the data they handle. They dont extend the Syntax: of the assembly language itself and therefore they are not an extension or even an real 'programming Language'.
 
 
 `TODO` speak about the compiling pipeline and stages
@@ -10,9 +10,58 @@ Macros are 'smart copy scripts' to move code around for you. But they work on th
 >Bass works using an multi-pass approach. On the first time it will solve all macro functions, on the second pass it will generate the binary output.
 
 ## Data Types
-`TODO`
+### Names
+Macros, functions, defines, variables and constants must be in the following format:
 
-## Syntax
+```regex
+[_A-Za-z][_A-Za-z0-9.]*
+```
+
+### Numbers
+Valid numbers must be in one of the following formats:
+
+```regex
+[0-9]+       integer
+0b[01]+      binary
+0o[0-7]+     octal
+0x[0-9a-f]+  hex
+%[01]+       binary
+$[0-9a-f]+   hex
+```
+
+Numbers may be prefixed with - or + if desired.
+
+Numbers may also use ' as a digit separator. For example:
+
+```regex
+123'456'789  //same as 123456789
+0b1001'0110   //same as 0b10010110
+```
+
+### Strings
+Strings are surrounded by double-quotes. They support the following escape sequences:
+
+```regex
+\\ = backslash (\)
+\' = single-quote (')
+\" = double-quote (")
+\n = new line
+\t = tab
+``` 
+
+Strings may also be concatenated via the ~ operator, which is useful for string construction via defines:
+
+```regex
+"foo" ~ "bar"  //equivalent to "foobar"
+```
+
+### Characters
+Characters are surrounded by single-quotes, and evaluate to integer values which can be used inside of expressions. They support the same escape sequences as strings.
+
+> **Note** that characters are not escaped for block tokenization. That means you must use '\b' instead of ';' to avoid splitting the character into two separate statements.
+
+
+## Syntax:
 ### Variables and Constants
 Variables and constants are what you would expect them to be. Please keep in mind that both are constructs inside of the macro engine. They will (by default) not be present on the target system but only in the compilers virtual machine.
 
@@ -69,7 +118,7 @@ while i < array.size(x) {   // see array.size build in function
 ````
 
 ## Expressions
-All expressions use an parentheses syntax like `{x}`, this seperate them clean from any variables and constants. However, they can be mixed. 
+All expressions use an parentheses Syntax: like `{x}`, this seperate them clean from any variables and constants. However, they can be mixed. 
 
 ### Defines
 Defines store content without any interpretation. Since it's possible to use defines in combination with parameters as construction rule, they might give the impression that they can be used like macros and functions. But this is not the case. While they do return a result, it's still just a constructed string without any interpretation. More about constructing defines can be read in the Macros Section of this Document.
@@ -85,7 +134,7 @@ print "{a}{b}{c}\n"   // prints "Hello"World5.1(4+3)\n
 
 Defines are evaluated from right-to-left order, meaning that expressions such as `{x{y}`} will first expand `{y}`, and then the result of that expression, `{x...}`. In case of an define that is unknown (in it's scope) no error will be trown. It will be passed unresolved to allow manuall evaluation.
 
-Defines are not constant and can be redefined. It is possible to test if a define has been declared or not by using the special syntax: `{defined <name>}`
+Defines are not constant and can be redefined. It is possible to test if a define has been declared or not by using the special Syntax:: `{defined <name>}`
 
 ```as
 // v15-18
@@ -158,29 +207,198 @@ print hex:start, " - ", hex:mid, "\n" // 0 - 4
 constant start = 12   // error: cannot be modified
 ```
 
+`TODO: more`
+
 ## Macros and Function
 Write here about parameters in general
 
 ### Defines
 
 
-The syntax to use an defined value is to surround it with braches `{<name>}`. Many users tend to use defines equal with constants.
+The Syntax: to use an defined value is to surround it with braches `{<name>}`. Many users tend to use defines equal with constants.
 
 
 
 ### Macros
+`TODO: more`
+
 ### Functions
+`TODO: more`
 
+## Build in Functions and Commands
+This is a list of all build in functions and commands. The difference between both groups is not only the Syntax:, but also the fact, that commands are used to controll the way how bass is compiling your code. Build-in-Functions on the other hand works and act like hand written macros.
 
-## Built in Functions
-
-## Architecture
+### architecture, arch
 The main difference between Bass and most other assemblers is, that it does not target to an single architecture or system. Thanks to its table driven approach it's possible (and yet necessary) to choose the target architecture. 
 
 It is possible (but not recomended) to switch back and forth between multiple architectures at any time.
 
 Syntax:
-```
+```html
 architecture <name>
 ```
  * `<name>` - Switch to this target architecture by looking for the file `architectures/<name>.arch`. First it will look in `~/bass/`, then relative to the location of itself.
+
+### Array Functions
+**.size(<name>)**<br/>
+Returns the number of elements in array `<name>`, or produces an error if the array is not defined.
+
+Syntax:
+```html
+array.size(<name>)
+```
+
+**.sort(<name>)**<br/>
+Sorts the specified array in ascending order.
+
+Syntax:
+```html
+array.sort(<name>)
+```
+
+### assert
+Syntax:
+```html
+assert(<expression>)
+```
+Produces an error if the expression evaluates to zero.
+
+### base
+Syntax:
+```html
+base <offset>
+```
+This command creates a signed displacement against the origin value, which is used when computing the pc (program counter) value for labels. This command allows mapping file address space into a virtual memory address space.
+
+Example:
+```asp
+TODO
+```
+
+### delete
+Syntax:
+```html
+todo <what>
+```
+  * `<name>` - TODO
+
+### dequeue
+Syntax:
+```html
+todo <what>
+```
+  * `<name>` - TODO
+
+### ds
+Syntax:
+```html
+todo <what>
+```
+  * `<name>` - TODO
+
+### endian
+Syntax:
+```html
+todo <what>
+```
+  * `<name>` - TODO
+
+### enqueue
+Syntax:
+```html
+todo <what>
+```
+  * `<name>` - TODO
+
+### File Functions
+.exists
+Syntax:
+```html
+todo <what>
+```
+  * `<name>` - TODO
+
+.size
+Syntax:
+```html
+todo <what>
+```
+
+
+copy
+Syntax:
+```html
+copy <source>, <target>, <length>
+```
+This command copies a block from the currently open file to another location within the file. It does this by reading the entire block in first, and then writing said block out, so be careful with overlapping addresses. 
+
+
+### fill
+Syntax:
+```html
+todo <what>
+```
+  * `<name>` - TODO
+
+### include
+Syntax:
+```html
+todo <what>
+```
+  * `<name>` - TODO
+
+### insert
+Syntax:
+```html
+todo <what>
+```
+  * `<name>` - TODO
+
+### map
+Syntax:
+```html
+todo <what>
+```
+  * `<name>` - TODO
+
+### origin
+Syntax:
+```html
+todo <what>
+```
+  * `<name>` - TODO
+
+### output
+Syntax:
+```html
+todo <what>
+```
+  * `<name>` - TODO
+
+### pc
+Syntax:
+```html
+todo <what>
+```
+  * `<name>` - TODO
+
+### print (notice, warning, error)
+Syntax:
+```html
+todo <what>
+```
+  * `<name>` - TODO
+
+### read 
+Syntax:
+```html
+todo <what>
+```
+  * `<name>` - TODO
+
+### tracker
+Syntax:
+```html
+todo <what>
+```
+  * `<name>` - TODO
