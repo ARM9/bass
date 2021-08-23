@@ -21,6 +21,25 @@ base <offset>
 ```
 This command creates a signed displacement against the origin value, which is used when computing the pc (program counter) value for labels. This command allows mapping file address space into a virtual memory address space. It could be used for subsystems or bank switching.
 
+## db, dw, dl, dd, dq, ...
+Inserts binary data directly into the target file. 
+
+Syntax:
+```html
+db ("<string>" | <variable> | <const>) [, ...]
+```
+
+Sizes:
+command | size
+--- | --- 
+`db` | 1 Byte
+`dw` | 2 Byte
+`dl` | 3 Byte
+`dd` | 4 Byte
+`dq` | 8 Byte
+ 
+>**Note:**<br/> 
+> Like `Integer` in other languages the length of this commands depends on the architecture. Besides of `db` all sizes may change from architecture to architecture. Whenever you activate one.
 
 ## delete
 Syntax:
