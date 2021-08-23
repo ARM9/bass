@@ -151,14 +151,15 @@ print "'", char:65, "'"  //prints 'A'
 ```
 
 >**Note:**<br/> 
-> All defined parameters will be evaluated / executed!<br/>
+> Defined parameters will be evaluated as single parameter, but just be referenced when used inside of a string.<br/>
 > Example:
 > ```as
 > // v15-18
 > constant a = 2
 > define x = 1 + a
-> print {x}, "\n"        // prints "3\n"
+> print {x}, ", {x}\n"        // prints "3, 1 + a\n"
 > ```
+> This may lead to wrong assumptions about the strings content if you debug using print commands. 
 
 ## Queues
 The queue feature works like a smal stack for certan system states `<state>` such as `origin`, `base` and `pc`. It works in a 'last in first out' manner.

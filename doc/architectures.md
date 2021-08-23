@@ -5,7 +5,7 @@ Most compilers can compile code to every target platform by using different back
 > Speaking of architecture-files usually refers to string files used by the Table-Architecture-Backend.
 
 ## Using and writing Architecture Tables
-Architecture files are simply text files that have one instruction in each line. This could be an function, an comment, or an token pair. Let's be honest, we read this document because we want to know more about the token pair.
+Architecture files are simply text files that have one instruction in each line. This could be an command, an comment, or an token pair. Let's be honest, we read this document because we want to know more about the token pair.
 
 Our syntax is simple: The left side represents what you see in the assembly file, the right side is the result that you want to see as binary output.
 
@@ -22,7 +22,7 @@ The example is straight forward: `nop` is translated to the value `0xEA` and wil
 ### LFH Tokens
 Bass always tries to give as least limitations to architecture files as possible. The LFH syntax only know two reserved states:
 
-* The first character is an `#`, because this indicates defines or function calls
+* The first character is an `#`, because this indicates defines or command calls
 * `*` indicate parameters and how many bit's are used.
 
 ```cpp
@@ -56,11 +56,11 @@ cmp *08        ;$c5 =a
 ```
 `nop` -> constant value `0xEA`.
 
-`cmp *16,x` -> constant value `0xDD` followed by the two bytes of the first parameter. Parameters will always have increasing letters starting at `a` from the left to the right. `=` indicates that we expect `a` to be an 16-Bit value.If not, this line will not match.
+`cmp *16,x` -> constant value `0xDD` followed by the two bytes of the first parameter. Parameters will always have increasing letters starting at `a` from the left to the right. `=` indicates that we *strong* expect `a` to be an 16-Bit value. If not, this line will not match.
 
 `cmp *08,x` -> constant value `0xDD` followed by that bytes of the first parameter. Again we expect a perfect match in terms of the used bit's.
 
-Since the scanner works top down it is important to know when to demand exact `=` values or `~`, fitting values. On this architecture we would never reach the second line 
+Since the scanner works top down it is important to know when to demand exact `!`, strong `=` or weak `~` fitting values. On this architecture we would never reach the second line 
 
 ```cpp
 cmp *16        ;$cd ~a
@@ -69,33 +69,33 @@ cmp *08        ;$c5 =a
 Because an 8-Bit value would always fit into an 16-Bit-or-less parameter as we indicate it here.
 
 > **Note:**<br>
-> The following list might increase in the near future.
+> The following list is under construction.
 
 Code | Descr | Example
 --- | --- | ---
 `$` | hex constant | `nop ;$ea`
-`%` | foo | `todo`
-`!` | foo | `todo`
-`=` | foo | `todo`
+`%` | binary constant | `nop ;%1110 %1010`
+`!` | exact value required | `cmp *16  ;$cd !a` needs exact 16 bit param
+`=` | strict value required | `cmp *16 ;$cd =a`
+`~` | weak value required | `cmp *16 ;$cd ~a`
 `+` | foo | `todo`
 `-` | foo | `todo`
-`~` | foo | `todo`
 `*` | foo | `todo`
-||
 `>>` | foo | `todo`
 `<<` | foo | `todo`
-||
 `+>>` | foo | `todo`
 `N>>` | foo | `todo`
 `N` | foo | `todo`
 
 
 
-### # Functions
-`todo` bblablas
+### Commands
+Commands can and should be used to set the assembler into the right operation state. 
+
+Each architecture description that is not calling `#endian` and `#directive` on it's first rows can be considered as dangerous. Autors should never expect the users to not mix different architecture files so wild that they destroy any kind of 'default behavior'.
 
 #### `#directive <name> <bytesize>` 
-Defines that the directive `name` will have exactly THIS <bytesize>. 
+Defines that the directive `name` will have exactly THIS `<bytesize>`. 
 
 Default values are:
 ```cpp
@@ -146,7 +146,7 @@ auto Foo::assemble(const string& statement) -> bool {
   return true;
 }
 ```
-The `assemble` function will be called for each assembly line thats need an binary output. This lines will allready represent the static output after macro features and everything else are done with working.
+The `assemble` command will be called for each assembly line thats need an binary output. This lines will allready represent the static output after macro features and everything else are done with working.
 
 `TODO: more?`
 

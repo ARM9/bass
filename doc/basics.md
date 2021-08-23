@@ -4,8 +4,6 @@ Bass brings a strong macro language that offers alot of comfort compared to most
 Macros are 'smart copy scripts' to move code around for you. But they work on the base of copy and paste. They do not understand the data they handle. They dont extend the Syntax: of the assembly language itself and therefore they are not an extension or even an real 'programming Language'.
 
 
-`TODO` speak about the compiling pipeline and stages
-
 >**Note:**<br/> 
 >Bass works using an multi-pass approach. On the first time it will solve all macro functions, on the second pass it will generate the binary output.
 
@@ -62,6 +60,8 @@ Characters are surrounded by single-quotes, and evaluate to integer values which
 
 
 ## Syntax:
+In bass the semicolon acts as a statement separator, and not as a statement terminator, meaning that a semicolon is not required at the end of each line. 
+
 ### Variables and Constants
 Variables and constants are what you would expect them to be. Please keep in mind that both are constructs inside of the macro engine. They will (by default) not be present on the target system but only in the compilers virtual machine.
 
@@ -74,9 +74,7 @@ a = (12 + 2) * 2
 print a, "\n"   // prints "28\n"
 ```
 
-Important to know is, that variables and constants are not sharing the same namespaces. In other words: the  `constant a` is not the same as the `variable a`. If both are present variables will be used first. More about that can be found at the *Scopes* Section.
-
-Valid operators are `TODO`
+Important to know is, that variables and constants are not sharing the same namespaces. In other words: the  `constant a` is not the same as the `variable a`. If both are present **variables** will be used first. More about that can be found at the *Scopes* Section.
 
 ## if, else, while
 Bass supports traditional conditional expressions.
@@ -174,7 +172,7 @@ Why? Because `print` takes each argument as evaluating parameter. More about the
 
 
 
-## Labels and Scopes
+## Labels
 Like in every other assembler its possible to 'label' an certain point in your code and use this adress inside of your program.
 
 ```as
@@ -207,23 +205,179 @@ print hex:start, " - ", hex:mid, "\n" // 0 - 4
 constant start = 12   // error: cannot be modified
 ```
 
-`TODO: more`
+Its also possible to have labels without names by using `-` and `+`.
+```as
+-; beq +; lsr; dex; bne -; +
 
-## Macros and Function
-Write here about parameters in general
+-; bra ++  //A: go to D
+-; bra +   //B: go to C
++; bra -   //C: go to B
++; bra --  //D: go to A
+```
 
-### Defines
+The previous `-` label can be referenced with `-`, and the next `+` label can be referenced with `+`. The second to last `-` label can be referenced with `--`, and the second to next `+` label can be referenced with `++`. 
 
+Deeper scoping is not supported. You will have to switch to named labels at this point.
 
-The Syntax: to use an defined value is to surround it with braches `{<name>}`. Many users tend to use defines equal with constants.
+## Namespaces
+Macros, defines, expressions, variables, arrays and constants can be scoped. This allows reuse of common names like loop and finish inside of scopes, without causing declaration collisions. 
 
+**Note:**<br/>
+> In bass this also means, that thoose do not share the *same* scope at all. Thats right. Macros, defines, expressions, variables, arrays and constants **DO NOT** share the same Namespace. You can have each of them with the same name and they would not collide.<br/>
+> This is considered dangerous behaviour of bass and might change soon.
 
+```as
+variable offset = 16
+
+namespace information {
+  variable length = 32
+
+  print "+", offset, ", "
+  print "+", length, ", "
+}
+
+print "-", offset, ", "
+print "-", information.length, "\n"
+// +16, +32, -16, -32
+```
+
+Each Namespace can contain the same stuff as the root Namespace could. All scopes get parsed and progressed together with the code itself.
+
+## Macros, Generators and Functions
+Bass gives you some option when it comes to write macros and "functions". The old fashioned definition of a function (in terms of programming languages) is `An callable code Block that accepts input parameters and returns a result`. 
+
+By this definition bass does *not* support functions. At least not now.
+
+Right now we have `defines` whitch do support having parameters and do return a value. But with theyr functional nature they do not have a code block that could hold assembly instructions.
+
+And there are `macros` that take parameters and own a code block for assembly instructions. But they do not return an result.
+
+But why can a define return an inline-result and macros can not? Let's follow this Example:
+
+```as
+// point a
+lda #x, foo(baa, x, 12)
+// point b
+```
+A define can return a certain value without creating any cpu code on the target system. So everything is fine.
+
+An macro most likeley *will* create code on the target system. But where to put it? 
+  - At **Point A** we would create strange side effects between the macro code and the 'global' code. There is no branch called. There is no routine that saves our registers to stack and pop's them back when the macro body is ready. We cannot even be sure there *is* a stack on the unknown target system. In fact we know nothing about the target system. We are just an generic macro language.
+  - At **Point B** it's obviously too late. 
+
+So in conclusion the reason is simple: Because this is not an real programming language, and you are not using a compiler. 
+
+Defines and Macros are handy tools that allows you to wrap your 'dirty machine code' into a nice candy package. But on the end of the Day this are limitations by design.
+
+### Generator Defines
+We allready spoke about defines. But there is a certain reason why we go back to them again: They can hold parameters and a production rule. If you call your define with that parameters you get an result. Just like if you would call a function.
+
+```as
+define sum(x, y) = ({x} + {y})
+lda #x, sum(1,1)
+```
+
+**Note:**<br>
+> Even though it's not a bug, but more 'not a feature': You cannot nest definition calls. Not linear, and of course not recursive. At the moment its not possible to call other generators
 
 ### Macros
-`TODO: more`
+Macros can take zero or more arguments, and name overloading with differing arity is possible. Recursion is supported, but requires conditionals in order to break infinite recursion. Macros must be declared before being used, and can be re-declared later on.
 
-### Functions
-`TODO: more`
+By default, macro parameters are simply the names of the values, and are passed in as defines. It is also possible to specify the type of the parameter, which will cause the invocation to pass the value in as the requested type. Supported types are: define, evaluate and variable.
+
+```as
+macro seek(offset) {
+  origin {offset} & 0x3fffff
+  base 0xc00000 | {offset}
+}
+
+seek(0xc08000)
+
+macro test(define a, evaluate b, variable c, d) {
+  //{d} has no type, so it defaults to "define d"
+  print "{ a } = {a}, { b } = {b}, c = ", c, ", { d } = {d}\n",
+}
+
+test(1+2, 1+2, 1+2, 1+2)   //{ a } = 1+2, { b } = 3, c = 3, { d } = 1+2\n
+```
+
+So macros can be invoked with the syntax: 
+```html
+macroName(<parameterA>, <parameterB>, ...)
+```
+
+If a macro is not matched, there is no error, the literal macroName(...) will be passed along to the assembly phase. Note that macros cannot appear inside expressions: the macro invocation must be the entire statement.
+
+You can also use labels in macros. But because expanded macros are passed directly to the assembler, a macro with a label name cannot be expanded twice in the same scope, or the label name will be declared twice, resulting in an error. The special token `{#}` can be used in a label name, where it will be substituted with a numeric value that increments every time a macro is invoked.
+
+Example: 
+```as
+macro test() {
+  foo{#}:
+  print "{#} - Ah ah ah ah, staying alive\n",
+}
+
+test()  // _0_ - Ah ah ah ah, staying alive
+test()  // _1_ - Ah ah ah ah, staying alive
+```
+
+In terms of scopes every macro create it's own stack frame just as namespaces do. More about stack frames can be found at *Scopes*.
+
+## Scopes
+Every time a macro is invoked, a new object stack frame is created, which will supercede all previous stack frames. All macro arguments, as well as any objects declared inside of said macro, are appended to the new frame. When the macro completes execution, said frame is destroyed, and said objects are lost. Note that this does not apply to constants, which must always be placed in the global frame to support forward-declarations.
+
+### Global and Parent Scopes
+
+It is however possible to access the global frame by prefixing object creation with the `global` keyword, for example:
+
+```as
+macro square(value) {
+  global evaluate result = {value}*{value}
+}
+
+square(16)
+
+print "{square.result}\n"  //prints 256
+```
+
+Further, it is also possible to reference the parent frame by prefixing object creation with the `parent` keyword, which is useful for recursive macros, or to represent macro return values. For example:
+
+```as
+macro factorial(variable n) {
+  parent variable result = 1
+  if n >= 1 {
+    factorial(n - 1)
+    result = n * factorial.result
+  }
+}
+
+factorial(10)
+print factorial.result, "\n"  //prints 3628800
+```
+
+### Nested Scopes
+
+As you see the keywords `global` and `parent` you might ask 'Why?' since you may expect that they are not needed since you have nested scopes just as in other languages. But no, bass up to version 17 do **not** has nested scopes. You can access the global, and the parent frame. But this is all you got. Even thought you can open deeper namespaces than just this.
+
+**Note:**<br/>
+> Bass v18 and above do support nested scopes.
+
+### Inline macros
+Macros can also be created without a stack frame by using the `inline` keyword, which will cause any objects created inside of them to appear in the same frame as the macro was invoked in. For example:
+
+```as
+inline square(variable value) {
+  variable result = value * value
+}
+
+function main {
+  square(16)
+}
+
+print main.result, "\n"  //prints 256
+```
+
+This is obviously not a good idea to use for recursive macros.
 
 ## Build in Functions and Commands
 This is a list of all build in functions and commands. The difference between both groups is not only the Syntax, but also the fact, that commands are used to controll the way how bass is compiling your code. 
@@ -232,8 +386,8 @@ Build-in-Functions on the other hand works and act like hand written macros.
 >**Note:**<br/> 
 >Please note that the syntax for Commands and Build-in-Functions is somewhat simular. It is most likely that many commands will be removed and be replaced with an set of namespace scoped build-in-functions in the future.
 
-- [Commands](./commands.md)
-- [Build in Functions](./buildinfunctions.md)
+* [Commands](./commands.md)
+* [Build in Functions](./buildinfunctions.md)
 
 
 ## Final Words
