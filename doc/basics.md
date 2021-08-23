@@ -170,7 +170,7 @@ constant a = 2
 define x = 1 + a
 print {x}, "\n"        //also prints "3\n"
 ```
-Why? Because `print <evaluation n, ...>` takes each argument as evaluating parameter. More about them on 'Macros and Functions'. 
+Why? Because `print` takes each argument as evaluating parameter. More about them on 'Macros and Functions'. 
 
 
 
@@ -226,179 +226,17 @@ The Syntax: to use an defined value is to surround it with braches `{<name>}`. M
 `TODO: more`
 
 ## Build in Functions and Commands
-This is a list of all build in functions and commands. The difference between both groups is not only the Syntax:, but also the fact, that commands are used to controll the way how bass is compiling your code. Build-in-Functions on the other hand works and act like hand written macros.
+This is a list of all build in functions and commands. The difference between both groups is not only the Syntax, but also the fact, that commands are used to controll the way how bass is compiling your code. 
+Build-in-Functions on the other hand works and act like hand written macros.
 
-### architecture, arch
-The main difference between Bass and most other assemblers is, that it does not target to an single architecture or system. Thanks to its table driven approach it's possible (and yet necessary) to choose the target architecture. 
+>**Note:**<br/> 
+>Please note that the syntax for Commands and Build-in-Functions is somewhat simular. It is most likely that many commands will be removed and be replaced with an set of namespace scoped build-in-functions in the future.
 
-It is possible (but not recomended) to switch back and forth between multiple architectures at any time.
-
-Syntax:
-```html
-architecture <name>
-```
- * `<name>` - Switch to this target architecture by looking for the file `architectures/<name>.arch`. First it will look in `~/bass/`, then relative to the location of itself.
-
-### Array Functions
-**.size(<name>)**<br/>
-Returns the number of elements in array `<name>`, or produces an error if the array is not defined.
-
-Syntax:
-```html
-array.size(<name>)
-```
-
-**.sort(<name>)**<br/>
-Sorts the specified array in ascending order.
-
-Syntax:
-```html
-array.sort(<name>)
-```
-
-### assert
-Syntax:
-```html
-assert(<expression>)
-```
-Produces an error if the expression evaluates to zero.
-
-### base
-Syntax:
-```html
-base <offset>
-```
-This command creates a signed displacement against the origin value, which is used when computing the pc (program counter) value for labels. This command allows mapping file address space into a virtual memory address space.
-
-Example:
-```asp
-TODO
-```
-
-### delete
-Syntax:
-```html
-todo <what>
-```
-  * `<name>` - TODO
-
-### dequeue
-Syntax:
-```html
-todo <what>
-```
-  * `<name>` - TODO
-
-### ds
-Syntax:
-```html
-todo <what>
-```
-  * `<name>` - TODO
-
-### endian
-Syntax:
-```html
-todo <what>
-```
-  * `<name>` - TODO
-
-### enqueue
-Syntax:
-```html
-todo <what>
-```
-  * `<name>` - TODO
-
-### File Functions
-.exists
-Syntax:
-```html
-todo <what>
-```
-  * `<name>` - TODO
-
-.size
-Syntax:
-```html
-todo <what>
-```
+- [Commands](./commands.md)
+- [Build in Functions](./buildinfunctions.md)
 
 
-copy
-Syntax:
-```html
-copy <source>, <target>, <length>
-```
-This command copies a block from the currently open file to another location within the file. It does this by reading the entire block in first, and then writing said block out, so be careful with overlapping addresses. 
+## Final Words
+Hopefully this has been informative. The best way to learn is through practice, so please do experiment and see what you can come up with!
 
-
-### fill
-Syntax:
-```html
-todo <what>
-```
-  * `<name>` - TODO
-
-### include
-Syntax:
-```html
-todo <what>
-```
-  * `<name>` - TODO
-
-### insert
-Syntax:
-```html
-todo <what>
-```
-  * `<name>` - TODO
-
-### map
-Syntax:
-```html
-todo <what>
-```
-  * `<name>` - TODO
-
-### origin
-Syntax:
-```html
-todo <what>
-```
-  * `<name>` - TODO
-
-### output
-Syntax:
-```html
-todo <what>
-```
-  * `<name>` - TODO
-
-### pc
-Syntax:
-```html
-todo <what>
-```
-  * `<name>` - TODO
-
-### print (notice, warning, error)
-Syntax:
-```html
-todo <what>
-```
-  * `<name>` - TODO
-
-### read 
-Syntax:
-```html
-todo <what>
-```
-  * `<name>` - TODO
-
-### tracker
-Syntax:
-```html
-todo <what>
-```
-  * `<name>` - TODO
+Thank you for using bass!
