@@ -1,26 +1,27 @@
 # Bass
 
-Bass is an table based, multi architecture and cross platform, macro assembler written by Near until version 17. This tool targets at developers or hackers interested into old videogame systems such as NES, SNES, MegaDrive and others.
+Bass is a table-based, multi-architecture and cross-platform, macro assembler developed by Near up until version 17. It is targeted at developers and hackers interested in legacy video game consoles such as NES, SNES, MegaDrive and others.
 
-**This is for you if:**
+**Bass is for you if:**
   * you want or need to work low level 
-  * dependencies are something that you want to avoid
-  * the system is so obscure that you cant find any other compiler but dont want to write your own
-  * you like to have strong macro features that allow you to work as if you almost have a higher programming language
-  * if something dont work, you want to be able to fix it
+  * you want to avoid dependencies
+  * you target obscure systems that lack any other compiler 
+  * you want to build your own compiler
+  * you want extensive macro features allowing you to work similiar to using a higher programming language
+  * you want the ability to do root level debugging
 
 **This is not for you if:**
   * you look for a higher 'real' programming language
-  * you expect an complete toolchain that takes care about all of your needs
+  * you expect an complete toolchain that takes care about all your needs
 
 
-## Available Documents
+## Available supporting documents
 **Documentation**
   * [Bass Core Features](basics.md)
     * [Commands](./commands.md)
-    * [Build in Functions](./buildinfunctions.md)
+    * [Built-in functions](./buildinfunctions.md)
   * [Architectures](architectures.md)
 
 **Tutorials**
-  * How to design a good lib
-  * How to have a malloc macro
+  * How to design a good library
+  * How to include a malloc macro
