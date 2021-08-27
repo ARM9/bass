@@ -1,3 +1,5 @@
+![bass](bass.svg)
+
 # Bass Core Features
 Bass includes a strong macro language that offers alot of comfort compared to most classic assemblers. Macros are 'smart copy scripts' that move around code to ease the programmers work. They provide a function for copying and inserting sections of code. They do not include any understanding of the copied sections of code - they are a meta language not aimed at extending the functionality of the assembler. It is important not to confuse them with the actual program.
 

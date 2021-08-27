@@ -1,3 +1,5 @@
+![bass](bass.svg)
+
 # Bass
 
 Bass is a table-based, multi-architecture and cross-platform, macro assembler developed by Near up until version 17. It is targeted at developers and hackers interested in legacy video game consoles such as NES, SNES, MegaDrive and others.
