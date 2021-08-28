@@ -1,4 +1,4 @@
-#endian lsb
+#include defaults
 
 asl            ;$0a
 clc            ;$18

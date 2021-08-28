@@ -1,3 +1,5 @@
+#include defaults
+
 // Famicom/NES WDC6502 without decimal flag ("cld" & "sed" run as NOP)
 
 asl            ;$0a

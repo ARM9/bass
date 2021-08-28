@@ -1,4 +1,4 @@
-#endian lsb
+#include defaults
 
 nop              ;$00
 brk              ;$0f

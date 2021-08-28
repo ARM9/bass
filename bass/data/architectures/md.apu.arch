@@ -1,2 +1,4 @@
+#include defaults
+
 // Mega Drive Zilog Z80 APU instruction set
-#include z80
+#include z80/z80
