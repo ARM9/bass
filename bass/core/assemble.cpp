@@ -240,6 +240,7 @@ auto Bass::assemble(const string& statement) -> bool {
   uint dataLength = 0;
   uint tokenLength = 0;
   for(auto& d : directives.EmitBytes) {
+    // make sure to have & consume a space
     if(s.beginsWith(d.token)) {
       dataLength = d.dataLength;
       tokenLength = d.token.length();
@@ -247,7 +248,7 @@ auto Bass::assemble(const string& statement) -> bool {
     }
   }
   if(dataLength) {
-    s = slice(s, tokenLength+1);  //remove prefix +space
+    s = slice(s, tokenLength);  //remove prefix +space
     auto p = split(s);
     for(auto& t : p) {
       if(t.match("\"*\"")) {

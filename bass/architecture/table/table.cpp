@@ -152,15 +152,19 @@ auto Table::bitLength(string& text) const -> uint {
 }
 
 auto Table::writeBits(uint64_t data, uint length) -> void {
+  function<uint64_t(unsigned)> setBits = [&](unsigned n) -> uint64_t {
+    // Create a bit mask with the n least significant bits set
+    return (1 << n) - 1;
+  };
   bitval <<= length;
-  bitval |= data;
+  bitval |= data & setBits(length);
   bitpos += length;
 
   while(bitpos >= 8) {
     write(bitval);
     bitval >>= 8;
     bitpos -= 8;
-  }
+  }  
 }
 
 auto Table::parseTable(const string& text) -> bool {
@@ -206,10 +210,12 @@ auto Table::parseDirective(string& line) -> void {
   }
 
   auto& key = items[0];
+  key.append(" ");
+  
   uint value = atoi(items[1]);
   
   for(auto& d : directives().EmitBytes) {
-    if(key.beginsWith(d.token)) {
+    if(key.equals(d.token)) {
       d.dataLength = value;
       return;
     }
