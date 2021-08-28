@@ -60,7 +60,7 @@ Syntax:
 ```html
 endian <lsb | msb>
 ```
-This command controls whether multi-byte values (eg from dw and dd) are output in little-endian (lsb) or big-endian (msb) format.
+This command controls whether multi-byte values (eg from dw and dd) are output in little-endian (lsb) or big-endian (msb) format. Default is lsb.
 
 >**Note:**<br/> 
 > Most architectures (should) call this command when they get activated. This may lead to confusion, so keep it in mind.
