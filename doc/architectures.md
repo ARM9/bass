@@ -166,4 +166,4 @@ else {
 
 
 ### Extend the Table Backend
-`todo`
+`todo` As above. But you Extend the original `table` class and pass everything though it that is not of your concerns.
