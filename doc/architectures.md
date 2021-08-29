@@ -1,13 +1,12 @@
 # Bass Architectures
-Most compilers can compile code to every target platform by using different backends. Bass is no exception to this, but it offers the possibility to write an custom backend in minutes and by just using an text editor.
+Most compilers can compile code to every target platform by using different backends. Bass is no exception to this - but it also offers the possibility to write an custom backend in minutes and by just using an text editor.
 
 > **Note:**<br/>
-> Speaking of architecture-files usually refers to string files used by the Table-Architecture-Backend.
+> The term 'architecture file' usually refers to a string file used by the Table-Architecture-Backend.
 
 ## Using and writing Architecture Tables
-Architecture files are simply text files that have one instruction in each line. This could be an command, an comment, or an token pair. Let's be honest, we read this document because we want to know more about the token pair.
-
-Our syntax is simple: The left side represents what you see in the assembly file, the right side is the result that you want to see as binary output.
+Architecture files are plain text files with one instruction in each line. This could be an command, a comment, or a token pair. 
+Of this, the token pair requires most exploration. The syntax is simple: The left side represents the contents of the assembly file, the right side represents the binary output. 
 
 ```cpp
 // <LFH> ;<RHS>
@@ -15,15 +14,15 @@ Our syntax is simple: The left side represents what you see in the assembly file
 nop        ;$ea
 asl #*08   ;*a:$0a
 ```
-> Please keep in mind to always use **lower** case.
+> Keep in mind to always use **lower** case.
 
 The example is straight forward: `nop` is translated to the value `0xEA` and will be put into the current position of the output binary.
 
 ### LFH Tokens
-Bass always tries to give as least limitations to architecture files as possible. The LFH syntax only know two reserved states:
+Bass always tries to limit architecture files to the least extent possible. The LFH syntax only know two reserved states:
 
-* The first character is an `#`, because this indicates defines or command calls
-* `*` indicate parameters and how many bit's are used.
+* The first character is an `#` which denotes defines or command calls
+* `*` indicate parameters and how many bits are used.
 
 ```cpp
 // WDC6502
@@ -38,13 +37,13 @@ cmp *16        ;$cd =a
 cmp *08        ;$c5 =a
 ```
 
-This compare's come in a lot of syntax flavor's, huh? But this is it. It's just a flavor. The only functional stuff on the left side indicates that we have `08` and `16` bit parameters. And thats allready the whole syntax: Alot of fancy ASCII plus some pointers what of it is actually interesting for us.
+While these compares show different syntax flavors, this example only denotes different `08` and `16` bit parameters.
 
-Remember that bass is alway working top down. On the assemply Stage we will scan top down, until the first matching line. Everything behind this line will be ignored.
+Bass is always working from top to bottom. During the assemply Stage, scanning is conducted from top to bottom until the first match is found. Everything after this match is ignored. 
 
 
 ### RHS Tokens
-On the right side we will find out construction rule. They contain constants, parameters and instruction tokens that tell our compiler what to do with it. Lets go back to our example.
+The right side holds the construction rule. This rule contains constants, parameters and instruction tokens which instruct the compiler. See for example:
 
 ```cpp
 // WDC6502
@@ -56,17 +55,17 @@ cmp *08        ;$c5 =a
 ```
 `nop` -> constant value `0xEA`.
 
-`cmp *16,x` -> constant value `0xDD` followed by the two bytes of the first parameter. Parameters will always have increasing letters starting at `a` from the left to the right. `=` indicates that we *strong* expect `a` to be an 16-Bit value. If not, this line will not match.
+`cmp *16,x` -> constant value `0xDD` followed by the two bytes of the first parameter. Parameters will always have increasing letters starting at `a` from the left to the right. `=` indicates the *strong* expectation of `a` being a 16-Bit value. If this is not the case, this line will not result in a match.
 
-`cmp *08,x` -> constant value `0xDD` followed by that bytes of the first parameter. Again we expect a perfect match in terms of the used bit's.
+`cmp *08,x` -> constant value `0xDD` followed by that bytes of the first parameter. Again we expect a perfect match in terms of the used bits.
 
-Since the scanner works top down it is important to know when to demand exact `!`, strong `=` or weak `~` fitting values. On this architecture we would never reach the second line 
+Since the scanner works from top to bottom of the file the importance of using exact `!`, strong `=` or weak `~` fitting values is highly relevant. This example shows an architecture which would never reach the second line: 
 
 ```cpp
 cmp *16        ;$cd ~a
 cmp *08        ;$c5 =a
 ```
-Because an 8-Bit value would always fit into an 16-Bit-or-less parameter as we indicate it here.
+Because an 8-Bit value would always fit into an 16-Bit-or-less parameter indicated here.
 
 > **Note:**<br>
 > The following list is under construction.
@@ -90,19 +89,19 @@ Code | Descr | Example
 
 
 ### Commands
-Commands can and should be used to set the assembler into the right operation state. 
+Commands can and should be used to set the assembler into the right operationg state. 
 
-Each architecture description that is not calling `#endian` and `#directive` on it's first rows can be considered as dangerous. Autors should never expect the users to not mix different architecture files so wild that they destroy any kind of 'default behavior'.
+Each architecture description that is not calling `#endian` and `#directive` on it's first rows can be considered as dangerous. Autors should never expect the users to not mix different architecture files in a manner which destroys any kind of 'default behavior'.
 
 #### `#directive <name> <bytesize>` 
-Defines that the directive `name` will have exactly THIS `<bytesize>`. 
+Defines that the directive `name` will have exactly a specific `<bytesize>`. 
 
 Default values are:
 ```cpp
 {"db", 1}, {"dw", 2}, {"dl", 3}, {"dd", 4}, {"dq", 8}
 ```
 > **Note:**<br/>
-> If you mix different architectures back and forth it might be that architecture `b` is setting custom directives, but `a` is not. This means that `b` changes the sizes, and `a` do not change them back. This leads to an very stupid error that is hard to track. Whenever you write an custom architecture make sure, to set the directives!
+> Mixing different architectures back and forth might cause architecture `b` setting custom directives while architecture `a` does not. Architecture 'b' might change sizes without architecture 'a' changing these back. This causes nasty errors which are to track. Whenever you write an custom architecture make sure, to set the directives!
 
 #### `#endian msb` and `#endian lsb`
 Set the current architecture to be big or little endian.
@@ -114,17 +113,17 @@ Includes the full content of `<path/name>.arch` file into the current one
 Tables have two big flaws
 
 * They are not as fast as real code since alot of string compares are used for each Instruction. Compiling huge projects can and will be slow
-* They are dumb. Complex architectures and nested register features result to large architecture files, since there is no way to handle them in a smarter way.
+* They are dumb. Complex architectures and nested register features result in large architecture files, since there is no way to handle them in a smarter way.
 
-But there is a solution for both: Extend the bass source code and handle some the whole compiling, or just parts of it using custom c++ routines.
+But there is a solution for both: Extend the Bass source code and handle some the whole compiling, or just parts of it using custom c++ routines.
 
 ### The architecture Interface
 `todo`
 
 ### Add an hardcoded backend
-Given your new Architecture is called `foo` and you want to add it into bass just follow this steps:
+Adding a new architecture named `foo` to Bass is done with the following steps:
 
-**1.** Create a the new subfolder for your Architecture like `bass/architecture/foo/`
+**1.** Create a the new subfolder for your Architecture like `Bass/architecture/foo/`
 
 **2.** Create `foo.hpp` in your new folder and fill it with an minimalistic struct like 
 ```cpp
@@ -135,7 +134,7 @@ struct Foo : Architecture {
   auto assemble(const string& statement) -> bool override;
 };
 ```
-You may extend the constructor as much as you need, but there should be no reason to do so.
+The constructor might be extended as needed. However, usually there is no need to do this. 
 
 **3.** Now create the `foo.cpp` besides of the header and also fill it with some minimalistic implementation details:
 ```cpp
@@ -146,12 +145,12 @@ auto Foo::assemble(const string& statement) -> bool {
   return true;
 }
 ```
-The `assemble` command will be called for each assembly line thats need an binary output. This lines will allready represent the static output after macro features and everything else are done with working.
+The `assemble` command will be called for each assembly line that requires a binary output. Other language features excluded.
 
 `TODO: more?`
 
 
-**4.** Include `foo.hpp` in the main `bass.hpp`, and `foo.cpp` at the `bass.cpp`
+**4.** Include `foo.hpp` in the main `Bass.hpp`, and `foo.cpp` at the `Bass.cpp`
 
 **5.** Add the usage of your code inside of the `assemble.cpp` file, somewhere around line 90.
 ```cpp
@@ -166,4 +165,4 @@ else {
 
 
 ### Extend the Table Backend
-`todo` As above. But you Extend the original `table` class and pass everything though it that is not of your concerns.
+`todo` As above. But extend the original `table` class and pass everything though it that is not of your concern.
