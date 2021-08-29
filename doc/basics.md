@@ -221,8 +221,8 @@ Deeper scoping is not supported. Named labels have to be used to address additio
 Macros, definitions, expressions, variables, arrays and constants have a scope. This allows reuse of common names like loop and finish inside of scopes without causing declaration collisions. 
 
 **Note:**<br/>
-> In bass this also means that these elements do not share the *same* scope. Macros, definitions, expressions, variables, arrays and constants **DO NOT** share the same Namespace. Instances of all these elements with the same name are possible without collision .<br/>
-> Note: This is considered dangerous behaviour of bass and might change soon.
+> In Bass this also means that these elements do not share the *same* scope. Macros, definitions, expressions, variables, arrays and constants **DO NOT** share the same Namespace. Instances of all these elements with the same name are possible without collision .<br/>
+> Note: This is considered dangerous behaviour of Bass and might change soon.
 
 ```as
 variable offset = 16
@@ -244,31 +244,31 @@ Each Namespace can contain the same elements as the root Namespace could. All sc
 ## Macros, Generators and Functions
 Bass gives provides some options when it comes to write macros and "functions". The old fashioned definition of a function (in terms of programming languages) is `A callable block of programm code that accepts input parameters and returns a result`. 
 
-By this definition bass does *not* support functions. At least not now.
+By this definition, Bass does *not* support functions in the current version.
 
-Right now, `defines` which support having parameters and return a value. But due to their functional nature they do not contain a code block which could hold assembly instructions.
+Currently `defines` support parameters and return a value but do not contain a code block which could hold assembly instructions due to their functional nature.
 
-In addition, `macros` which take parameters and contain a code block for assembly instructions are available. But these do not return a result.
+In addition, `macros` take parameters and contain a code block for assembly instructions. But 'macros' do not return a result.
 
-But why can a define return an inline-result and macros can not? Let us follow this example:
+This example explains the difference between 'defines' and 'macros' in terms of returning results:
 
 ```as
 // point a
 lda #x, foo(baa, x, 12)
 // point b
 ```
-A define can return a certain value without creating any cpu code on the target system. So everything is fine.
+A define can return a certain value without creating any cpu code on the target system. 
 
-A macro most likeley *will* create code on the target system. But where to put it? 
-  - At **Point A** we would create strange side effects between the macro code and the 'global' code. There is no branch called. There is no routine that saves our registers to stack and pop's them back when the macro body is ready. We cannot even be sure there *is* a stack on the unknown target system. In fact we know nothing about the target system. We are just an generic macro language.
+A macro usually *will* generates program code on the target system. But where is this code generated?
+  - At **Point A** unwanted side effects between the macro code and the 'global' code would occur. In this case, no branch would be executed and no routine for storing the registers to a stack and returning them once a return occurs is included. Potentially, the (unkown) target system does not even implement a stack. The 'macro' is written in a generic macro language without any knowledge about the specific target system. 
   - At **Point B** it's obviously too late. 
 
-So in conclusion the reason is simple: Because this is not an real programming language, and you are not using a compiler. 
+So in conclusion it is important to note that this is a handy macro language to make programming easier but not to provide basic programm code. 
 
-Defines and Macros are handy tools that allows you to wrap your 'dirty machine code' into a nice candy package. But on the end of the Day this are limitations by design.
+Defines and Macros are handy tools which can wrap 'dirty machine code' into a nice candy package - nothing less and nothing more.
 
 ### Generator Defines
-We allready spoke about defines. But there is a certain reason why we go back to them again: They can hold parameters and a production rule. If you call your define with that parameters you get an result. Just like if you would call a function.
+Definitions were already explored. However, definitions can also hold parameters and production rules. These definitions can be called using parameters and provide a result (just like a basic function):
 
 ```as
 define sum(x, y) = ({x} + {y})
@@ -276,12 +276,12 @@ lda #x, sum(1,1)
 ```
 
 **Note:**<br>
-> Even though it's not a bug, but more 'not a feature': You cannot nest definition calls. Not linear, and of course not recursive. At the moment its not possible to call other generators
+> Even though it is not a bug, but more 'not a feature': definition calls cannot be nested. Neither linear nor recursive. At the moment, it is not possible for a generator to call other generators
 
 ### Macros
-Macros can take zero or more arguments, and name overloading with differing arity is possible. Recursion is supported, but requires conditionals in order to break infinite recursion. Macros must be declared before being used, and can be re-declared later on.
+Macros can take zero or more arguments. Name overloading with differing arity is possible. Recursion is supported, but requires conditional statements in order to break infinite recursion. Macros must be declared before being used and can be re-declared later on.
 
-By default, macro parameters are simply the names of the values, and are passed in as defines. It is also possible to specify the type of the parameter, which will cause the invocation to pass the value in as the requested type. Supported types are: define, evaluate and variable.
+By default, macro parameters are simply the names of the values and are passed in as defines. It is also possible to specify the type of the parameter, which will cause the invocation to pass the value as the requested type. Supported types are: define, evaluate and variable.
 
 ```as
 macro seek(offset) {
@@ -304,9 +304,9 @@ So macros can be invoked with the syntax:
 macroName(<parameterA>, <parameterB>, ...)
 ```
 
-If a macro is not matched, there is no error, the literal macroName(...) will be passed along to the assembly phase. Note that macros cannot appear inside expressions: the macro invocation must be the entire statement.
+If a macro is not matched, there is no error and the literal macroName(...) will be passed along to the assembly phase. Note that macros cannot appear inside expressions: the macro invocation must be the entire statement.
 
-You can also use labels in macros. But because expanded macros are passed directly to the assembler, a macro with a label name cannot be expanded twice in the same scope, or the label name will be declared twice, resulting in an error. The special token `{#}` can be used in a label name, where it will be substituted with a numeric value that increments every time a macro is invoked.
+Labels can also be used witnin macros. But since expanded macros are passed directly to the assembler, a macro with a label name cannot be expanded twice in the same scope or the label name will be declared twice, resulting in an error. The special token `{#}` can be used in a label name, where it will be substituted with a numeric value that increments each time a macro is invoked.
 
 Example: 
 ```as
@@ -322,7 +322,7 @@ test()  // _1_ - Ah ah ah ah, staying alive
 In terms of scopes every macro create it's own stack frame just as namespaces do. More about stack frames can be found at *Scopes*.
 
 ## Scopes
-Every time a macro is invoked, a new object stack frame is created, which will supercede all previous stack frames. All macro arguments, as well as any objects declared inside of said macro, are appended to the new frame. When the macro completes execution, said frame is destroyed, and said objects are lost. Note that this does not apply to constants, which must always be placed in the global frame to support forward-declarations.
+Every time a macro is invoked, a new object stack frame is created which will supercede all previous stack frames. All macro arguments, as well as any objects declared inside of said macro, are appended to the new frame. When the macro completes execution, said frame is destroyed, and said objects are lost. Note that this does not apply to constants, which must always be placed in the global frame to support forward-declarations.
 
 ### Global and Parent Scopes
 
@@ -355,13 +355,13 @@ print factorial.result, "\n"  //prints 3628800
 
 ### Nested Scopes
 
-As you see the keywords `global` and `parent` you might ask 'Why?' since you may expect that they are not needed since you have nested scopes just as in other languages. But no, bass up to version 17 do **not** has nested scopes. You can access the global, and the parent frame. But this is all you got. Even thought you can open deeper namespaces than just this.
+The keywords 'global' and 'parent' provide access to the global and the parent frame. Bass (up to version 17) does **not** support nest scopes. The opening of deeper namespaces is possible, though. 
 
 **Note:**<br/>
 > Bass v18 and above do support nested scopes.
 
 ### Inline macros
-Macros can also be created without a stack frame by using the `inline` keyword, which will cause any objects created inside of them to appear in the same frame as the macro was invoked in. For example:
+Macros can also be created without a stack frame by using the `inline` keyword which will cause any objects created inside of them to appear in the same frame as the macro was invoked in. For example:
 
 ```as
 inline square(variable value) {
@@ -378,8 +378,7 @@ print main.result, "\n"  //prints 256
 This is obviously not a good idea to use for recursive macros.
 
 ## Build in Functions and Commands
-This is a list of all build in functions and commands. The difference between both groups is not only the Syntax, but also the fact, that commands are used to controll the way how bass is compiling your code. 
-Build-in-Functions on the other hand works and act like hand written macros.
+This is a list of all build in functions and commands. Commands control code compilation in Bass. Functions work and act like hand written macros.  
 
 >**Note:**<br/> 
 >Please note that the syntax for Commands and Build-in-Functions is somewhat simular. It is most likely that many commands will be removed and be replaced with an set of namespace scoped build-in-functions in the future.
@@ -391,4 +390,4 @@ Build-in-Functions on the other hand works and act like hand written macros.
 ## Final Words
 Hopefully this has been informative. The best way to learn is through practice, so please do experiment and see what you can come up with!
 
-Thank you for using bass!
+Thank you for using Bass!
