@@ -1,5 +1,6 @@
 ![bass](doc/bass.svg)
 
+
 # Bass
 Bass is a table-based, multi-architecture and cross-platform, macro assembler developed by Near up until version 17. It is targeted at developers and hackers interested in legacy video game consoles such as NES, SNES, MegaDrive and others.
 
@@ -14,6 +15,7 @@ Bass is a table-based, multi-architecture and cross-platform, macro assembler de
 **This is not for you if:**
   * you look for a higher 'real' programming language
   * you expect an complete toolchain that takes care about all your needs
+
 
 ## Releases
 Downloads can be found in the [Release Section](https://github.com/ARM9/bass/releases).
