@@ -27,7 +27,7 @@ Syntax:
 ```html
 pc()
 ```
-Returns the current programm counter (origin + base).
+Returns the current program counter (origin + base).
 
 
 
@@ -36,14 +36,14 @@ Returns the current programm counter (origin + base).
 ## array.size()
 Syntax:
 ```html
-array.exists(<name>)
+array.size(<name>)
 ```
 Returns the number of elements in an array, or produces an error if the array is not defined.
 
 ## array.sort()
 Syntax:
 ```html
-array.exists(<name>)
+array.sort(<name>)
 ```
 Sorts the specified array in ascending order.
 
@@ -68,9 +68,9 @@ Returns the size of `<filename>` on disk, or produces an error if the file is no
 ## read()
 Syntax:
 ```html
-read(<adress>)
+read(<address>)
 ```
 Reads a byte from the currently open output file, or produces an error if there is no file currently open. The address provided is the origin, or literal file address. The base offset is not factored in when this function is used.
 
->**Note:**<br/> 
+>**Note:**<br/>
 > The resulting values read from a target file are only valid during the write phase of assembly! If you rely on the value read back during a previous pass to control outputting code, bass may assemble the source code incorrectly. Use this function with caution. It is mostly intended for when bass is used in patching mode.

@@ -1,10 +1,10 @@
 ![bass](bass.svg)
 
-# Bass Core Features
-Bass includes a strong macro language that offers alot of comfort compared to most classic assemblers. Macros are 'smart copy scripts' that move around code to ease the programmers work. They provide a function for copying and inserting sections of code. They do not include any understanding of the copied sections of code - they are a meta language not aimed at extending the functionality of the assembler. It is important not to confuse them with the actual program.
+# bass Core Features
+bass includes a strong macro language that offers a lot of comfort compared to most classic assemblers. Macros are 'smart copy scripts' that move around code to ease the programmers work. They automate copying and inserting sections of code. They do not include any understanding of the copied sections of code - they are a meta language not aimed at extending the functionality of the assembler. It is important not to confuse them with the actual program.
 
->**Note:**<br/> 
->Bass works using an multi-pass approach. On the first pass, all macro functions are resolved. On the second pass, the binary output is generated.
+>**Note:**<br/>
+>bass works using an multi-pass approach. On the first pass, all macro functions are resolved. On the second pass, the binary output is generated.
 
 ## Data Types
 ### Names
@@ -18,7 +18,7 @@ Macros, functions, definitions, variables and constants must follow this format:
 Valid numbers must follow one of these formats:
 
 ```regex
-[0-9]+       integer
+[0-9]+       decimal
 0b[01]+      binary
 0o[0-7]+     octal
 0x[0-9a-f]+  hex
@@ -31,7 +31,7 @@ Numbers may have either - or + as a prefix if desired.
 Numbers may also use ' as a separator between digits. For example:
 
 ```regex
-123'456'789  //same as 123456789
+123'456'789   //same as 123456789
 0b1001'0110   //same as 0b10010110
 ```
 
@@ -44,7 +44,7 @@ Strings are encompassed by double-quotes. The following escape sequences for str
 \" = double-quote (")
 \n = new line
 \t = tab
-``` 
+```
 
 Strings may also be concatenated using the ~ operator. This can be used for string construction using definitions:
 
@@ -53,16 +53,15 @@ Strings may also be concatenated using the ~ operator. This can be used for stri
 ```
 
 ### Characters
-Characters are encompassed by single-quotes. Tnteger values used inside of expression are evaluated. Characters support the same escape sequences as strings.
+Characters are encompassed by single-quotes. Integer values used inside of expression are evaluated. Characters support the same escape sequences as strings.
 
 > **Note** that characters are not escaped for block tokenization. That means '\b' must be used instead of ';' to avoid splitting the character into two separate statements.
 
-
 ## Syntax:
-In Bass, the semicolon acts as a statement separator (and not as a statement terminator). This means that a semicolon is not required at the end of each line. 
+In bass, the semicolon acts as a statement separator (and not as a statement terminator). This means that a semicolon is not required at the end of each line.
 
 ### Variables and Constants
-Variables and constants fulfill the same function as in common programming languanges. Both are constructs inside of the macro engine. By default they are not present in the target system but only in the compilers virtual machine.
+Variables and constants fulfil the same function as in common programming languages. Both are constructs inside of the macro engine. By default they are not present in the target system but only in the compilers virtual machine.
 
 ```as
 // v15-18
@@ -76,7 +75,7 @@ print a, "\n"   // prints "28\n"
 Variables and constants do not share the same namespace. This means that he `constant a` is not the same as the `variable a`. If both are present **variables** will be used first. More about this behaviour can be found at the *Scopes* Section.
 
 ## if, else, while
-Bass supports traditional conditional expressions.
+bass supports traditional conditional expressions.
 
 ```as
 // v15-18
@@ -115,7 +114,7 @@ while i < array.size(x) {   // see array.size build in function
 ````
 
 ## Expressions
-All expressions use an parentheses syntax like `{x}`. This seperates them from any variables and constants. However, they can be mixed. 
+All expressions use an parentheses syntax like `{x}`. This separates them from any variables and constants. However, they can be mixed.
 
 ### Definitions
 Definitions (using the command sequence define) store content without any interpretation. Since it is possible to use definitions in combination with parameters as a construction rule, the impression that they can be used like macros and functions can arise. This is not the case: While they do return a result, this result is only a constructed string without any interpretation. More about constructing definitions can be read in the Macros Section of this Document.
@@ -129,7 +128,7 @@ define c = (4+3)
 print "{a}{b}{c}\n"   // prints "Hello"World5.1(4+3)\n
 ```
 
-Definitions are evaluated in order from right to left. An expression such as `{x{y}`} will first expand `{y}`, and then the result of that expression, `{x...}`. In case of an unknown definition (in terms of scope) no error will be trown. The definition will be passed unresolved to allow manual evaluation.
+Definitions are evaluated in order from right to left. An expression such as `{x{y}`} will first expand `{y}`, and then the result of that expression, `{x...}`. In case of an unknown definition (in terms of scope) no error will be thrown. The definition will be passed unresolved to allow manual evaluation.
 
 Definitions are not constant and can be redefined. It is possible to test if a definition has been declared by using the following syntax:: `{defined <name>}`
 
@@ -167,11 +166,11 @@ define x = 1 + a
 print {x}, "\n"        //also prints "3\n"
 ```
 
-This is due to `print` taking each argument as evaluating parameter. More on this topic is in the section on 'Macros and Functions'. 
+This is due to `print` taking each argument as evaluating parameter. More on this topic is in the section on 'Macros and Functions'.
 
 
 ## Labels
-Like in every other assembler it is possible to 'label' a certain point within the code and use this adress within the program.
+Like in every other assembler it is possible to 'label' a certain point within the code and use this address within the program.
 
 ```as
 architecture snes.cpu
@@ -213,16 +212,16 @@ Its also possible to use labels without names by using `-` and `+`.
 +; bra --  //D: go to A
 ```
 
-The previous `-` label can be referenced with `-`. The next `+` label can be referenced with `+`. The label before the `-` label can be referenced with `--`. The label after the `+` label can be referenced with `++`. 
+The previous `-` label can be referenced with `-`. The next `+` label can be referenced with `+`. The label before the `-` label can be referenced with `--`. The label after the `+` label can be referenced with `++`.
 
 Deeper scoping is not supported. Named labels have to be used to address additional scopes.
 
 ## Namespaces
-Macros, definitions, expressions, variables, arrays and constants have a scope. This allows reuse of common names like loop and finish inside of scopes without causing declaration collisions. 
+Macros, definitions, expressions, variables, arrays and constants have a scope. This allows reuse of common names like loop and finish inside of scopes without causing declaration collisions.
 
 **Note:**<br/>
-> In Bass this also means that these elements do not share the *same* scope. Macros, definitions, expressions, variables, arrays and constants **DO NOT** share the same Namespace. Instances of all these elements with the same name are possible without collision .<br/>
-> Note: This is considered dangerous behaviour of Bass and might change soon.
+> In bass this also means that these elements do not share the *same* scope. Macros, definitions, expressions, variables, arrays and constants **DO NOT** share the same namespace. Instances of all these elements with the same name are possible without collision .<br/>
+> Note: This is considered dangerous behaviour of bass and might change soon.
 
 ```as
 variable offset = 16
@@ -239,16 +238,16 @@ print "-", information.length, "\n"
 // +16, +32, -16, -32
 ```
 
-Each Namespace can contain the same elements as the root Namespace could. All scopes get parsed and progressed together with the code itself.
+Each namespace can contain the same elements as the root namespace could. All scopes get parsed and progressed together with the code itself.
 
 ## Macros, Generators and Functions
-Bass gives provides some options when it comes to write macros and "functions". The old fashioned definition of a function (in terms of programming languages) is `A callable block of programm code that accepts input parameters and returns a result`. 
+bass gives provides some options when it comes to write macros and "functions". The old fashioned definition of a function (in terms of programming languages) is "a callable block of program code that accepts input parameters and returns a result".
 
 By this definition, Bass does *not* support functions in the current version.
 
-Currently `defines` support parameters and return a value but do not contain a code block which could hold assembly instructions due to their functional nature.
+Currently, bass supports `define`s which take parameters and return a value. But due to their functional nature they do not contain a code block which could hold assembly instructions.
 
-In addition, `macros` take parameters and contain a code block for assembly instructions. But 'macros' do not return a result.
+In addition, bass supports `macros` which take parameters and contain a block of assembly instructions, but these do not return a result.
 
 This example explains the difference between 'defines' and 'macros' in terms of returning results:
 
@@ -299,7 +298,7 @@ macro test(define a, evaluate b, variable c, d) {
 test(1+2, 1+2, 1+2, 1+2)   //{ a } = 1+2, { b } = 3, c = 3, { d } = 1+2\n
 ```
 
-So macros can be invoked with the syntax: 
+So macros can be invoked with the syntax:
 ```html
 macroName(<parameterA>, <parameterB>, ...)
 ```
@@ -308,7 +307,7 @@ If a macro is not matched, there is no error and the literal macroName(...) will
 
 Labels can also be used witnin macros. But since expanded macros are passed directly to the assembler, a macro with a label name cannot be expanded twice in the same scope or the label name will be declared twice, resulting in an error. The special token `{#}` can be used in a label name, where it will be substituted with a numeric value that increments each time a macro is invoked.
 
-Example: 
+Example:
 ```as
 macro test() {
   foo{#}:
@@ -358,7 +357,7 @@ print factorial.result, "\n"  //prints 3628800
 The keywords 'global' and 'parent' provide access to the global and the parent frame. Bass (up to version 17) does **not** support nest scopes. The opening of deeper namespaces is possible, though. 
 
 **Note:**<br/>
-> Bass v18 and above do support nested scopes.
+> bass v18 and above do support nested scopes.
 
 ### Inline macros
 Macros can also be created without a stack frame by using the `inline` keyword which will cause any objects created inside of them to appear in the same frame as the macro was invoked in. For example:
@@ -378,16 +377,16 @@ print main.result, "\n"  //prints 256
 This is obviously not a good idea to use for recursive macros.
 
 ## Build in Functions and Commands
-This is a list of all build in functions and commands. Commands control code compilation in Bass. Functions work and act like hand written macros.  
+This is a list of all build in functions and commands. Commands control code compilation in Bass. Built-in functions work and act like hand written macros.  
 
->**Note:**<br/> 
->Please note that the syntax for Commands and Build-in-Functions is somewhat simular. It is most likely that many commands will be removed and be replaced with an set of namespace scoped build-in-functions in the future.
+>**Note:**<br/>
+>Please note that the syntax for commands and built-in functions is similar. It is most likely that many commands will be removed and be replaced with a set of namespace-scoped built-in functions in the future.
 
 * [Commands](./commands.md)
-* [Build in Functions](./buildinfunctions.md)
+* [Built-in functions](./built-in-functions.md)
 
 
 ## Final Words
 Hopefully this has been informative. The best way to learn is through practice, so please do experiment and see what you can come up with!
 
-Thank you for using Bass!
+Thank you for using bass!
