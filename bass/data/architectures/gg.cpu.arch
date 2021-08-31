@@ -1,3 +1,4 @@
-// Game Gear Zilog Z80
+#include defaults
 
-#include z80
+// Game Gear Zilog Z80
+#include z80/z80

@@ -1,3 +1,5 @@
+#include defaults
+
 // PC-Engine/TurboGrafx-16 HuC6280 (Modified WDC65C02 CPU)
 
 asl             ;$0a

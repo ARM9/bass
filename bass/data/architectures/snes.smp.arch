@@ -1,2 +1,4 @@
+#include defaults
+
 // Super Famicom/SNES SPC-700 SMP
 #include spc700

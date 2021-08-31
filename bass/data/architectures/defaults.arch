@@ -1,0 +1,10 @@
+// This file contains default settings that should be restored whenever
+// an architecture file is loaded
+
+#endian lsb
+
+#directive db 1
+#directive dw 2
+#directive dl 3
+#directive dd 4
+#directive dq 8

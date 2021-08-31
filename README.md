@@ -1,4 +1,5 @@
-![bass](bass.svg)
+![bass](doc/bass.svg)
+
 
 # bass
 
@@ -11,19 +12,23 @@ bass is a table-based, multi-architecture and cross-platform, macro assembler de
   * you want to build your own compiler
   * you want extensive macro features giving you the convenience of a higher-level programming language
   * you want the ability to do root level debugging
-
+  * 
 **This is not for you if:**
-  * you want an actual high-level programming language
-  * you expect an complete toolchain that takes care of all your needs
+  * you look for a higher 'real' programming language
+  * you expect an complete toolchain that takes care about all your needs
 
 
-## Available supporting documents
-**Documentation**
-  * [bass Core Features](basics.md)
-    * [Commands](./commands.md)
-    * [Built-in functions](./built-in-functions.md)
-  * [Architectures](architectures.md)
+## Releases
+Downloads can be found in the [Release Section](https://github.com/ARM9/bass/releases).
 
-**Tutorials**
-  * How to design a good library
-  * How to include a malloc macro
+Next Release **v18** comming soon!
+
+
+### Building
+Bass requires make and coreutils (msys/cygwin on windows)
+```
+git clone https://github.com/ARM9/bass.git && cd bass/bass && make
+```
+
+## Documentation
+  * Online [Handbook](doc/index.md)

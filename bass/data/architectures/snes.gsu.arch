@@ -1,3 +1,5 @@
+#include defaults
+
 // alt0
 stop            ;$00
 nop             ;$01
