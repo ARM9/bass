@@ -138,6 +138,7 @@ protected:
   auto write(uint64_t data, uint length = 1) -> void;
 
   auto printInstruction() -> void;
+  auto printInstructionStack() -> void;
   template<typename... P> auto notice(P&&... p) -> void;
   template<typename... P> auto warning(P&&... p) -> void;
   template<typename... P> auto error(P&&... p) -> void;
