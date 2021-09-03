@@ -147,9 +147,12 @@ template<typename... P> auto Bass::notice(P&&... p) -> void {
 template<typename... P> auto Bass::warning(P&&... p) -> void {
   string s{forward<P>(p)...};
   print(stderr, terminal::color::yellow("warning: "), s, "\n");
-  printInstruction();
+  if(!strict) {
+    printInstruction();
+    return;
+  }
 
-  if(!strict) return;
+  printInstructionStack();
   struct BassWarning {};
   throw BassWarning();
 }
@@ -157,8 +160,19 @@ template<typename... P> auto Bass::warning(P&&... p) -> void {
 template<typename... P> auto Bass::error(P&&... p) -> void {
   string s{forward<P>(p)...};
   print(stderr, terminal::color::red("error: "), s, "\n");
-  printInstruction();
+  printInstructionStack();
 
   struct BassError {};
   throw BassError();
+}
+
+auto Bass::printInstructionStack() -> void {
+  printInstruction();
+
+  for(const auto& frame : reverse(frames)) {
+    if(frame.ip > 0 && frame.ip <= program.size()) {
+      auto& i = program[frame.ip - 1];
+      print(stderr, "   ", sourceFilenames[i.fileNumber], ":", i.lineNumber, ":", i.blockNumber, ": ", i.statement, "\n");
+    }
+  }
 }
