@@ -356,9 +356,6 @@ print factorial.result, "\n"  //prints 3628800
 
 The keywords 'global' and 'parent' provide access to the global and the parent frame. Bass (up to version 17) does **not** support nest scopes. The opening of deeper namespaces is possible, though. 
 
-**Note:**<br/>
-> bass v18 and above do support nested scopes.
-
 ### Inline macros
 Macros can also be created without a stack frame by using the `inline` keyword which will cause any objects created inside of them to appear in the same frame as the macro was invoked in. For example:
 
