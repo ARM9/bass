@@ -87,8 +87,14 @@ auto Bass::executeInstruction(Instruction& i) -> bool {
   }
 
   if(s.match("variable ?*")) {
-    auto p = s.trimLeft("variable ", 1L).split("=", 1L).strip();
-    setVariable(p(0), evaluate(p(1)), level);
+    if (s.match("*(*")){
+      auto p = s.trim("variable ", ")").split("(");
+      setVariable(p(0), evaluate(p(1)), level);
+    }
+    else {
+      auto p = s.trimLeft("variable ", 1L).split("=", 1L).strip();
+      setVariable(p(0), evaluate(p(1)), level);
+    }
     return true;
   }
 
