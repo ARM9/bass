@@ -51,9 +51,9 @@ auto Bass::assemble(const string& statement) -> bool {
       auto p = s.trim("constant ", ")").split("(");
       setConstant(p(0), evaluate(p(1)));
     }
-      else {
-        auto p = s.trimLeft("constant ", 1L).split("=", 1L).strip();
-        setConstant(p(0), evaluate(p(1)));
+    else {
+      auto p = s.trimLeft("constant ", 1L).split("=", 1L).strip();
+      setConstant(p(0), evaluate(p(1)));
     }
     return true;
   }

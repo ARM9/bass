@@ -17,12 +17,44 @@ bass is a table-based, multi-architecture and cross-platform, macro assembler de
   * you look for a higher 'real' programming language
   * you expect an complete toolchain that takes care about all your needs
 
+## Supported Systems
+
+| Systems | Processor | State |
+| --- | --- | --- |
+| Commodore Amiga 500/600 | Motorola 68000 CPU | ![](doc/star.png)![](doc/star.png)![](doc/starless.png) |
+| Famicon / NES | WDC6502 CPU | ![](doc/star.png)![](doc/star.png)![](doc/starless.png) |
+| Game Boy / Game Boy Color | Z80 CPU | ![](doc/star.png)![](doc/star.png)![](doc/starless.png) |
+| Game Gear | Z80 CPU | ![](doc/star.png)![](doc/star.png)![](doc/starless.png) |
+| Master System | Z80 CPU | ![](doc/star.png)![](doc/star.png)![](doc/starless.png) |
+| Mega Drive / Genesis | Motorola 68000 CPU <br> Z80 APU| ![](doc/star.png)![](doc/star.png)![](doc/starless.png) <br> ![](doc/star.png)![](doc/star.png)![](doc/starless.png)|
+| MSX1, MSX2, MSX2+, MSX Turbo-R|Z80 CPU |![](doc/star.png)![](doc/star.png)![](doc/starless.png) |
+| Neo Geo | Motorola 68000 CPU <br> Z80 APU| ![](doc/star.png)![](doc/star.png)![](doc/starless.png) <br> ![](doc/star.png)![](doc/star.png)![](doc/starless.png)|
+| Nintendo 64 | MIPS VR4300 CPU<br>RDP<br>MIPS 4000 RSP | ![](doc/star.png)![](doc/star.png)![](doc/starless.png) <br>![](doc/star.png)![](doc/star.png)![](doc/starless.png)<br>![](doc/star.png)![](doc/star.png)![](doc/starless.png) |
+| PC-Engine / TurboGrafx-16 | (via WDC6502) CPU | ![](doc/star.png)![](doc/star.png)![](doc/starless.png) | 
+| SGI VICE | MIPS 4000 CPU+MSP | ![](doc/star.png)![](doc/star.png)![](doc/starless.png) |
+| Super Famicon / SNES | WDC6502 CPU<br>Super FX GSU<br>SPC700 SMP | ![](doc/star.png)![](doc/star.png)![](doc/star.png) <br> ![](doc/star.png)![](doc/star.png)![](doc/star.png)<br> ![](doc/star.png)![](doc/star.png)![](doc/starless.png)|
+| ZX Spectrum 48K/128K+1/128K+2/128K+3|Z80 CPU |![](doc/star.png)![](doc/star.png)![](doc/starless.png) |
+
+
+**Also known:**
+| Systems | Processor | State |
+| --- | --- | --- |
+| Atari Lynx | 65C02 CPU | ![](doc/star.png)![](doc/star.png)![](doc/star.png) |
+| [Wonder Swan / Wonderswan Color](https://github.com/thar0x29a/basstess) | NEC V30 CPU | ![](doc/starless.png)![](doc/starless.png)![](doc/starless.png) |
+| Pokémon Mini | "MINX" CPU | ![](doc/starless.png)![](doc/starless.png)![](doc/starless.png) |
+
+**Legend:**
+  - ![](doc/starless.png)![](doc/starless.png)![](doc/starless.png) incomplete architecture project
+  - ![](doc/star.png)![](doc/starless.png)![](doc/starless.png) completed optcodes
+  - ![](doc/star.png)![](doc/star.png)![](doc/starless.png) .. that also got covered with tests
+  - ![](doc/star.png)![](doc/star.png)![](doc/star.png) .. and real life Example Code for this System
+
+
 
 ## Releases
 Downloads can be found in the [Release Section](https://github.com/ARM9/bass/releases).
 
-Next Release **v18** comming soon!
-
+**v19** is our current release. It aims to support both, **v14** and newer syntax styles at once.
 
 ### Building
 Bass requires make and coreutils (msys/cygwin on windows)
