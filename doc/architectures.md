@@ -4,6 +4,16 @@ Most compilers can compile code to every target platform by using different back
 > **Note:**<br/>
 > The term 'architecture file' usually refers to a string file used by the Table-Architecture-Backend.
 
+Over the past few years many compains about the 'assembly syntax' had reached us. Fact is that almost every CPU in the world do have more then one assembly language for it. In other words: We cannot make it right. The Author of each file had to make an decission, and we are always open for suggestions. At the end of the day an assembly syntax is always also 'just' a flavor. And there is no reasons to not have different versions side by side.
+
+## Where to find and put Architecture Files?
+bass will look at this locations and in this order for architecture files:
+
+- `{home directory}`/bass/architectures/
+- `{bass binary}`/architectures/
+
+This is also the place to look up for installed architectures.
+
 ## Using and writing Architecture Tables
 Architecture files are plain text files with one instruction in each line. This could be an command, a comment, or a token pair. 
 Of this, the token pair requires most exploration. The syntax is simple: The left side represents the contents of the assembly file, the right side represents the binary output. 

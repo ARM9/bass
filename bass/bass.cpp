@@ -9,7 +9,7 @@
 #include <nall/main.hpp>
 auto nall::main(Arguments arguments) -> void {
   if(!arguments) {
-    print(stderr, "bass v19\n");
+    print(stderr, string{"bass", terminal::color::blue(" v19\n")});
     print(stderr, "\n");
     print(stderr, "usage:\n");
     print(stderr, "  bass [options] source [source ...]\n");
