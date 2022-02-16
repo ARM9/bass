@@ -1,0 +1,5 @@
+// Amiga CPU instruction set
+#endian msb
+
+#include m68k/directives
+#include m68k/m68000
