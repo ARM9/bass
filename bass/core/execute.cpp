@@ -67,14 +67,26 @@ auto Bass::executeInstruction(Instruction& i) -> bool {
   }
 
   if(s.match("define ?*")) {
-    auto p = s.trimLeft("define ", 1L).split("=", 1L).strip();
-    setDefine(p(0), {}, p(1), level);
+    if (s.match("*(*")) {
+      auto p = s.trim("define ", ")").split("(");
+      setDefine(p(0), {}, p(1), level);
+    }
+    else {
+      auto p = s.trimLeft("define ", 1L).split("=", 1L).strip();
+      setDefine(p(0), {}, p(1), level);
+    }
     return true;
   }
 
   if(s.match("evaluate ?*")) {
-    auto p = s.trimLeft("evaluate ", 1L).split("=", 1L).strip();
-    setDefine(p(0), {}, evaluate(p(1)), level);
+    if (s.match("*(*")) {
+      auto p = s.trim("evaluate ", ")").split("(");
+      setDefine(p(0), {}, evaluate(p(1)), level);
+    }
+    else {
+      auto p = s.trimLeft("evaluate ", 1L).split("=", 1L).strip();
+      setDefine(p(0), {}, evaluate(p(1)), level);
+    }
     return true;
   }
 
