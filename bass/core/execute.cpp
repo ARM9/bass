@@ -58,33 +58,28 @@ auto Bass::executeInstruction(Instruction& i) -> bool {
     return true;
   }
 
-  if(s.match("define ?*(*)*")) {
-    auto e = s.trimLeft("define ", 1L).split("=", 1L).strip();
-    auto p = e(0).trimRight(")", 1L).split("(", 1L).strip();
-    auto parameters = split(p(1));
-    setDefine(p(0), parameters, e(1), level);
-    return true;
-  }
-
   if(s.match("define ?*")) {
-    if (s.match("*(*")) {
-      auto p = s.trim("define ", ")").split("(");
+    if(s.contains("=")) {
+      auto e = s.trimLeft("define ", 1L).split("=", 1L).strip();
+      auto p = e(0).trimRight(")", 1L).split("(", 1L).strip();
+      auto parameters = split(p(1));
+      setDefine(p(0), parameters, e(1), level);
+    } else if(s.contains("(")) {
+      auto p = s.trim("define ", ")", 1L).split("(", 1L).strip();
       setDefine(p(0), {}, p(1), level);
-    }
-    else {
-      auto p = s.trimLeft("define ", 1L).split("=", 1L).strip();
-      setDefine(p(0), {}, p(1), level);
+    } else {
+      auto p = s.trimLeft("define ", 1L).strip();
+      setDefine(p, {}, {}, level);
     }
     return true;
   }
 
   if(s.match("evaluate ?*")) {
-    if (s.match("*(*")) {
-      auto p = s.trim("evaluate ", ")").split("(");
-      setDefine(p(0), {}, evaluate(p(1)), level);
-    }
-    else {
+    if(s.contains("=")) {
       auto p = s.trimLeft("evaluate ", 1L).split("=", 1L).strip();
+      setDefine(p(0), {}, evaluate(p(1)), level);
+    } else {
+      auto p = s.trim("evaluate ", ")", 1L).split("(", 1L).strip();
       setDefine(p(0), {}, evaluate(p(1)), level);
     }
     return true;
@@ -99,12 +94,11 @@ auto Bass::executeInstruction(Instruction& i) -> bool {
   }
 
   if(s.match("variable ?*")) {
-    if (s.match("*(*")){
-      auto p = s.trim("variable ", ")").split("(");
-      setVariable(p(0), evaluate(p(1)), level);
-    }
-    else {
+    if(s.contains("=")) {
       auto p = s.trimLeft("variable ", 1L).split("=", 1L).strip();
+      setVariable(p(0), evaluate(p(1)), level);
+    } else {
+      auto p = s.trim("variable ", ")", 1L).split("(", 1L).strip();
       setVariable(p(0), evaluate(p(1)), level);
     }
     return true;

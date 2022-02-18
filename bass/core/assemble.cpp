@@ -43,16 +43,12 @@ auto Bass::assemble(const string& statement) -> bool {
     return true;
   }
 
-  //constant name(value)
-  //or
-  //constant name = value
   if(s.match("constant ?*")) {
-    if (s.match("*(*")){
-      auto p = s.trim("constant ", ")").split("(");
-      setConstant(p(0), evaluate(p(1)));
-    }
-    else {
+    if(s.contains("=")) {
       auto p = s.trimLeft("constant ", 1L).split("=", 1L).strip();
+      setConstant(p(0), evaluate(p(1)));
+    } else {
+      auto p = s.trim("constant ", ")", 1L).split("(", 1L).strip();
       setConstant(p(0), evaluate(p(1)));
     }
     return true;
