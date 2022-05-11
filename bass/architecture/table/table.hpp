@@ -20,7 +20,13 @@ private:
         ShiftRight, ShiftLeft,
         RelativeShiftRight,
         Negative,
-        NegativeShiftRight
+        NegativeShiftRight,
+        Compliment,
+        ComplimentShiftRight,
+        Decrement,
+        DecrementShiftRight,
+        Increment,
+        IncrementShiftRight
     } type;
     enum class Match : uint { Exact, Strong, Weak } match;
     uint data;

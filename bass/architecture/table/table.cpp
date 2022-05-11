@@ -107,7 +107,43 @@ auto Table::assemble(const string& statement) -> bool {
           uint64_t data = evaluate(args[format.argument]);
           writeBits(-data >> format.data, opcode.number[format.argument].bits);
           break;
-        }        
+        }
+
+        case Format::Type::Compliment: {
+          unsigned data = evaluate(args[format.argument]);
+          writeBits(~data, opcode.number[format.argument].bits);
+          break;
+        }
+
+        case Format::Type::ComplimentShiftRight: {
+          uint64_t data = evaluate(args[format.argument]);
+          writeBits(~data >> format.data, opcode.number[format.argument].bits);
+          break;
+        }
+
+        case Format::Type::Decrement: {
+          unsigned data = evaluate(args[format.argument]);
+          writeBits(--data, opcode.number[format.argument].bits);
+          break;
+        }
+
+        case Format::Type::DecrementShiftRight: {
+          uint64_t data = evaluate(args[format.argument]);
+          writeBits(--data >> format.data, opcode.number[format.argument].bits);
+          break;
+        }
+
+        case Format::Type::Increment: {
+          unsigned data = evaluate(args[format.argument]);
+          writeBits(++data, opcode.number[format.argument].bits);
+          break;
+        }
+
+        case Format::Type::IncrementShiftRight: {
+          uint64_t data = evaluate(args[format.argument]);
+          writeBits(++data >> format.data, opcode.number[format.argument].bits);
+          break;
+        }
       }
     }
 
@@ -304,6 +340,51 @@ auto Table::assembleTableRHS(Opcode& opcode, const string& text) -> void {
     // Na
     else if(item[0] == 'N' && item[1] != '>') {
       Format format = {Format::Type::Negative, Format::Match::Weak};
+      format.argument = item[1] - 'a';
+      opcode.format.append(format);
+    }
+
+    // C>>XXa
+    else if(item[0] == 'C' && item[1] == '>' && item[2] == '>') {
+      Format format = {Format::Type::ComplimentShiftRight, Format::Match::Weak};
+      format.argument = item[5] - 'a';
+      format.data = (item[3] - '0') * 10 + (item[4] - '0');
+      opcode.format.append(format);
+    }
+
+    // Ca
+    else if(item[0] == 'C' && item[1] != '>') {
+      Format format = {Format::Type::Compliment, Format::Match::Weak};
+      format.argument = item[1] - 'a';
+      opcode.format.append(format);
+    }
+
+    // D>>XXa
+    else if(item[0] == 'D' && item[1] == '>' && item[2] == '>') {
+      Format format = {Format::Type::DecrementShiftRight, Format::Match::Weak};
+      format.argument = item[5] - 'a';
+      format.data = (item[3] - '0') * 10 + (item[4] - '0');
+      opcode.format.append(format);
+    }
+
+    // Da
+    else if(item[0] == 'D' && item[1] != '>') {
+      Format format = {Format::Type::Decrement, Format::Match::Weak};
+      format.argument = item[1] - 'a';
+      opcode.format.append(format);
+    }
+
+    // I>>XXa
+    else if(item[0] == 'D' && item[1] == '>' && item[2] == '>') {
+      Format format = {Format::Type::IncrementShiftRight, Format::Match::Weak};
+      format.argument = item[5] - 'a';
+      format.data = (item[3] - '0') * 10 + (item[4] - '0');
+      opcode.format.append(format);
+    }
+
+    // Ia
+    else if(item[0] == 'D' && item[1] != '>') {
+      Format format = {Format::Type::Increment, Format::Match::Weak};
       format.argument = item[1] - 'a';
       opcode.format.append(format);
     }
