@@ -95,7 +95,7 @@ Code | Descr | Example
 `N>>` | negative shift right | `neg *16 ;$cd N>>01a` -data >> 1
 `N` | negative | `neg *16 ;$cd Na` -data
 `C>>` | compliment shift right | `bic *16 ;$cd C>>01a` ~data >> 1
-`C` | negative | `bic *16 ;$cd Ca` ~data
+`C` | compliment | `bic *16 ;$cd Ca` ~data
 `D>>` | decrement shift right | `dec *16 ;$cd D>>01a` --data >> 1
 `D` | decrement | `dec *16 ;$cd Da` --data
 `I>>` | increment shift right | `inc *16 ;$cd D>>01a` ++data >> 1
