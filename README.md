@@ -32,4 +32,4 @@ git clone https://github.com/ARM9/bass.git && cd bass/bass && make
 
 ## Documentation / Help
   * Online [Handbook](doc/index.md)
-  * [Discord](https://discord.gg/DJaUZxkDP3)
+  * [Discord](https://discord.gg/B27hf27ZVf) (Fixed)
