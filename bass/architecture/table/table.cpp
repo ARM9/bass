@@ -184,6 +184,8 @@ auto Table::bitLength(string& text) const -> uint {
   if(*p == '$') return hexLength(p + 1);
   if(*p == '0' && *(p + 1) == 'b') return binLength(p + 2);
   if(*p == '0' && *(p + 1) == 'x') return hexLength(p + 2);
+  if(*p >= '0' && *p <= '9') return floor(log2(atoi(p))) + 1;
+  if(*p == '-') return 64;
   return 0;
 }
 
