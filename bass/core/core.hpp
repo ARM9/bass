@@ -126,7 +126,6 @@ struct Bass {
     }
   };
 
-protected:
   auto analyzePhase() const -> bool { return phase == Phase::Analyze; }
   auto queryPhase() const -> bool { return phase == Phase::Query; }
   auto writePhase() const -> bool { return phase == Phase::Write; }

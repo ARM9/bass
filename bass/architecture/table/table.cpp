@@ -186,6 +186,16 @@ auto Table::bitLength(string& text) const -> uint {
   if(*p == '0' && *(p + 1) == 'x') return hexLength(p + 2);
   if(*p >= '0' && *p <= '9') return floor(log2(atoi(p))) + 1;
   if(*p == '-') return 64;
+  if((*p >= 'a' && *p <= 'z') || (*p >= 'A' && *p <= 'Z')) {
+    if(auto constant = self.findConstant(p)) {
+      if(constant().value >= 0) return floor(log2(constant().value)) + 1;
+      else return 64;
+    }
+    if(auto variable = self.findVariable(p)) {
+      if(variable().value >= 0) return floor(log2(variable().value)) + 1;
+      else return 64;
+    }
+  }
   return 0;
 }
 
@@ -307,7 +317,7 @@ auto Table::assembleTableRHS(Opcode& opcode, const string& text) -> void {
       opcode.format.append(format);
     }
 
-// >>XXa
+    // >>XXa
     else if(item[0] == '>' && item[1] == '>') {
       Format format = {Format::Type::ShiftRight, Format::Match::Weak};
       format.argument = item[4] - 'a';
@@ -315,6 +325,7 @@ auto Table::assembleTableRHS(Opcode& opcode, const string& text) -> void {
       opcode.format.append(format);
     }
 
+    // <<XXa
     else if(item[0] == '<' && item[1] == '<') {
       Format format = {Format::Type::ShiftLeft, Format::Match::Weak};
       format.argument = item[4] - 'a';
