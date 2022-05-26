@@ -320,7 +320,7 @@ auto Table::assembleTableRHS(Opcode& opcode, const string& text) -> void {
     // >>XXa
     else if(item[0] == '>' && item[1] == '>') {
       Format format = {Format::Type::ShiftRight, Format::Match::Weak};
-      format.argument = item[4] - 'a';
+      format.argument = (item[4] >= 'A' && item[4] <= 'Z') ? item[4] + 123 - 'A' - 'a' : item[4] - 'a';
       format.data = (item[2] - '0') * 10 + (item[3] - '0');
       opcode.format.append(format);
     }
@@ -328,7 +328,7 @@ auto Table::assembleTableRHS(Opcode& opcode, const string& text) -> void {
     // <<XXa
     else if(item[0] == '<' && item[1] == '<') {
       Format format = {Format::Type::ShiftLeft, Format::Match::Weak};
-      format.argument = item[4] - 'a';
+      format.argument = (item[4] >= 'A' && item[4] <= 'Z') ? item[4] + 123 - 'A' - 'a' : item[4] - 'a';
       format.data = (item[2] - '0') * 10 + (item[3] - '0');
       opcode.format.append(format);
     }
@@ -336,7 +336,7 @@ auto Table::assembleTableRHS(Opcode& opcode, const string& text) -> void {
     // +X>>YYa
     else if(item[0] == '+' && item[2] == '>' && item[3] == '>') {
       Format format = {Format::Type::RelativeShiftRight, Format::Match::Weak};
-      format.argument = item[6] - 'a';
+      format.argument = (item[6] >= 'A' && item[6] <= 'Z') ? item[6] + 123 - 'A' - 'a' : item[6] - 'a';
       format.displacement = +(item[1] - '0');
       format.data = (item[4] - '0') * 10 + (item[5] - '0');
       opcode.format.append(format);
@@ -345,7 +345,7 @@ auto Table::assembleTableRHS(Opcode& opcode, const string& text) -> void {
     // N>>XXa
     else if(item[0] == 'N' && item[1] == '>' && item[2] == '>') {
       Format format = {Format::Type::NegativeShiftRight, Format::Match::Weak};
-      format.argument = item[5] - 'a';
+      format.argument = (item[5] >= 'A' && item[5] <= 'Z') ? item[5] + 123 - 'A' - 'a' : item[5] - 'a';
       format.data = (item[3] - '0') * 10 + (item[4] - '0');
       opcode.format.append(format);
     }
@@ -353,14 +353,14 @@ auto Table::assembleTableRHS(Opcode& opcode, const string& text) -> void {
     // Na
     else if(item[0] == 'N' && item[1] != '>') {
       Format format = {Format::Type::Negative, Format::Match::Weak};
-      format.argument = item[1] - 'a';
+      format.argument = (item[1] >= 'A' && item[1] <= 'Z') ? item[1] + 123 - 'A' - 'a' : item[1] - 'a';
       opcode.format.append(format);
     }
 
     // C>>XXa
     else if(item[0] == 'C' && item[1] == '>' && item[2] == '>') {
       Format format = {Format::Type::ComplimentShiftRight, Format::Match::Weak};
-      format.argument = item[5] - 'a';
+      format.argument = (item[5] >= 'A' && item[5] <= 'Z') ? item[5] + 123 - 'A' - 'a' : item[5] - 'a';
       format.data = (item[3] - '0') * 10 + (item[4] - '0');
       opcode.format.append(format);
     }
@@ -368,14 +368,14 @@ auto Table::assembleTableRHS(Opcode& opcode, const string& text) -> void {
     // Ca
     else if(item[0] == 'C' && item[1] != '>') {
       Format format = {Format::Type::Compliment, Format::Match::Weak};
-      format.argument = item[1] - 'a';
+      format.argument = (item[1] >= 'A' && item[1] <= 'Z') ? item[1] + 123 - 'A' - 'a' : item[1] - 'a';
       opcode.format.append(format);
     }
 
     // D>>XXa
     else if(item[0] == 'D' && item[1] == '>' && item[2] == '>') {
       Format format = {Format::Type::DecrementShiftRight, Format::Match::Weak};
-      format.argument = item[5] - 'a';
+      format.argument = (item[5] >= 'A' && item[5] <= 'Z') ? item[5] + 123 - 'A' - 'a' : item[5] - 'a';
       format.data = (item[3] - '0') * 10 + (item[4] - '0');
       opcode.format.append(format);
     }
@@ -383,14 +383,14 @@ auto Table::assembleTableRHS(Opcode& opcode, const string& text) -> void {
     // Da
     else if(item[0] == 'D' && item[1] != '>') {
       Format format = {Format::Type::Decrement, Format::Match::Weak};
-      format.argument = item[1] - 'a';
+      format.argument = (item[1] >= 'A' && item[1] <= 'Z') ? item[1] + 123 - 'A' - 'a' : item[1] - 'a';
       opcode.format.append(format);
     }
 
     // I>>XXa
     else if(item[0] == 'D' && item[1] == '>' && item[2] == '>') {
       Format format = {Format::Type::IncrementShiftRight, Format::Match::Weak};
-      format.argument = item[5] - 'a';
+      format.argument = (item[5] >= 'A' && item[5] <= 'Z') ? item[5] + 123 - 'A' - 'a' : item[5] - 'a';
       format.data = (item[3] - '0') * 10 + (item[4] - '0');
       opcode.format.append(format);
     }
@@ -398,7 +398,7 @@ auto Table::assembleTableRHS(Opcode& opcode, const string& text) -> void {
     // Ia
     else if(item[0] == 'D' && item[1] != '>') {
       Format format = {Format::Type::Increment, Format::Match::Weak};
-      format.argument = item[1] - 'a';
+      format.argument = (item[1] >= 'A' && item[1] <= 'Z') ? item[1] + 123 - 'A' - 'a' : item[1] - 'a';
       opcode.format.append(format);
     }
 
@@ -411,39 +411,39 @@ auto Table::assembleTableRHS(Opcode& opcode, const string& text) -> void {
 
     else if(item[0] == '!') {
       Format format = {Format::Type::Absolute, Format::Match::Exact};
-      format.argument = item[1] - 'a';
+      format.argument = (item[1] >= 'A' && item[1] <= 'Z') ? item[1] + 123 - 'A' - 'a' : item[1] - 'a';
       opcode.format.append(format);
     }
 
     else if(item[0] == '=') {
       Format format = {Format::Type::Absolute, Format::Match::Strong};
-      format.argument = item[1] - 'a';
+      format.argument = (item[1] >= 'A' && item[1] <= 'Z') ? item[1] + 123 - 'A' - 'a' : item[1] - 'a';
       opcode.format.append(format);
     }
 
     else if(item[0] == '~') {
       Format format = {Format::Type::Absolute, Format::Match::Weak};
-      format.argument = item[1] - 'a';
+      format.argument = (item[1] >= 'A' && item[1] <= 'Z') ? item[1] + 123 - 'A' - 'a' : item[1] - 'a';
       opcode.format.append(format);
     }
 
     else if(item[0] == '+') {
       Format format = {Format::Type::Relative};
-      format.argument = item[2] - 'a';
+      format.argument = (item[2] >= 'A' && item[2] <= 'Z') ? item[2] + 123 - 'A' - 'a' : item[2] - 'a';
       format.displacement = +(item[1] - '0');
       opcode.format.append(format);
     }
 
     else if(item[0] == '-') {
       Format format = {Format::Type::Relative};
-      format.argument = item[2] - 'a';
+      format.argument = (item[2] >= 'A' && item[2] <= 'Z') ? item[2] + 123 - 'A' - 'a' : item[2] - 'a';
       format.displacement = -(item[1] - '0');
       opcode.format.append(format);
     }
 
     else if(item[0] == '*') {
       Format format = {Format::Type::Repeat};
-      format.argument = item[1] - 'a';
+      format.argument = (item[1] >= 'A' && item[1] <= 'Z') ? item[1] + 123 - 'A' - 'a' : item[1] - 'a';
       format.data = toHex((const char*)item + 3);
       opcode.format.append(format);
     }
