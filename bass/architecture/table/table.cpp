@@ -186,16 +186,8 @@ auto Table::bitLength(string& text) const -> uint {
   if(*p == '0' && *(p + 1) == 'x') return hexLength(p + 2);
   if(*p >= '0' && *p <= '9') return floor(log2(atoi(p))) + 1;
   if(*p == '-') return 64;
-  if((*p >= 'a' && *p <= 'z') || (*p >= 'A' && *p <= 'Z')) {
-    if(auto constant = self.findConstant(p)) {
-      if(constant().value >= 0) return floor(log2(constant().value)) + 1;
-      else return 64;
-    }
-    if(auto variable = self.findVariable(p)) {
-      if(variable().value >= 0) return floor(log2(variable().value)) + 1;
-      else return 64;
-    }
-  }
+  if(auto constant = self.findConstant(p)) return (constant().value >= 0) ? floor(log2(constant().value)) + 1 : 64;
+  if(auto variable = self.findVariable(p)) return (variable().value >= 0) ? floor(log2(variable().value)) + 1 : 64;
   return 0;
 }
 
