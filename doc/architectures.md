@@ -88,7 +88,7 @@ Code | Descr | Example
 `~` | weak value required | `cmp *16 ;$cd ~a`
 `+` | relative | `bra *08 ;$80 +2a` data-pc+2
 `-` | relative | `bra *08 ;$80 -2a` data-pc-2
-`*` | repeat | `todo`
+`*` | repeat | `asl #*08 ;*a:$0a` a times: data repeated
 `>>` | shift right | `shr *16 ;$cd >>01a` data >> 1
 `<<` | shift left | `shl *16 ;$cd <<01a` data << 1
 `+>>` | relative shift right | `bra *24 ;$cd +4>>02a` data-pc+4 >> 2
