@@ -4,7 +4,7 @@ Most compilers can compile code to every target platform by using different back
 > **Note:**<br/>
 > The term 'architecture file' usually refers to a string file used by the Table-Architecture-Backend.
 
-Over the past few years many compains about the 'assembly syntax' had reached us. Fact is that almost every CPU in the world do have more then one assembly language for it. In other words: We cannot make it right. The Author of each file had to make an decission, and we are always open for suggestions. At the end of the day an assembly syntax is always also 'just' a flavor. And there is no reasons to not have different versions side by side.
+Over the past few years many complaints about the 'assembly syntax' had reached us. Fact is that almost every CPU in the world do have more then one assembly language for it. In other words: We cannot make it right. The Author of each file had to make a decission, and we are always open for suggestions. At the end of the day an assembly syntax is always also 'just' a flavor. And there is no reasons to not have different versions side by side.
 
 ## Where to find and put Architecture Files?
 bass will look at this locations and in this order for architecture files:
@@ -48,7 +48,7 @@ cmp *08        ;$c5 =a
 
 While these compares show different syntax flavors, this example only denotes different `08` and `16` bit parameters.
 
-Bass is always working from top to bottom. During the assemply Stage, scanning is conducted from top to bottom until the first match is found. Everything after this match is ignored. 
+Bass is always working from top to bottom. During the assembly Stage, scanning is conducted from top to bottom until the first match is found. Everything after this match is ignored. 
 
 
 ### RHS Tokens
