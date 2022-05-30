@@ -380,7 +380,7 @@ auto Table::assembleTableRHS(Opcode& opcode, const string& text) -> void {
     }
 
     // I>>XXa
-    else if(item[0] == 'D' && item[1] == '>' && item[2] == '>') {
+    else if(item[0] == 'I' && item[1] == '>' && item[2] == '>') {
       Format format = {Format::Type::IncrementShiftRight, Format::Match::Weak};
       format.argument = (item[5] >= 'A' && item[5] <= 'Z') ? item[5] + 123 - 'A' - 'a' : item[5] - 'a';
       format.data = (item[3] - '0') * 10 + (item[4] - '0');
@@ -388,7 +388,7 @@ auto Table::assembleTableRHS(Opcode& opcode, const string& text) -> void {
     }
 
     // Ia
-    else if(item[0] == 'D' && item[1] != '>') {
+    else if(item[0] == 'I' && item[1] != '>') {
       Format format = {Format::Type::Increment, Format::Match::Weak};
       format.argument = (item[1] >= 'A' && item[1] <= 'Z') ? item[1] + 123 - 'A' - 'a' : item[1] - 'a';
       opcode.format.append(format);
