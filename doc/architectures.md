@@ -98,8 +98,8 @@ Code | Descr | Example
 `C` | compliment | `bic *16 ;$cd Ca` ~data
 `D>>` | decrement shift right | `dec *16 ;$cd D>>01a` --data >> 1
 `D` | decrement | `dec *16 ;$cd Da` --data
-`I>>` | increment shift right | `inc *16 ;$cd D>>01a` ++data >> 1
-`I` | increment | `inc *16 ;$cd Da` ++data
+`I>>` | increment shift right | `inc *16 ;$cd I>>01a` ++data >> 1
+`I` | increment | `inc *16 ;$cd Ia` ++data
 
 
 
