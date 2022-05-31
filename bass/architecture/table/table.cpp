@@ -27,10 +27,12 @@ auto Table::assemble(const string& statement) -> bool {
       if(format.type == Format::Type::Absolute) {
         if(format.match != Format::Match::Weak) {
           uint bits = bitLength(args[format.argument]);
-          if(bits != opcode.number[format.argument].bits) {
-            if(format.match == Format::Match::Exact || bits != 0) {
-              mismatch = true;
-              break;
+          if(format.match == Format::Match::Strong && bits > opcode.number[format.argument].bits) {
+            if(bits != opcode.number[format.argument].bits) {
+              if(format.match == Format::Match::Exact || bits != 0) {
+                mismatch = true;
+                break;
+              }
             }
           }
         }
@@ -186,8 +188,8 @@ auto Table::bitLength(string& text) const -> uint {
   if(*p == '0' && *(p + 1) == 'x') return hexLength(p + 2);
   if(*p >= '0' && *p <= '9') return floor(log2(atoi(p))) + 1;
   if(*p == '-') return 64;
-  if(auto constant = self.findConstant(p)) return (constant().value >= 0) ? floor(log2(constant().value)) + 1 : 64;
-  if(auto variable = self.findVariable(p)) return (variable().value >= 0) ? floor(log2(variable().value)) + 1 : 64;
+  if(auto constant = self.findConstant(p)) return (constant().value >= 0) ? (floor(log2(constant().value)) + 1) : 64;
+  if(auto variable = self.findVariable(p)) return (variable().value >= 0) ? (floor(log2(variable().value)) + 1) : 64;
   return 0;
 }
 
