@@ -364,12 +364,12 @@ set 5,(iy+*08)  ; $FD $CB =a $EE
 set 6,(iy+*08)  ; $FD $CB =a $F6
 set 7,(iy+*08)  ; $FD $CB =a $FE
 
-pop iy          ; $FD $E1
-push iy         ; $FD $E5
+pop iy      ; $FD $E1
+push iy     ; $FD $E5
 
-jp (iy)         ; $FD $E9
+jp (iy)     ; $FD $E9
 
-ld sp,iy        ; $FD $F9
+ld sp,iy    ; $FD $F9
 
 jr nz,*08   ; $20 +2a
 jr z,*08    ; $28 +2a
@@ -875,15 +875,15 @@ ei          ; $FB
 cp *08      ; $FE =a
 rst 38h     ; $FF
 
-ld (*16),hl     ; $22 =a
-ld hl,(*16)     ; $2A =a
+ld (*16),hl ; $22 =a
+ld hl,(*16) ; $2A =a
 ld hl,*16   ; $21 =a
-ld (*16),a      ; $32 =a
-ld a,(*16)      ; $3A =a
+ld (*16),a  ; $32 =a
+ld a,(*16)  ; $3A =a
 ld a,*08    ; $3E =a
 
-ld (*16),ix     ; $DD $22 =a
-ld (*16),bc     ; $ED $43 =a
-ld (*16),de     ; $ED $53 =a
-ld (*16),sp     ; $ED $73 =a
-ld (*16),iy     ; $FD $22 =a
+ld (*16),ix ; $DD $22 =a
+ld (*16),bc ; $ED $43 =a
+ld (*16),de ; $ED $53 =a
+ld (*16),sp ; $ED $73 =a
+ld (*16),iy ; $FD $22 =a
