@@ -28,9 +28,11 @@ auto Table::assemble(const string& statement) -> bool {
         if(format.match != Format::Match::Weak) {
           uint bits = bitLength(args[format.argument]);
           if(format.match == Format::Match::Strong && bits > opcode.number[format.argument].bits) {
-            if(format.match == Format::Match::Exact && bits != opcode.number[format.argument].bits) {
-              mismatch = true;
-              break;
+            if(bits != opcode.number[format.argument].bits) {
+              if(format.match == Format::Match::Exact || bits != 0) {
+                mismatch = true;
+                break;
+              }
             }
           }
         }
