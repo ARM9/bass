@@ -514,11 +514,11 @@
     <p>The name is transformed to <i>name.arch</i>, and bass tries to find said
     file in two locations: first, in the <i>architectures/</i> subdirectory next
     to the main bass executable. And second, in
-    <i>~/.local/share/bass/architectures/</i> or
+    <i>$PREFIX/share/bass/architectures/</i> or
     <i>%localappdata%/bass/architectures/</i>, depending upon your OS.</p>
 
     <p>bass ships with a variety of pre-made table architecture files. On
-    Linux/BSD, users should run <i>make install</i> to place these files into
+    Linux/BSD, users should run <i>PREFIX=[/usr/local] make install</i> to place these files into
     the appropriate location to be used.</p>
 
     <p>bass is also extensible, so users can add their own table architecture
