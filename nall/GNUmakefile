@@ -152,10 +152,12 @@ endif
 ifeq ($(object.path),)
   object.path := obj
 endif
+$(shell mkdir -p $(object.path))
 
 ifeq ($(output.path),)
   output.path := out
 endif
+$(shell mkdir -p $(output.path))
 
 # rules
 default: all;
@@ -244,5 +246,6 @@ strne = $(if $(filter-out xx,x$(subst $1,,$2)$(subst $2,,$1)x),1,)
 ifeq ($(platform),windows)
   prefix := $(subst $([space]),\$([space]),$(strip $(call strtr,$(LOCALAPPDATA),\,/)))
 else
-  prefix := $(HOME)/.local
+  PREFIX ?= /usr/local
+  prefix := $(PREFIX)
 endif
