@@ -21,18 +21,14 @@ clean:
 	$(call delete,out/*)
 
 install: all
-ifeq ($(shell id -un),root)
-	$(error "make install should not be run as root")
-else ifneq ($(filter $(platform),linux bsd),)
+ifneq ($(filter $(platform),linux bsd),)
 	cp out/$(name) $(prefix)/bin/$(name)
 	mkdir -p $(prefix)/share/$(name)/architectures/
 	cp -R data/architectures/* $(prefix)/share/$(name)/architectures/
 endif
 
 uninstall:
-ifeq ($(shell id -un),root)
-	$(error "make uninstall should not be run as root")
-else ifneq ($(filter $(platform),linux bsd),)
+ifneq ($(filter $(platform),linux bsd),)
 	rm -f $(prefix)/bin/$(name)
 endif
 
