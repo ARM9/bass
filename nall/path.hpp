@@ -128,7 +128,7 @@ inline auto sharedData() -> string {
   #elif defined(PLATFORM_MACOS)
   string result = "/Library/Application Support/";
   #else
-  string result = "/usr/share/";
+  string result = { PREFIX, "/share/" };
   #endif
   if(!result) result = ".";
   if(!result.endsWith("/")) result.append("/");

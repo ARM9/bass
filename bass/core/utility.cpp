@@ -269,7 +269,7 @@ auto Bass::evaluateDefines(string& s) -> void {
 }
 
 auto Bass::readArchitecture(const string& s) -> string {
-  string location{Path::userData(), "bass/architectures/", s, ".arch"};
+  string location{Path::sharedData(), "bass/architectures/", s, ".arch"};
   if(!file::exists(location)) location = {Path::program(), "architectures/", s, ".arch"};
   if(!file::exists(location)) error("unknown architecture: ", s);
   return string::read(location);

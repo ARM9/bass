@@ -249,3 +249,5 @@ else
   PREFIX ?= /usr/local
   prefix := $(PREFIX)
 endif
+  flags += -DPREFIX=\"$(prefix)\"
+
