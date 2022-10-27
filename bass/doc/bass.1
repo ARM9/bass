@@ -1,0 +1,17 @@
+# cat /usr/man/man1/bass.1
+.TH Bass v18
+.SH
+Bass - fork of byuu's bass assembler for 65816 
+.SH SYNOPSIS
+.B BASS
+[-omdc -strict -benchmark] source [source ...] 
+.SH Description
+Bass is a table-based, multi-architecture and cross-platform, macro assembler developed by Near up until version 17. It is targeted at developers and hackers interested in legacy video game consoles such as the NES, SNES, MegaDrive and others.
+.SH Options
+  -o target        specify default output filename [overwrite]
+  -m target        specify default output filename [modify]
+  -d name[=value]  create define with optional value
+  -c name[=value]  create constant with optional value
+  -strict          upgrade warnings to errors
+  -benchmark       benchmark performance
+
