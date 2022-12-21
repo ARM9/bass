@@ -26,7 +26,9 @@ private:
         Decrement,
         DecrementShiftRight,
         Increment,
-        IncrementShiftRight
+        IncrementShiftRight,
+        Addition,
+        Subtraction
     } type;
     enum class Match : uint { Exact, Strong, Weak } match;
     uint data;

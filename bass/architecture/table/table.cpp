@@ -146,6 +146,16 @@ auto Table::assemble(const string& statement) -> bool {
           writeBits(++data >> format.data, opcode.number[format.argument].bits);
           break;
         }
+        case Format::Type::Addition: {
+          uint64_t data = evaluate(args[format.argument]);
+          writeBits(data += format.data, opcode.number[format.argument].bits);
+          break;
+        }
+        case Format::Type::Subtraction: {
+          uint64_t data = evaluate(args[format.argument]);
+          writeBits(data -= format.data, opcode.number[format.argument].bits);
+          break;
+        }
       }
     }
 
@@ -393,6 +403,22 @@ auto Table::assembleTableRHS(Opcode& opcode, const string& text) -> void {
     else if(item[0] == 'I' && item[1] != '>') {
       Format format = {Format::Type::Increment, Format::Match::Weak};
       format.argument = (item[1] >= 'A' && item[1] <= 'Z') ? item[1] + 123 - 'A' - 'a' : item[1] - 'a';
+      opcode.format.append(format);
+    }
+
+    // +=XXa
+    else if(item[0] == '+' && item[1] == '=') {
+      Format format = {Format::Type::Addition, Format::Match::Weak};
+      format.argument = (item[4] >= 'A' && item[4] <= 'Z') ? item[4] + 123 - 'A' - 'a' : item[4] - 'a';
+      format.data = (item[2] - '0') * 10 + (item[3] - '0');
+      opcode.format.append(format);
+    }
+
+    // -=XXa
+    else if(item[0] == '-' && item[1] == '=') {
+      Format format = {Format::Type::Subtraction, Format::Match::Weak};
+      format.argument = (item[4] >= 'A' && item[4] <= 'Z') ? item[4] + 123 - 'A' - 'a' : item[4] - 'a';
+      format.data = (item[2] - '0') * 10 + (item[3] - '0');
       opcode.format.append(format);
     }
 
