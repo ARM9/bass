@@ -104,6 +104,8 @@ Code | Descr | Example
 `D>>` | decrement shift right | `dec *16 ;$cd D>>01a` --data >> 1
 `I` | increment | `inc *16 ;$cd Ia` ++data
 `I>>` | increment shift right | `inc *16 ;$cd I>>01a` ++data >> 1
+`+=` | addition | `add *16 ;$cd +=02a` data += 2
+`-=` | subtraction | `add *16 ;$cd -=02a` data -= 2
 
 
 
