@@ -105,7 +105,7 @@ Code | Descr | Example
 `I` | increment | `inc *16 ;$cd Ia` ++data
 `I>>` | increment shift right | `inc *16 ;$cd I>>01a` ++data >> 1
 `+=` | addition | `add *16 ;$cd +=02a` data += 2
-`-=` | subtraction | `add *16 ;$cd -=02a` data -= 2
+`-=` | subtraction | `sub *16 ;$cd -=02a` data -= 2
 
 
 
