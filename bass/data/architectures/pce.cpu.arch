@@ -12,6 +12,7 @@ clx              ;$82
 cly              ;$c2
 csh              ;$d4
 csl              ;$54
+dec              ;$3a
 dex              ;$ca
 dey              ;$88
 inc              ;$1a
