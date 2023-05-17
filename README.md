@@ -15,7 +15,7 @@ bass is a table-based, multi-architecture and cross-platform, macro assembler de
 
 **This is not for you if:**
   * you look for a higher 'real' programming language
-  * you expect an complete toolchain that takes care about all your needs
+  * you expect a complete toolchain that takes care about all your needs
 
 
 ## Releases
